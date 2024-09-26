@@ -1,11 +1,10 @@
 {
-  "name": "rhs-openshift-admins-devops",
-  "description": "OpenShift Admins Devops Course Documentation Site",
-  "homepage": "https://redhat-scholars.github.io/openshift-admins-devops",
+  "name": "rhs-quarkus-workshop-sandbox",
+  "description": "",
+  "homepage": "https://redhat-scholars.github.io/",
   "author": {
-    "email": "kamesh.sampath@hotmail.com",
-    "name": "Kamesh Sampath",
-    "url": "https://twitter.com/@kamesh_sampath"
+    "email": "",
+    "name": ""
   },
   "dependencies": {
     "@antora/cli": "^2.3.1",
@@ -28,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/redhat-scholars/openshift-admins-devops.git"
+    "url": "git+https://github.com/bmeklund/quarkus-workshop-sandbox.git"
   },
   "license": "Apache-2.0",
   "babel": {

@@ -2,17 +2,23 @@ runtime:
   cache_dir: ./.cache/antora
 
 site:
-  title: Template Tutorial
-  url: https://redhat-scholars.github.io/course-template
-  start_page: template-tutorial::index.adoc
+  title: Quarkus Workshop Guides
+  url: https://github.com/bmeklund/quarkus-workshop-sandbox
+  start_page: rhs-quarkus-guides::index.adoc
 
 content:
   sources:
-    - url: ./
+    - url: https://github.com/bmeklund/quarkus-workshop-sandbox.git
+      branches: master
       start_path: documentation
 
 asciidoc:
   attributes:
+    #title: Template Tutorial(Dev Mode)
+    experimental: true
+    openshift-version: 4.15
+    project-namespace: workshop
+    page-pagination: true    
     release-version: master
     page-pagination: true
   extensions:
@@ -21,13 +27,10 @@ asciidoc:
 
 ui:
   bundle:
-    url: https://github.com/redhat-developer-demos/rhd-tutorial-ui/releases/download/v0.1.10/ui-bundle.zip
+    url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.14/ui-bundle.zip
     snapshot: true
   supplemental_files:
     - path: ./supplemental-ui
-    - path: .nojekyll
-    - path: ui.yml
-      contents: "static_files: [ .nojekyll ]"
 
 output:
   dir: ./gh-pages

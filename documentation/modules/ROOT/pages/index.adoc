@@ -1,20 +1,46 @@
-= Welcome to Template Tutorial
+= Welcome to the Quarkus Workshop
 :page-layout: home
 :!sectids:
 
 [.text-center.strong]
-== Publish Services to Kubernetes
+== Quarkus Workshop
 
-A Kubernetes tutorial to show how you can deploy a Java service to a Kubernetes cluster as it was a child game.
+This workshop focuses on Quarkus, supersonic, subatomic container-native Java.  
+
+The workshop rely on the Developer Sandbox IDE(Dev Spaces) to develop Quarkus apps and deploy them to a Kubernetes cluster (based on OpenShift), and covers several other developer topics such as:
 
 [.tiles.browse]
 == Browse modules
 
 [.tile]
-.xref:01-setup.adoc[Get Started]
-* xref:01-setup.adoc#minikube[Minikube]
-
+* xref:intro.adoc[Lab Instructions]
 [.tile]
-.xref:02-deploy.adoc[Deploying]
-* xref:02-deploy.adoc#package[Package the Application]
-* xref:02-deploy.adoc#deploy[Deploy the Application]
+* xref:basics.adoc[Getting Started with Quarkus]
+[.tile]
+* xref:cdi.adoc[Dependency Injection]
+[.tile]
+* xref:testing.adoc[Testing Quarkus Apps]
+[.tile]
+* xref:debugging.adoc[Debugging Quarkus Apps]
+[.tile]
+* xref:native.adoc[Building Native Quarkus Apps]
+[.tile]
+* xref:cloudnative.adoc[Developing Cloud Native with Quarkus]
+[.tile]
+* xref:deploy.adoc[Deploying to the cloud]
+[.tile]
+* xref:extensions.adoc[Using Quarkus extensions]
+[.tile]
+* xref:panache.adoc[Hibernate ORM with Panache]
+[.tile]
+* xref:openapi.adoc[Documenting and Testing APIs]
+[.tile]
+* xref:messaging.adoc[Event-driven Messaging]
+[.tile]
+* xref:kafka.adoc[Streaming Data with Quarkus and Kafka]
+[.tile]
+* xref:monitoring.adoc[Monitoring with Prometheus and Grafana]
+[.tile]
+* xref:tracing.adoc[Tracing Quarkus Apps with Jaeger and MicroProfile Tracing]
+[.tile]
+* xref:security.adoc[Securing Quarkus APIs]

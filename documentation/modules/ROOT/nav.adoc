@@ -1,7 +1,20 @@
-* xref:01-setup.adoc[1. Setup]
-** xref:01-setup.adoc#prerequisite[Prerequisites]
-** xref:01-setup.adoc#minikube[Setup Minikube]
+* xref:intro.adoc[Lab Instructions]
 
-* xref:02-deploy.adoc[2. Deploy Service]
-** xref:02-deploy.adoc#package[Build Service]
-** xref:02-deploy.adoc#deploy[Deploy Dervice]
+.Module One
+* xref:basics.adoc[Getting Started with Quarkus]
+* xref:cdi.adoc[Dependency Injection]
+* xref:testing.adoc[Testing Quarkus Apps]
+* xref:debugging.adoc[Debugging Quarkus Apps]
+* xref:native.adoc[Building Native Quarkus Apps]
+* xref:cloudnative.adoc[Developing Cloud Native with Quarkus]
+* xref:deploy.adoc[Deploying to the cloud]
+
+.Module Two
+* xref:extensions.adoc[Using Quarkus extensions]
+* xref:panache.adoc[Hibernate ORM with Panache]
+* xref:openapi.adoc[Documenting and Testing APIs]
+* xref:messaging.adoc[Event-driven Messaging]
+* xref:kafka.adoc[Streaming Data with Quarkus and Kafka]
+* xref:monitoring.adoc[Monitoring with Prometheus and Grafana]
+* xref:tracing.adoc[Tracing Quarkus Apps with Jaeger and MicroProfile Tracing]
+* xref:security.adoc[Securing Quarkus APIs]

@@ -1,0 +1,93 @@
+= Dependency Injection
+:experimental:
+:imagesdir: images
+
+In the previous step you created a basic RESTful Java application with Quarkus. In this step we'll add a custom bean using dependency injection (DI). Quarkus DI solution is based on the http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html[Contexts and Dependency Injection for Java 2.0 specification^].
+
+== Add Custom Bean
+
+Let’s modify the application and add a companion bean. In VS Code, right-click on the `org.acme.people.service` package in the project browser and select _New File..._.
+
+image::newclass.png[newclass,600]
+
+Name the file `GreetingService.java`.
+
+image::classname.png[classname,600]
+
+Next, replace the below code into the class:
+
+[source,java,role="copypaste"]
+----
+package org.acme.people.service;
+
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class GreetingService {
+
+    private String hostname = System.getenv().getOrDefault("HOSTNAME", "unknown");
+
+    public String greeting(String name) {
+        return "hello " + name + " from " + hostname;
+    }
+
+}
+----
+
+This is an injectable bean that implements a `greeting()` method returning a string `hello <hostname>` (where `<hostname>` is the Linux hostname of the machine on which the code runs).
+
+Next, open the existing `GreetingResource.java` file (in the `org.acme.people.rest` package) and add a new field and method above the existing `hello` method:
+
+[source,java,role="copypaste"]
+----
+    @Inject
+    GreetingService service;
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/greeting/{name}")
+    @NonBlocking
+    public String greeting(@PathParam("name") String name) {
+        return service.greeting(name);
+    }
+----
+
+This will cause our new `GreetingResource` class to be instantiated and injected as the `service` field, and then the method `greeting` accesses this service to return the name.
+
+You will get red error squigglies when you paste this code due to missing import statements:
+
+image::importerror.png[error,800]
+
+Add the necessary imports below the existing `import` statements near the top of the file:
+
+[source,java,role="copypaste"]
+----
+import jakarta.inject.Inject;
+import org.acme.people.service.GreetingService;
+import jakarta.ws.rs.PathParam;
+----
+
+[WARNING]
+====
+If you do not get red squigglies, or you can't make them disappear, try to close the file and re-open it, or reload your web browser.
+====
+
+== Inspect the results
+
+Check that it works as expected by accessing the `/hello/greeting/quarkus` with _curl_:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8080/hello/greeting/quarkus
+----
+
+Note we are exercising our new bean using the `/hello/greeting/quarkus` endpoint, and you should see `hello quarkus from <hostname>`.
+
+[NOTE]
+====
+In this case, the hostname is the hostname from the pod the app is running on within Kubernetes and will change later on.
+====
+
+== Congratulations!
+
+It's a familiar CDI-based environment for you Enterprise Java developers out there, with powerful mechanisms to reload your code _as you type_ (or very close to realtime). In the next step, we'll create some tests for our app, which should also be familiar to _all_ developers.

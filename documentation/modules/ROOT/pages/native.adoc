@@ -1,0 +1,154 @@
+= Building Native Images
+:experimental:
+:imagesdir: images
+
+Let’s now produce a native executable for our application. It improves the startup time of the application, and produces a minimal disk and memory footprint. The executable would have everything to run the application including the "JVM" (shrunk to be just enough to run the application), and the application. This is accomplished using https://github.com/graalvm/mandrel[Mandrel^].
+
+Mandrel is a downstream distribution of the GraalVM community edition. Mandrel's main goal is to provide a native-image release specifically to support https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus[Quarkus^]. The aim is to align the native-image capabilities from GraalVM with OpenJDK and Red Hat Enterprise Linux libraries to improve maintainability for native Quarkus applications.
+
+image::native-image-process.png[native, 600]
+
+GraalVM is already installed for you. Inspect the value of the `GRAALVM_HOME` variable in the Terminal with:
+
+[source,sh,role="copypaste"]
+----
+echo $GRAALVM_HOME
+----
+
+== Build the image
+
+Within the `pom.xml` is the declaration for the Quarkus Maven plugin which contains a profile for `native-image`:
+
+[source,xml]
+----
+  <profiles>
+    <profile>
+      <id>native</id>
+      <activation>
+      ...
+      </activation>
+      <build>
+      ...
+      <properties>
+        <quarkus.package.type>native</quarkus.package.type>
+      </properties>
+    </profile>
+  </profiles>
+----
+
+We use a profile because, you will see very soon, packaging the native image takes a few seconds. However, this compilation time is only incurred _once_, as opposed to _every_ time the application starts, which is the case with other approaches for building and executing JARs.
+
+Create a native executable by using the **devfile: 04. Build Native App** task:
+
+image::cmd-native.png[livecoding, 700]
+
+or by running the below command:  
+[source,sh,role="copypaste"]
+----
+mvn clean package -Pnative -DskipTests -Dquarkus.native.native-image-xmx=2g
+----
+
+**This will take about 2-3 minutes to finish. Wait for it!**. In the end you should get a *BUILD SUCCESS* message.
+
+[NOTE]
+====
+Since we are on Linux in this environment, and the OS that will eventually run our application is also Linux, we can use our local OS to build the native Quarkus app. If you need to build native Linux binaries when on other OS's like Windows or Mac OS X, you can use `-Dquarkus.native.container-runtime=[podman | docker]`. You'll need either Docker or https://podman.io[Podman,target=_blank] installed depending on which runtime you want to use!
+====
+
+The output of the native build is a native Linux binary, which you can see using the readelf command. Run this in a Terminal:
+
+[source,sh,role="copypaste"]
+----
+readelf -h target/*-runner
+----
+
+you’ll see:
+
+[source,none]
+----
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x405000
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          49403488 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         9
+  Size of section headers:           64 (bytes)
+  Number of section headers:         32
+  Section header string table index: 31
+----
+
+It’s a binary that can only run on Linux, but as you’ll see in a moment, this native executable starts up very fast and takes up little memory.
+
+== Run native image
+
+Since our environment here is Linux, you can _just run it_. Select **devfile: 06. Run Native App** task:
+
+image::run-native.png[livecoding, 700]
+
+We use port `8081` here to avoid conflicting with our already-running development mode Quarkus app.
+
+Notice the amazingly fast startup time:
+
+[source,none,role="copypaste"]
+----
+INFO  [io.quarkus] (main) people 1.0-SNAPSHOT native (powered by Quarkus 3.8.3.redhat-00003) started in 0.024s. Listening on: http://0.0.0.0:8081
+----
+
+That's *24* milliseconds to start up.
+
+And extremely low memory usage as reported by the Linux `ps` utility. While the app is running, open another Terminal and run:
+
+[source,sh,role="copypaste"]
+----
+ps -o pid,rss,command -p $(pgrep -f runner)
+----
+You should see something like:
+
+[source,none]
+----
+    PID   RSS COMMAND
+  13306  2804 sh -c cd /projects/quarkus-workshop-m1m2-labs; ./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081
+  13312 44008 ./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081
+----
+
+The 2nd row is the actual process that is taking around `44` MB of memory (https://en.wikipedia.org/wiki/Resident_set_size[Resident Set Size^], or RSS). Pretty compact!
+
+[NOTE]
+====
+The RSS and memory usage of any app, including Quarkus, will vary depending your specific environment, and will rise as the application experiences load.
+====
+
+Make sure the app is still working as expected (we'll use `curl` this time to access it directly). In a new Terminal run:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8081/hello/greeting/quarkus
+----
+
+You should see:
+
+[source,none]
+----
+hello quarkus from <hostname>
+----
+
+Nice!
+
+== Cleanup
+
+Go to the Terminal in which you ran the native app and press kbd:[CTRL+C] to stop our native app. **Be sure to leave your Live Coding Terminal open!**
+
+== Congratulations!
+
+You've now built a Java application as an executable JAR and a Linux native binary. We'll explore the benefits of native binaries later in when we start deploying to Kubernetes.

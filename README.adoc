@@ -1,1 +1,46 @@
-Check the build courseware https://redhat-scholars.github.io/build-course[documentation]  on how folder structure, how to use macros and other gotchas
+# Quarkus workshop
+
+## Overview
+
+|===
+|Audience Experience Level
+|Beginner
+
+|Average Time to Complete	
+|4h hours
+|===
+
+Quarkus - supersonic, subatomic container-native Java.  
+This workshop is intended to give you a hands on introduction to using Quarkus for building applications  
+The workshop uses OpenShift Developer Sandbox and the Sandbox IDE(DevSpaces) to develop Quarkus apps and deploy them to a Kubernetes cluster (based on OpenShift Sandbox that is)  
+
+You can also run this Lab on any other OpenShift cluster, either Managed and Self-Managed by pointing the guides to the correct cluster and namespace.  
+
+* OCP
+* Developer Sandbox
+* CRC
+* ARO
+* ROKS
+* ROSA
+
+### Objectives
+
+*Dependency Injection
+*Testing Quarkus Apps
+*Debugging Quarkus Apps
+*Building Native Quarkus Apps
+*Developing Cloud Native with Quarkus
+*Using Quarkus extensions
+*Hibernate ORM with Panache
+*Event-driven Messaging
+*Streaming Data with Quarkus and Kafka
+*Monitoring with Prometheus and Grafana
+*Tracing Quarkus Apps with Jaeger and MicroProfile Tracing
+
+## Documentation
+
+This workshop is based on link:https://antora.org/[Antora] and link:https://github.com/redhat-scholars/courseware-template[Red Hat scholars template] to build HTML based tutorials.  
+
+To start this workshop, follow the step by step tutorial link for your cluster available below: 
+
+https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-workshop-guides/master/index.html

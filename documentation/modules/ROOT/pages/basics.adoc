@@ -1,0 +1,212 @@
+= The Basics
+:experimental:
+:imagesdir: images
+
+In this step, you will create a straightforward application serving a `hello` endpoint. To demonstrate dependency injection this endpoint uses a `greeting` bean.
+
+image::arch.png[arch,800]
+
+This IDE is based on Eclipse Che (which is in turn based on MicroSoft VS Code editor).
+
+You can see icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins.  You’ll use these during the course of this workshop. Feel free to select them and see what they do:
+
+image::ds-icons.png[cdw, 800]
+
+[NOTE]
+====
+If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
+====
+
+Many features of VS Code are accessed via *Command Palette*. You can see a few of the tutorials on the *Get Started* page (e.g. _Login/Provision OpenShift Cluster_, _Create Component from Devfile registries webview_, and others).
+
+If you ever need to run commands that you don't see in a menu, you can press kbd:[F1] to open the command window, or the more traditional kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on macOS).
+
+## Explore Project
+
+Let's take a look at the left *Explorer*. Your Quarkus project was already imported when the workspace was created. 
+
+When you select the `pom.xml`, you will see which version fo the Red Hat Build of Quarkus you will use for the workshop today.
+
+image::ds-explorer.png[cdw, 900]
+
+The project also has
+
+* The Maven structure
+* An `org.acme.people.rest.GreetingResource` resource exposed on `/hello`, along with a simple test
+* A landing page that is accessible on `http://localhost:8080` after starting the application
+* The application configuration file
+* Other source files we'll use later
+
+Navigate to `src -> main -> java -> org.acme.people.rest` in the project tree and select `GreetingResource.java`.
+
+image::initnav.png[VS Code-workspace-terminal, 800]
+
+This class has a very simple RESTful endpoint definition:
+
+[source, java]
+----
+@Path("/hello")
+public class GreetingResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "hello";
+    }
+}
+----
+
+It’s a very simple REST endpoint, returning *hello* to requests on `/hello`.
+
+[NOTE]
+====
+Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Application` class. It’s supported but not required. In addition, only one instance of the resource is created and not one per request. You can configure this using the different `Scoped` annotations (`ApplicationScoped`, `RequestScoped`, etc).
+====
+
+## Running the Application in Live Coding Mode
+
+**Live Coding** (also referred to as _dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.
+
+You can always use the `mvn` (Maven) commands to run Quarkus apps, but we've created a few helpful *tasks* on the VS Code.
+
+Navigate the *Command Palette* menu or the press kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on macOS). 
+
+image::navigate-command-palette.png[commands, 800]
+
+Delete `<` then type `task` in the command palette. Make sure to append a `space` character after the *task*. 
+
+Select the `devfile` task to show the Quarkus tasks up.
+
+image::type-task.png[type-task, 800]
+
+Start the _Live Coding_ by selecting `devfile: 02. Start Live Coding`.
+
+image::quarkus-tasks.png[quarkus-tasks, 800]
+
+A terminal opens automatically to run the *Quarkus Dev Mode*.
+
+image::cmd-livecoding.png[livecoding, 900]
+
+This will compile and run the app using `mvn compile quarkus:dev` in a Terminal window. Leave this terminal window open throughout the lab! You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.
+
+[NOTE]
+====
+The first time you build the app, new dependencies may be downloaded via maven. This should only happen once, after that things will go even faster
+====
+
+[NOTE]
+====
+You may see WARNINGs like `Unrecognized configuration key` or `Duplicate entry`. These are configuration values that will take effect later on and can be safely ignored for now.
+Occasionally you may get an error (e.g. `NullPointerException`) during Live Reloading. In this case, simply close the terminal and restart live coding using the task.
+====
+
+You should see:
+
+[source,none]
+----
+INFO  [io.quarkus] (Quarkus Main Thread) people 1.0-SNAPSHOT on JVM (powered by Quarkus xx.xx.xx.) started in 2.510s. Listening on: http://0.0.0.0:8080
+INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy-reactive, smallrye-context-propagation, vertx]
+
+--
+Tests paused
+Press [r] to resume testing, [o] Toggle test output, [h] for more options>
+----
+
+Note the amazingly fast startup time! The app is now running *locally* (within the Che container in which the workspace is also running). `localhost` refers to the Kubernetes pod, not *your* laptop (so therefore opening localhost:8080 in your browser will not do anything).
+
+You can also see *Tests paused* by default when a Quarkus application gets started. We will learn more details in the _Testing Quarkus App_ lab.
+
+VS Code will also detect that the Quarkus app opens port `5005` (for debugging) and `8080` (for web requests). *Close the popup not to add a port 5005*, but when prompted, *Open In New Tab* to open a port `8080`, which opens a new tab in your web browser:
+
+image::open-port.png[port, 700]
+
+[NOTE]
+====
+In case you see the popup message below, select `Open`.
+
+image::open-external.png[port, 700]
+====
+
+You should see the default Quarkus welcome page:
+
+image::welcome-quarkus.png[port, 900]
+
+Open a *new* terminal by selecting `+` icon:
+
+image::cmd-terminal.png[livecoding, 900]
+
+and invoke the `hello` endpoint using the following _curl_ command:
+
+[source,sh,role="copypaste"]
+----
+curl http://localhost:8080/hello
+----
+
+You can also add `/hello` to the Quarkus welcome page to see the same result as the _curl_ command:
+
+image::crw-open-page-hello.png[page, 800]
+
+When you fail to access the *hello* page, make sure to call the URL using *http* protocol.
+
+Now, let's exercise the **live reload** capabilities of Quarkus. In VS Code, open the `GreetingResource.java` file (in `src/main/java/org/acme/people/rest`) and change `return "hello";` to `return "hola";` in the editor. After making this change, reload the same brower tab that was showing `hello`. It should now show `hola`.
+
+Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
+
+[NOTE]
+====
+`quarkus:dev` runs Quarkus in development mode. This enables live reload with background compilation, which means that when you modify your Java files your resource files and refresh your browser these changes will automatically take effect.
+====
+
+[NOTE]
+====
+This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
+====
+
+### Package the app
+
+Quarkus apps can be packaged as an executable JAR file or a native binary. We'll cover native binaries later, so for now, let's package as an executable JAR.
+
+Open the *command palette* again. Select `devfile: 03. Package app for OpenShift` in the che tasks:
+
+image::cmd-package.png[livecoding, 700]
+
+This produces an executable jar file in the `target/quarkus-app/` directory:
+
+image::jar.png[jar,800]
+
+* `quarkus-run.jar` - being an executable fast jar. Be aware that it’s not an über-jar as the dependencies are copied into the `target/lib` directory.
+
+## Run the executable JAR
+
+Run the packaged application. Go back to the *command palette* again. Select `devfile: 05. Run Fast Jar` in the che tasks:
+
+image::run-fast-jar.png[run-fast-jar, 700]
+
+[NOTE]
+====
+We use `-Dquarkus.http.port=8081` to avoid conflicting with port `8080` used for Live Coding mode
+====
+
+With the app running, go back to the terminal window, and ensure the app _is_ running by executing a `curl` command:
+
+[source, sh, role="copypaste"]
+----
+curl http://localhost:8081/hello
+----
+
+You should see:
+
+```console
+hola
+```
+
+## Cleanup
+
+Go back to the terminal in which you ran the app with `java -jar` and stop the app by pressing kbd:[CTRL+C]. **Be sure not to close the "Start Live Coding" terminal!**
+
+## Congratulations!
+
+You've seen how to build a basic app, package it as an executable JAR and start it up very quickly. The JAR file can be used like any other executable JAR file (e.g. running it as-is, packaging as a Linux container, etc.)
+
+In the next step we'll inject a custom bean to showcase Quarkus' CDI capabilities.
