@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Reactive Streams with Quarkus and Kafka :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-guides/kafka.html">
+    <link rel="prev" href="messaging.html">
+    <link rel="next" href="monitoring.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://github.com/bmeklund/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="kafka.html">Streaming Data with Quarkus and Kafka</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/kafka.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Reactive Streams with Quarkus and Kafka</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise, you will use the Quarkus Kafka extension to build a streaming application using MicroProfile Reactive Streams Messaging and <a href="https://kafka.apache.org" target="_blank" rel="noopener">Apache Kafka</a>, a distributed streaming platform. You will also use <a href="https://www.redhat.com/en/resources/amq-streams-datasheet" target="_blank" rel="noopener">Red Hat AMQ streams</a>, which provides an easy way to run an Apache Kafka cluster on Kubernetes and OpenShift using <a href="https://operatorhub.io/what-is-an-operator" target="_blank" rel="noopener">Operators</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_apache_kafka"><a class="anchor" href="#_what_is_apache_kafka"></a>What is Apache Kafka?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Kafka is a distributed streaming platform. A streaming platform has three key capabilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Publish and subscribe to streams of records, similar to a message queue or enterprise messaging system.</p>
+</li>
+<li>
+<p>Store streams of records in a fault-tolerant durable way.</p>
+</li>
+<li>
+<p>Process streams of records as they occur.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Kafka is generally used for two broad classes of applications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Building real-time streaming data pipelines that reliably get data between systems or applications</p>
+</li>
+<li>
+<p>Building real-time streaming applications that transform or react to the streams of data</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_amq_streams"><a class="anchor" href="#_what_is_amq_streams"></a>What is AMQ Streams?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AMQ Streams simplifies the process of running Apache Kafka in an OpenShift cluster. AMQ Streams provides container images and Operators for running Kafka on OpenShift. AMQ Streams Operators are fundamental to the running of AMQ Streams. The Operators provided with AMQ Streams are purpose-built with specialist operational knowledge to effectively manage Kafka.</p>
+</div>
+<div class="paragraph">
+<p>Operators simplify the process of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploying and running Kafka clusters</p>
+</li>
+<li>
+<p>Deploying and running Kafka components</p>
+</li>
+<li>
+<p>Configuring access to Kafka</p>
+</li>
+<li>
+<p>Securing access to Kafka</p>
+</li>
+<li>
+<p>Upgrading Kafka</p>
+</li>
+<li>
+<p>Managing brokers</p>
+</li>
+<li>
+<p>Creating and managing topics</p>
+</li>
+<li>
+<p>Creating and managing users</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_goal"><a class="anchor" href="#_the_goal"></a>The Goal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise, we are going to generate (random) names in one component. These names are written in a Kafka topic (<code>names</code>). A second component reads from the <code>names</code> Kafka topic and applies some magic conversion to the name (adding an honorific). The result is sent to an <em>in-memory stream</em> consumed by a JAX-RS resource. The data is sent to a browser using <a href="https://www.w3.org/TR/eventsource/" target="_blank" rel="noopener"><em>server-sent events</em></a> and displayed in the browser. It will look like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/names.png" alt="names" width="800">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_kafka_cluster"><a class="anchor" href="#_create_kafka_cluster"></a>Create Kafka Cluster</h3>
+<div class="paragraph">
+<p>The Strimzi operator installs and manages Kafka clusters on Kubernetes. It&#8217;s been pre-installed for you, so all you have to do is create a Kafka cluster inside your namespace.</p>
+</div>
+<div class="paragraph">
+<p>First, on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], select <strong>+Add to Project</strong> on the left. Then, Type in <code>Kafka</code> in the search box, and select the <strong>Kafka</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/fromcat-kafka.png" alt="names" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>These are all of the Kafka cluster elements you can install. Select <strong>Create</strong>. This will open a yaml file for you to configure the cluster before it&#8217;s installed. Change the name of the cluster from <code>my-cluster</code> to <code>names-cluster</code> (under the <em>metadata</em> section of the YAML file). Leave all other values as-is, and select <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/createkafka.png" alt="createkafka" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a new Kafka Kubernetes object in your namespace, triggering the Operator to deploy Kafka.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_kafka_topic"><a class="anchor" href="#_create_kafka_topic"></a>Create Kafka Topic</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Follow the same process to create a Kafka <em>Topic</em>:</p>
+</div>
+<div class="paragraph">
+<p>Select <strong>+Add to Project</strong> on the left. Then, Type in <code>Topic</code> in the search box, and select the <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/createkafkatopic.png" alt="createkafka" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll need to create a topic for our application to stream to and from, so in the YAML:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the <em>metadata &gt; name</em> value from <code>my-topic</code> to <code>names</code>.</p>
+</li>
+<li>
+<p>Change the vale of the <code>strimzi.io/cluster=my-cluster</code> to <code>strimzi.io/cluster=names-cluster</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then select <strong>Create</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/topiccreate.png" alt="topiccreate" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will cause the Operator to provision a new Topic in the Kafka cluster.</p>
+</div>
+<div class="paragraph">
+<p>Back on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], make sure all the Kafka and Zookeeper pods are up and running (with dark blue circles):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kafkaup.png" alt="topiccreate" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>It may take a few minutes for all of the pods to appear spin up. You can continue to the next step while the Kafka cluster and topics are created.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_quarkus_kafka_extension"><a class="anchor" href="#_add_quarkus_kafka_extension"></a>Add Quarkus Kafka Extension</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Kafka installing, turn your attention back to the app. Like other exercises, we&#8217;ll need another extension to integrate with Kafka. Install it with:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="messaging-kafka"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-smallrye-reactive-messaging-kafka has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add the necessary entries in your <code>pom.xml</code> to bring in the Kafka extension.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_application_you_will_build"><a class="anchor" href="#_the_application_you_will_build"></a>The Application You Will Build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The app consists of 3 components that pass messages via Kafka and an in-memory stream, then uses SSE to push messages to the browser. It looks like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kafkaarch.png" alt="kafka" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_name_generator"><a class="anchor" href="#_create_name_generator"></a>Create name generator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To start building the app, create a new Java class file in the <code>org.acme.people.stream</code> called <code>NameGenerator.java</code>. This class will generate random names and publish them to our Kafka topic for further processing. Use this code:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.stream;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import org.acme.people.utils.CuteNameGenerator;
+import org.eclipse.microprofile.reactive.messaging.Outgoing;
+
+import io.smallrye.mutiny.Multi;
+
+import java.time.Duration;
+
+@ApplicationScoped
+public class NameGenerator {
+
+    @Outgoing("generated-name")        <i class="conum" data-value="1"></i><b>(1)</b>
+    public Multi&lt;String&gt; generate() {  <i class="conum" data-value="2"></i><b>(2)</b>
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
+                .onOverflow().drop()
+                .map(tick -&gt; CuteNameGenerator.generate());
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Instruct Reactive Messaging to dispatch the items from returned stream to <code>generated-name</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The method returns Reactive Stream emitting a random name every 5 seconds</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The method returns a Reactive Stream. The generated items are sent to the stream named <code>generated-name</code>. This stream is mapped to Kafka using the application.properties file that we will create soon.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_honorifics"><a class="anchor" href="#_add_honorifics"></a>Add honorifics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The name converter reads the names from Kafka, and transforms them, adding a random (English) honorific to the beginning of the name.</p>
+</div>
+<div class="paragraph">
+<p>Create a new Java class file in the same package called <code>NameConverter.java</code>. Use this code:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.stream;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
+
+@ApplicationScoped
+public class NameConverter {
+
+    private static final String[] honorifics = {"Mr.", "Mrs.", "Sir", "Madam", "Lord", "Lady", "Dr.", "Professor", "Vice-Chancellor", "Regent", "Provost", "Prefect"};
+
+    @Incoming("names")               <i class="conum" data-value="1"></i><b>(1)</b>
+    @Outgoing("my-data-stream")      <i class="conum" data-value="2"></i><b>(2)</b>
+    @Broadcast                       <i class="conum" data-value="3"></i><b>(3)</b>
+    public String process(String name) {
+        String honorific = honorifics[(int)Math.floor(Math.random() * honorifics.length)];
+        return honorific + " " + name;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Indicates that the method consumes the items from the <code>names</code> topic</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Indicates that the objects returned by the method are sent to the <code>my-data-stream</code> stream</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Indicates that the item are dispatched to all <em>subscribers</em></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The process method is called for every Kafka record from the <code>names</code> topic (configured in the application configuration). Every result is sent to the my-data-stream in-memory stream.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expose_to_front_end"><a class="anchor" href="#_expose_to_front_end"></a>Expose to front end</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Finally, let’s bind our stream to a JAX-RS resource. Create a new Java class in the same package called <code>NameResource.java</code>. Use this code:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.stream;
+
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.reactivestreams.Publisher;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+/**
+ * A simple resource retrieving the in-memory "my-data-stream" and sending the items as server-sent events.
+ */
+@Path("/names")
+public class NameResource {
+
+    @Inject
+    @Channel("my-data-stream") Publisher&lt;String&gt; names; <i class="conum" data-value="1"></i><b>(1)</b>
+
+    @GET
+    @Path("/stream")
+    @Produces(MediaType.SERVER_SENT_EVENTS)<i class="conum" data-value="2"></i><b>(2)</b>
+    public Publisher&lt;String&gt; stream() { <i class="conum" data-value="3"></i><b>(3)</b>
+        return names;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Injects the <code>my-data-stream</code> stream using the <code>@Channel</code> qualifier</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Indicates that the content is sent using <em>Server Sent Events</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Returns the stream (Reactive Stream)</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is a pre-created <code>names.html</code> page for you to use (in the <code>src/main/resources/META-INF/resources</code> directory) which will make a request to this <code>/names/stream</code> endpoint using standard JavaScript running in the browser and draw the resulting names using the <a href="https://d3js.org/" target="_blank" rel="noopener">D3.js library</a>. The JavaScript that makes this call looks like this (do not copy this into anything!):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">var source = new EventSource("/names/stream"); <i class="conum" data-value="1"></i><b>(1)</b>
+
+source.onmessage = function (event) { <i class="conum" data-value="2"></i><b>(2)</b>
+
+    console.log("received new name: " + event.data);
+    // process new name in event.data
+    // ...
+
+    // update the display with the new name
+    update(); <i class="conum" data-value="3"></i><b>(3)</b>
+};</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Uses your browser&#8217;s support for the <code>EventSource</code> API (part of the W3C SSE standard) to call the endpoint</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Each time a message is received via SSE, <em>react</em> to it by running this function</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Refresh the display using the D3.js library</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_application"><a class="anchor" href="#_configure_application"></a>Configure application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We need to configure the Kafka connector. This is done in the <code>application.properties</code> file (in the <code>src/main/resources</code> directory). The keys are structured as follows:</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.[outgoing|incoming].{channel-name}.property=value</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>channel-name</code> segment must match the value set in the <code>@Incoming</code> and <code>@Outgoing</code> annotation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>generated-name</code> → sink to which we write the names</p>
+</li>
+<li>
+<p><code>names</code> → source from which we read the names</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Add the following values to the app&#8217;s <code>src/main/resources/application.properties</code>:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none"># Configure the Kafka sink (we write to it)
+%prod.mp.messaging.outgoing.generated-name.bootstrap.servers=names-cluster-kafka-bootstrap:9092<i class="conum" data-value="1"></i><b>(1)</b>
+%prod.mp.messaging.outgoing.generated-name.connector=smallrye-kafka
+%prod.mp.messaging.outgoing.generated-name.topic=names
+%prod.mp.messaging.outgoing.generated-name.value.serializer=org.apache.kafka.common.serialization.StringSerializer
+
+# Configure the Kafka source (we read from it)
+%prod.mp.messaging.incoming.names.bootstrap.servers=names-cluster-kafka-bootstrap:9092<i class="conum" data-value="1"></i><b>(1)</b>
+%prod.mp.messaging.incoming.names.connector=smallrye-kafka
+%prod.mp.messaging.incoming.names.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+%prod.uarkus.openshift.route.tls.insecure-edge-termination-policy=None
+%prod.quarkus.openshift.route.tls.termination=edge</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The hostnames you see here will only make sense (be resolvable via DNS) when this app is run in the same Kubernetes namespace as the Kafka cluster you created earlier. So you&#8217;ll see this and other config values above prefixed with <code>%prod</code> which will not try to initialize Kafka when in <code>dev</code> mode.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>More details about this configuration is available on the <a href="https://kafka.apache.org/documentation/#producerconfigs">Producer configuration</a> and <a href="https://kafka.apache.org/documentation/#consumerconfigs" target="_blank" rel="noopener">Consumer configuration</a> section from the Kafka documentation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>What about <code>my-data-stream</code>? This is an in-memory stream, not connected to a message broker.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rebuild_and_redeploy_app_to_openshift"><a class="anchor" href="#_rebuild_and_redeploy_app_to_openshift"></a>Rebuild and redeploy app to OpenShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run the following command which will build and deploy using the OpenShift extension:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn clean package -DskipTests &amp;&amp; \
+oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc label dc/postgres-database app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite &amp;&amp; \
+oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build should take a minute or two to complete.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test"><a class="anchor" href="#_test"></a>Test</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our application should be up and running in a few seconds after the build completes and generating names. To see if it&#8217;s working, access the <a href="https://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/names.html" target="_blank" rel="noopener">graphical name cloud powered by Quarkus, MicroProfile and Kafka</a>. You should see a cloud of names updating every 5 seconds (it may take a few seconds for it to start!):</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It takes a few seconds to establish the connection to Kafka. If you don&#8217;t see new names generated every 5 seconds, reload the browser page to re-initialize the SSE stream.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/names.png" alt="names" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>These are the original names streamed through Kafka, altered to add a random honorific like <strong>Sir</strong> or <strong>Madam</strong>, and displayed in a <strong>word cloud</strong> for you to enjoy!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide has shown how you can interact with Kafka using Quarkus. It utilizes MicroProfile Reactive Messaging to build data streaming applications.</p>
+</div>
+<div class="paragraph">
+<p>If you want to go further check the documentation of <a href="https://smallrye.io/smallrye-reactive-messaging" target="_blank" rel="noopener">SmallRye Reactive Messaging</a>, the implementation used in Quarkus.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="messaging.html" class="query-params-link">Event-driven Messaging</a></span>
+  <span class="next"><a href="monitoring.html" class="query-params-link">Monitoring with Prometheus and Grafana</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Deploy to OpenShift :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-guides/deploy.html">
+    <link rel="prev" href="cloudnative.html">
+    <link rel="next" href="extensions.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://github.com/bmeklund/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module One</li>
+    <li><a href="deploy.html">Deploying to the cloud</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/deploy.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Deploy to OpenShift</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>With our app fully ready for its first cloud native deployment, let&#8217;s package it up for deployment to our Kubernetes platform as a native image. We&#8217;ll use some OpenShift tooling to accomplish this, as outlined in the <a href="https://quarkus.io/guides/kubernetes-guide" target="_blank" rel="noopener">Quarkus - Deploying on Kubernetes Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>OpenShift is a commercially supported distribution of Kubernetes from Red Hat. The platform is also available as open source, in the form of <a href="https://www.okd.io/" target="_blank" rel="noopener">OKD</a>, the Origin Community Distribution of Kubernetes that powers Red Hat OpenShift.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_login_to_openshift"><a class="anchor" href="#_login_to_openshift"></a>Login to OpenShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Although your VS Code is running on the Kubernetes cluster, it&#8217;s running with a default restricted <em>Service Account</em> that prevents you from creating most resource types. So we&#8217;ll log in with your workshop user. Execute the following command in the VS Code terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc login -u {{ USER_ID }} -p {{ OPENSHIFT_USER_PASSWORD }} https://openshift.default.svc:443</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">Login successful.
+
+You have access to the following projects and can switch between them with 'oc project &lt;projectname&gt;':
+
+  * {{ USER_ID }}-devspaces
+    {{ USER_ID }}-project
+
+Using project "user1-devspaces".
+Welcome! See 'oc help' to get started.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations, you are now authenticated to the OpenShift server via the CLI. We&#8217;ll use the prettier web console later on in this lab.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The login session might timeout after long periods of inactivity. If this happens, you&#8217;ll get messages like <code>Error from server (Forbidden): xxxxx is forbidden: User "system:anonymous" cannot xxxxx</code>. Simply login again!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/" target="_blank" rel="noopener">Namespaces</a> are a top level concept to help you organize your deployments and teams of developers. A namespace allows a community of users (or a user) to organize and manage their content in isolation from other communities. OpenShift <em>projects</em> provide additional functionality for managing Kubernetes namespaces.</p>
+</div>
+<div class="paragraph">
+<p>For this scenario, a project has been created for you called <code>{{ USER_ID }}-project</code>. You will use this project to deploy your developed project in the next step.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build_and_deploy_native_image"><a class="anchor" href="#_build_and_deploy_native_image"></a>Build and Deploy native image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus offers the ability to automatically generate OpenShift resources based on sane default and user supplied configuration. The OpenShift extension is actually a wrapper extension that brings together the <a href="https://quarkus.io/guides/deploying-to-kubernetes" target="_blank" rel="noopener">kubernetes</a> and <a href="https://quarkus.io/guides/container-image#s2i" target="_blank" rel="noopener">container-image-s2i</a> extensions with defaults so that it’s easier for the user to get started with Quarkus on OpenShift.</p>
+</div>
+<div class="paragraph">
+<p>Add <em>openshift</em> extension via VS Code Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="openshift"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you will see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-openshift has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, add the following variables in <code>src/main/resources/application.properties</code> for deploying the application to OpenShift. native compilation using <code>Mandrel</code> builder image:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">%prod.quarkus.kubernetes-client.trust-certs=true<i class="conum" data-value="1"></i><b>(1)</b>
+%prod.quarkus.kubernetes.deploy=true<i class="conum" data-value="2"></i><b>(2)</b>
+%prod.quarkus.kubernetes.deployment-target=openshift<i class="conum" data-value="3"></i><b>(3)</b>
+%prod.quarkus.openshift.build-strategy=docker<i class="conum" data-value="4"></i><b>(4)</b>
+%prod.quarkus.openshift.route.expose=true<i class="conum" data-value="5"></i><b>(5)</b>
+quarkus.openshift.deployment-kind=Deployment<i class="conum" data-value="6"></i><b>(6)</b>
+quarkus.container-image.group={{ USER_ID }}-project<i class="conum" data-value="7"></i><b>(7)</b>
+quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000<i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We are using self-signed certs in this simple example, so this simply says to the extension to trust them.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Instructs the extension to deploy to OpenShift after the container image is built</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Instructs the extension to generate and create the OpenShift resources (like <code>DeploymentConfig</code> and <code>Service</code>) after building the container</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the Docker build strategy</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Instructs the extension to generate an OpenShift <code>Route</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Generate the Deployment resource</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Specify a project where the application is deployed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Sepcify an internal container registry to push an application image</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Docker build</strong> strategy builds the artifacts (JAR files or a native executable) outside the OpenShift cluster, either locally or in a CI environment, and then provides them to the OpenShift build system together with a Dockerfile. The container is built inside the OpenShift cluster and provided as an image stream.</p>
+</div>
+<div class="paragraph">
+<p>Rebuild and re-deploy the people application via running the following maven plugin in the VS Code Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc project {{ USER_ID }}-project &amp;&amp;
+mvn clean package -Pnative -DskipTests -Dquarkus.package.uber-jar=false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you recall, the output of this process is a native Linux binary but also running Source-To-Image(S2I) build processor.</p>
+</div>
+<div class="paragraph">
+<p><strong>Wait for it to finish!</strong>. You should get a <strong>BUILD SUCCESS</strong> message at the end. Once that&#8217;s done, make sure it&#8217;s actually done rolling out:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait for that command to report <code>deployment "people" successfully rolled out</code> before continuing.</p>
+</div>
+<div class="paragraph">
+<p>And now we can access using <code>curl</code> once again. In the Terminal, run this command to access the endpoint:</p>
+</div>
+<div class="listingblock copypaste copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl $(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'{% endraw %})/hello/greeting/quarkus-on-openshift</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The above <code>curl</code> command constructs the URL to your running app on the cluster using the <code>oc get route</code> command.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">hello quarkus-on-openshift from people-1-9sgsm</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Your hostname (the Kubernetes <em>pod</em> in which your app runs) name will be different from the above.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>So now our app is deployed to OpenShift. You can also see it in the {{ CONSOLE_URL}}[OpenShift Console^]. Login with your assigned username and password (e.g. <code>{{ USER_ID }}/{{ OPENSHIFT_USER_PASSWORD }}</code>):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocplogin.png" alt="login" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Once logged in, select the name of your project (<code>{{ USER_ID }}-project</code>):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocpproj.png" alt="project" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Switch to the <em>Developer Perspective</em> using the upper-left drop-down:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devperspective.png" alt="perspective" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This provides a developer-centric Topology view of applications deployed to the project. You can see the single <code>people</code> deployment that we just deployed earlier using the CLI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/peopledc.png" alt="project" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Select the circle to get details:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/container1.png" alt="container" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Select the <strong>View Logs</strong> link to see the console output from the app:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/podlogs.png" alt="logs" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This is the same output you saw earlier when you ran it "locally" with its super-fast startup time.</p>
+</div>
+<div class="paragraph">
+<p>Go back to the <em>Topology</em> view. Since this app is exposed to the world, a <em>Route</em> was created which you can access using the small arrow in the upper right of the circle. Select the route link:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/routelink.png" alt="logs" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>You can click on the route link to open up the default Quarkus page that&#8217;s packaged as part of our workshop application.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connect_microprofile_health_check"><a class="anchor" href="#_connect_microprofile_health_check"></a>Connect MicroProfile health check</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Earlier you implemented a series of MicroProfile health checks. To make OpenShift aware of these available health checks and begin using them, run the following commands in a Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc set probe deployment/people --readiness --initial-delay-seconds=5 --period-seconds=5 --failure-threshold=20 --get-url=http://:8080/q//health/ready &amp;&amp; oc set probe deployment/people --liveness --initial-delay-seconds=5 --period-seconds=5 --failure-threshold=20  --get-url=http://:8080/q/health/live</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see in the Topology view that the app is re-deployed with the new settings and the old app will be <em>terminated</em> soon after:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/redeploy.png" alt="logs" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>This configures both a <em>readiness</em> probe (is the app initialized and ready to serve requests?) and a <em>liveness</em> probe (is the app still up and ready to serve requests) with default timeouts. OpenShift will not route any traffic to pods that don&#8217;t respond successfully to these probes. By editing these, it will trigger a new deployment.</p>
+</div>
+<div class="paragraph">
+<p>At this point, the probes will be accessed periodically to ensure the app is healthy.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This step covered the deployment of a native Quarkus application on OpenShift. However, there is much more, and the integration with these cloud native platforms (through health checks, configuration management, and monitoring) has been tailored to make Quarkus applications execution very smooth.</p>
+</div>
+<div class="paragraph">
+<p>This is the end of the <strong>Basic Quarkus Hands-On Lab</strong>. You can now continue with the <strong>Advanced Quarkus Hands-On Lab</strong> if your instructor has included that lab.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="cloudnative.html" class="query-params-link">Developing Cloud Native with Quarkus</a></span>
+  <span class="next"><a href="extensions.html" class="query-params-link">Using Quarkus extensions</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

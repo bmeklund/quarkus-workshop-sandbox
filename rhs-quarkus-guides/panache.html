@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hibernate ORM with Panache :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-guides/panache.html">
+    <link rel="prev" href="extensions.html">
+    <link rel="next" href="openapi.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://github.com/bmeklund/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="panache.html">Hibernate ORM with Panache</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/panache.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Hibernate ORM with Panache</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Hibernate ORM is the de facto JPA implementation and offers you the full breadth of an Object Relational Mapper. It makes complex mappings possible, but many simple and common mappings can also be complex. Hibernate ORM with <a href="https://quarkus.io/guides/hibernate-orm-panache" target="_blank" rel="noopener"><strong>Panache</strong></a> focuses on making your entities trivial and fun to write and use with Quarkus.</p>
+</div>
+<div class="paragraph">
+<p>With Panache, we took an opinionated approach to make hibernate as easy as possible. Hibernate ORM with Panache offers the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Auto-generation of IDs (but you can still customize if needed)</p>
+</li>
+<li>
+<p>No need for getters/setters. You simply refer to fields directly like <code>person.name</code> instead of <code>person.getName()</code>. You can still create getters and setters if you need to!</p>
+</li>
+<li>
+<p>Lots of super-useful static methods for access like <code>listAll()</code>, <code>find()</code>, etc.</p>
+</li>
+<li>
+<p>No need for custom queries for basic operations, e.g. <code>Person.find("name", "stef")</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>That’s all there is to it: with Panache, Hibernate ORM has never looked so trim and neat.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_people"><a class="anchor" href="#_people"></a>People</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You may have wondered why we are using <code>people</code> in our Java APIs, and now you&#8217;ll find out; we&#8217;ll be creating a simple data-driven application that manages a set of people, who have a name, birth date, and eye color. In the previous lab we added the extension for Panache to our project, but we will need a few more for connecting to databases. Add these extensions with the following command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="hibernate-orm-panache, jdbc-postgresql"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-hibernate-orm-panache has been installed
+[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-jdbc-postgresql has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll use the Postgres in both your local and the production Kubernetes environment. The <code>resteasy-reactive-jackson</code> is used to encode JSON objects.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quarkus_dev_services"><a class="anchor" href="#_quarkus_dev_services"></a>Quarkus Dev Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When testing or running in dev mode Quarkus can provide you with a zero-config database out of the box, a feature we refer to as <strong>Dev Services</strong>. Depending on your database type you may need <strong>Docker</strong> or <strong>Podman</strong> installed in order to use this feature. Dev Services is supported for the <strong>PostgreSQL</strong> databases. With that, you don&#8217;t need to add required configurations (e.g., username, password, JDBC URL) to set up the PostgreSQL in the <em>application.properties</em> file.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat Dev Spaces enables you to run the Quarkus Dev Services in the terminal using the <em>KUBEDOCK</em> tool. Unlikely a local environment, you need to set the <code>quarkus.datasource.devservices.volumes</code> where the PostgreSQL&#8217;s data is stored inside a container.</p>
+</div>
+<div class="paragraph">
+<p>when you take a look at the <em>src/main/resources/application.properties</em>, you can see the following configuration which we already added for you in advance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">%dev.quarkus.datasource.devservices.volumes."/"=/var/lib/postgresql/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Find more information about the Quarkus Dev Services <a href="https://quarkus.io/guides/databases-dev-services" target="_blank" rel="noopener">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>When you take a look at the <strong>02. Start Live Coding</strong> terminal, you should see the following logs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">Dev Services for the default datasource (postgresql) started</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, execute <code>podman ps</code> in the bash terminal. You will see that a <strong>PostgreSQL</strong> container is running automatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">CONTAINER ID  IMAGE                  COMMAND     CREATED         STATUS        PORTS       NAMES
+27ee26a42fae  docker.io/postgres:14              24 seconds ago  Healthy (Up)              27ee26a42faebacacfcccacde227e210b6884f66ffd7dcf13f4470c56ba7a8e7</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The database connection details (JDBC url, database credentials) are specified in <code>application.properties</code> using the Quarkus Profile support. So for example you&#8217;ll find this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">%prod.quarkus.datasource.db-kind=postgresql
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://postgres-database/person
+%prod.quarkus.datasource.jdbc.driver=org.postgresql.Driver
+...</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_entity"><a class="anchor" href="#_create_entity"></a>Create Entity</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With our extension installed, we can now define our entity using Panache.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll first need the definition of eye colors, so let&#8217;s create an <code>enum</code>. Create a new java class file in <code>src/main/java/org/acme/people/model</code> called <code>EyeColor.java</code>, and replace the following enum definition:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.model;
+
+public enum EyeColor {
+    BLUE, GREEN, HAZEL, BROWN
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This app will be a database of people, each of which have a name, birthdate, and eye color. We&#8217;ll need an entity, so open up the <code>src/main/java/org/acme/people/model/Person.java</code> file, and <strong>replace</strong> the stub code in the file with the following:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.model;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import org.acme.people.model.EyeColor;
+
+@Entity
+public class Person extends PanacheEntity {
+    // the person's name
+    public String name;
+
+    // the person's birthdate
+    public LocalDate birth;
+
+    // the person's eye color
+    @Enumerated(EnumType.STRING)
+    @Column(length = 8)
+    public EyeColor eyes;
+
+    // TODO: Add more queries
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You will incrementally replace the <code>// TODO</code> elements as we go along, so don&#8217;t delete them just yet!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Extending <code>PanacheEntity</code> is referred to as the <a href="https://quarkus.io/guides/hibernate-orm-panache#solution-1-using-the-active-record-pattern" target="_blank" rel="noopener">Active Record Pattern</a>. There is also another pattern called the <a href="https://quarkus.io/guides/hibernate-orm-panache#solution-2-using-the-repository-pattern" target="_blank" rel="noopener">Repository Pattern</a> that you could use which involves separating your entities from the operations on those entities.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As you can see we&#8217;ve defined the three fields <code>name</code>, <code>birth</code>, and <code>eyes</code>. We&#8217;re using the Java Persistence API&#8217;s <code>@Enumerated</code> field type for our eye color.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_define_restful_endpoint"><a class="anchor" href="#_define_restful_endpoint"></a>Define RESTful endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next, we&#8217;ll create a <code>PersonResource</code> class which we will use for our RESTful endpoint. Create a new Java class in the <code>src/main/java/org/acme/people/rest</code> directory called <code>PersonResource.java</code> with the following code:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.rest;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import org.acme.people.model.DataTable;
+import org.acme.people.model.EyeColor;
+import org.acme.people.model.Person;
+import org.acme.people.utils.CuteNameGenerator;
+
+import io.quarkus.panache.common.Parameters;
+import io.quarkus.runtime.StartupEvent;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+
+@Path("/person")
+@ApplicationScoped
+public class PersonResource {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Person&gt; getAll() {
+        return Person.listAll();
+    }
+
+    // TODO: add basic queries
+
+    // TODO: add datatable query
+
+    // TODO: Add lifecycle hook
+
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You may see lots of warnings about unused imports. Ignore them, we&#8217;ll use them later!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As you can see we&#8217;ve implemented our first Panache-based query, the <code>getAll</code> method, which will return our list of people as a JSON object when we access the <code>GET /person</code> endpoint. This is defined using standard JAX-RS <code>@Path</code> and <code>@GET</code> and <code>@Produces</code> annotations.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_sample_data"><a class="anchor" href="#_add_sample_data"></a>Add sample data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s add some sample data to the database so we can test things out. Create a new file <code>src/main/resources/import.sql</code> and add some SQL statements to the file to run on startup:</p>
+</div>
+<div class="paragraph">
+<p>Add these lines to <code>import.sql</code> file you just created:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO person(id, name, birth, eyes) VALUES (1, 'Farid Ulyanov', '1974-08-15', 'BLUE');
+INSERT INTO person(id, name, birth, eyes) VALUES (2, 'Salvador L. Witcher', '1984-05-24', 'BROWN');
+INSERT INTO person(id, name, birth, eyes) VALUES (3, 'Kim Hu', '1999-04-25', 'HAZEL');
+ALTER SEQUENCE person_seq RESTART WITH 4;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These statements will add some fake people to our database on startup.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_the_app"><a class="anchor" href="#_test_the_app"></a>Test the app</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With the app running, let&#8217;s try out our first RESTful endpoint to retrieve all the sample users. Open up a separate Terminal and issue the following command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s http://localhost:8080/person | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We call the endpoint with <code>curl</code> then send the output through <code>jq</code> to make the output prettier. You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+  {
+    "id": 1,
+    "birth": "1974-08-15",
+    "eyes": "BLUE",
+    "name": "Farid Ulyanov"
+  },
+  {
+    "id": 2,
+    "birth": "1984-05-24",
+    "eyes": "BROWN",
+    "name": "Salvador L. Witcher"
+  },
+  {
+    "id": 3,
+    "birth": "1999-04-25",
+    "eyes": "HAZEL",
+    "name": "Kim Hu"
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;s working! Note that the <code>id</code> field was added to our entity, but never appear in our query APIs and can be safely ignored most of the time.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Advanced use cases may require a custom ID strategy, which can by done by extending <code>PanacheEntityBase</code> instead of <code>PanacheEntity</code>, and declaring a public <code>id</code> field with the necessary policy. For example (do not copy this code into your app):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Id
+@SequenceGenerator(
+          name = "personSequence",
+          sequenceName = "person_id_seq",
+          allocationSize = 1,
+          initialValue = 4)
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personSequence")
+public Integer id;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_basic_queries"><a class="anchor" href="#_add_basic_queries"></a>Add Basic Queries</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s modify the application and add some queries. Much like traditional object-oriented programming, Panache and Quarkus recommend you place your custom entity queries as close to the entity definition as possible, in this case in the entity definition itself. Open the <code>Person</code> entity class (it&#8217;s in the <code>org.acme.person.model</code> package), and add the following code under the <code>// TODO: Add more queries</code> comment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    public static List&lt;Person&gt; findByColor(EyeColor color) {
+        return list("eyes", color);
+    }
+
+    public static List&lt;Person&gt; getBeforeYear(int year) {
+        return Person.&lt;Person&gt;streamAll()
+        .filter(p -&gt; p.birth.getYear() &lt;= year)
+        .collect(Collectors.toList());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These two queries will find a list of people in our database based on eye color, or birth year. Note the <code>getBeforeYear</code> is implemented using the Java Streams API.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All list methods in Panache-based entities (those that extend from <code>PanacheEntity</code>) have equivalent stream versions. So <code>list</code> has a <code>stream</code> variant, <code>listAll</code>-&#8594;`streamAll` and so on.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With our custom entity queries implemented in our <code>Person</code> entity class, let&#8217;s add RESTful endpoints to <code>PersonResource</code> to access them.</p>
+</div>
+<div class="paragraph">
+<p>Open the <code>PersonResource</code> class and add two news endpoint under the <code>//TODO: add basic queries</code> comment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @GET
+    @Path("/eyes/{color}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Person&gt; findByColor(@PathParam(value = "color") EyeColor color) {
+        return Person.findByColor(color);
+    }
+
+    @GET
+    @Path("/birth/before/{year}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Person&gt; getBeforeYear(@PathParam(value = "year") int year) {
+        return Person.getBeforeYear(year);
+    }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inspect_the_results"><a class="anchor" href="#_inspect_the_results"></a>Inspect the results</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Check that it works as expected by testing the new endpoints. Let&#8217;s find all the people with <code>BLUE</code> eyes. Execute in your Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s http://localhost:8080/person/eyes/BLUE | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should only see <strong>one</strong> person with BLUE eyes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+  {
+    "id": 1,
+    "birth": "1974-08-15",
+    "eyes": "BLUE",
+    "name": "Farid Ulyanov"
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And let&#8217;s find people born in 1990 or earlier:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s http://localhost:8080/person/birth/before/1990 | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see <strong>two</strong> people born in 1990 or earlier:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+  {
+    "id": 1,
+    "name": "Farid Ulyanov",
+    "birth": "1974-08-15",
+    "eyes": "BLUE"
+  },
+  {
+    "id": 2,
+    "name": "Salvador L. Witcher",
+    "birth": "1984-05-24",
+    "eyes": "BROWN"
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>Person</code> entity&#8217;s superclass comes with lots of super useful static methods and you can add your own in your entity class. Users can just start using your entity <code>Person</code> by typing <code>Person</code>, and getting completion for all the operations in a single place.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_paging_and_filtering"><a class="anchor" href="#_add_paging_and_filtering"></a>Add Paging and Filtering</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous step you added a few more custom queries to your entity and the associated RESTful endpoints. In this step we&#8217;ll build a slightly more complex query including filtering, searching and paging capabilities.</p>
+</div>
+<div class="sect2">
+<h3 id="_showing_data_in_tables"><a class="anchor" href="#_showing_data_in_tables"></a>Showing data in tables</h3>
+<div class="paragraph">
+<p>Earlier we used <code>curl</code> to access our data, which is very useful for testing, but for real applications you will usually surface the data in other ways, like on web pages using tables, with options for searching, sorting, filtering, paging, etc. Quarkus and Panache make this easy to adapt your application for any display library or framework.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s use a popular jQuery-based plugin called <a href="https://www.datatables.net" target="_blank" rel="noopener">DataTables</a>. It features a <strong>server-side</strong> processing mode where it depends on the server (in this case our Quarkus app) to do searching, filtering, sorting, and paging. This is useful for very large datasets, on the order of hundreds of thousands of records or more. Transmitting the entire data set to the client browser is inefficient at best, and will crash browsers, increase networking usage, and frustrate users at worst. So let&#8217;s just return the exact data needed to be shown.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_datatables_endpoint"><a class="anchor" href="#_add_datatables_endpoint"></a>Add Datatables endpoint</h3>
+<div class="paragraph">
+<p><a href="https://www.datatables.net/manual/server-side" target="_blank" rel="noopener">DataTables documentation</a> shows that its frontend will call an endpoint on the backend to retrieve some amount of data. It will pass several query parameters to tell the server what to sort, filter, search, and which data to return based on the page size and current page the user is viewing. For this example, we&#8217;ll only support a subset:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>start</code> - The index of the first element needed</p>
+</li>
+<li>
+<p><code>length</code> - Total number records to return (or less, if there are less records that meet criteria)</p>
+</li>
+<li>
+<p><code>search[value]</code> - The value of the search box</p>
+</li>
+<li>
+<p><code>draw</code> - DataTables does asnychronous processing, so this value is sent with each request, expecting it to be returned as-is, so DataTables can piece things back together on the frontend if a user selects things quickly.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Open the <code>PersonResource</code> resource class and add the following code below the <code>// TODO: add datatable query</code> comment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @GET
+    @Path("/datatable")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DataTable datatable(
+        @QueryParam(value = "draw") int draw,
+        @QueryParam(value = "start") int start,
+        @QueryParam(value = "length") int length,
+        @QueryParam(value = "search[value]") String searchVal
+
+        ) {
+            // TODO: Begin result
+
+            // TODO: Filter based on search
+
+            // TODO: Page and return
+
+    }</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You will see syntax errors highlighted in the editor when you paste the code. We&#8217;ll fix those in the next step!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here we are using JAX-RS <code>@QueryParam</code> values to specify the incoming parameters and be able to use them when the frontend calls the <code>GET /person/datatable</code> endpoint.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll fill in the <code>TODO</code> comments to build this method.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_datatable_endpoint"><a class="anchor" href="#_implement_datatable_endpoint"></a>Implement <code>/datatable</code> endpoint</h3>
+<div class="paragraph">
+<p>DataTables requires a specific JSON payload to be returned from this, and we&#8217;ve pre-created a POJO <code>DataTable</code> class representing this structure in <code>src/main/java/org/acme/people/model/DataTable.java</code>. This simple structure includes these fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>draw</code> - The async processing record id</p>
+</li>
+<li>
+<p><code>recordsTotal</code> - Total records in database</p>
+</li>
+<li>
+<p><code>recordsFiltered</code> - Total records that match filtering criteria</p>
+</li>
+<li>
+<p><code>data</code> - The actual array of records</p>
+</li>
+<li>
+<p><code>error</code> - Error string, if any</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So, in our <code>PersonResource</code> endpoint, we&#8217;ll start with an empty <code>result</code> object using the pre-created <code>DataTable</code> model. Add this code below the <code>// TODO: Begin Result</code> comment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">            DataTable result = new DataTable();
+            result.setDraw(draw); <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We initialize the <code>DataTable</code> return object with the value passed in, to ensure DataTables redraws in the correct order in case of async returns.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_search_logic"><a class="anchor" href="#_implement_search_logic"></a>Implement search logic</h3>
+<div class="paragraph">
+<p>Next, if the request includes a search parameter, let&#8217;s take care of that by including a search query, otherwise just collect all records. Add this code below the <code>// TODO: Filter based on search</code> marker:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">            PanacheQuery&lt;Person&gt; filteredPeople;
+
+            if (searchVal != null &amp;&amp; !searchVal.isEmpty()) { <i class="conum" data-value="1"></i><b>(1)</b>
+                filteredPeople = Person.&lt;Person&gt;find("name like :search",
+                    Parameters.with("search", "%" + searchVal + "%"));
+            } else {
+                filteredPeople = Person.findAll();
+            }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If a search value was passed in, use it to search using the Panache <code>find</code> method. Otherwise, use <code>findAll</code> to skip filtering.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_paging_logic"><a class="anchor" href="#_implement_paging_logic"></a>Implement paging logic</h3>
+<div class="paragraph">
+<p>And finally, we use the built-in Panache <code>page</code> operator to seek to the correct page of records and stream the number of entries desired, set the values into the <code>result</code> and return it. Add this code below the <code>// TODO: Page and return</code> marker:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">            int page_number = start / length;
+            filteredPeople.page(page_number, length);
+
+            result.setRecordsFiltered(filteredPeople.count());
+            result.setData(filteredPeople.list());
+            result.setRecordsTotal(Person.count());
+
+            return result;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_the_result"><a class="anchor" href="#_test_the_result"></a>Test the result</h3>
+<div class="paragraph">
+<p>Let&#8217;s test out our new endpoint using <code>curl</code> to search for names with <code>yan</code> in their name. Execute this in the Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s "http://localhost:8080/person/datatable?draw=1&amp;start=0&amp;length=10&amp;search\[value\]=yan" | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should return a single entity (since in our 3-person sample data, only one has <code>yan</code> in their name), embedded in the return object that DataTable is expecting (with the <code>draw</code>, <code>recordsFiltered</code>, <code>recordsTotal</code> etc):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "draw": 1,
+  "recordsTotal": 3,
+  "recordsFiltered": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Farid Ulyanov",
+      "birth": "1974-08-15",
+      "eyes": "BLUE"
+    }
+  ],
+  "error": null
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>data</code>, <code>draw</code>, <code>recordsFiltered</code> and <code>recordsTotal</code> values are what the DataTables frontend will be expecting when it calls this endpoint.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_lifecycle_hook"><a class="anchor" href="#_add_lifecycle_hook"></a>Add lifecycle hook</h3>
+<div class="paragraph">
+<p>You often need to execute custom actions when the application starts and clean up everything when the application stops. In this case we&#8217;ll add an action that will pre-generate a lot of fake data.</p>
+</div>
+<div class="paragraph">
+<p>Managed beans (like our <code>PersonResource</code>) can listen for lifecycle events by using the <code>@Observes</code> annotation on method signatures, which will be called when the associated event occurs.</p>
+</div>
+<div class="paragraph">
+<p>Open the <code>PersonResource</code> resource class and add the following lifecycle listener at the <code>// TODO: Add lifecycle hook</code> marker:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Transactional
+    void onStart(@Observes StartupEvent ev) {
+        for (int i = 0; i &lt; 1000; i++) {
+            String name = CuteNameGenerator.generate();
+            LocalDate birth = LocalDate.now().plusWeeks(Math.round(Math.floor(Math.random() * 40 * 52 * -1)));
+            EyeColor color = EyeColor.values()[(int)(Math.floor(Math.random() * EyeColor.values().length))];
+            Person p = new Person();
+            p.birth = birth;
+            p.eyes = color;
+            p.name = name;
+            Person.persist(p);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code will insert 1,000 fake people with random birthdates in the last 40 years, eye colors, and names at startup. Note the use of the <code>@Transactional</code> annotation - this is required for methods that make changes to the underlying database (and automatically executes the method in a Transaction for you).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_access_new_data"><a class="anchor" href="#_access_new_data"></a>Access new data</h3>
+<div class="paragraph">
+<p>Although our lifecycle code is listening for <code>StartupEvent</code>, and our application has already started, in <code>quarkus:dev</code> mode Quarkus will still fire this event once. So let&#8217;s test it out and see if it picks up our new data. We&#8217;ll search for a single letter <code>F</code> and limit the results to <code>2</code>:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s "http://localhost:8080/person/datatable?draw=1&amp;start=0&amp;length=2&amp;search\[value\]=F" | jq</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Adding 1k entries will make startup time artificially high, around 1 second.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should get up to 2 records returned (since we passed <code>length=2</code> in the query), but the total number available should show many more indicating our search found many more, and the total number of records should now be <code>1003</code> (the 1k we added plus the 3 original values):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "draw": 1,
+  "recordsTotal": 1003,
+  "recordsFiltered": 140, <i class="conum" data-value="1"></i><b>(1)</b>
+  "data": [
+    {
+      "id": 1,
+      "name": "Farid Ulyanov",
+      "birth": "1974-08-15",
+      "eyes": "BLUE"
+    },
+    {
+      "id": 9,
+      "name": "Crimson Ferret",
+      "birth": "1988-03-10",
+      "eyes": "BROWN"
+    }
+  ],
+  "error": null
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Note the values for <code>recordsFiltered</code> (the number of records with the letter <code>F</code> in the name), and <code>recordsTotal</code>. The value you see for <code>recordsFiltered</code> may be different than the above value, since the number of records with an <code>F</code> in the name may vary since the data is random. But the <code>recordsTotal</code> shows our initial 3 values, plus the 1000 additional values we added in the lifecycle hook code.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deploy_to_openshift"><a class="anchor" href="#_deploy_to_openshift"></a>Deploy to OpenShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our production environment needs a "real" database so let&#8217;s deploy a Postgres database to OpenShift. Back in the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], select <strong>+Add to Project</strong> on the left. Then, Type in <code>PostgreSQL (Ephemeral)</code> in the search box, and select the <strong>PostgreSQL (ephemeral)</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/db.png" alt="db" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Select <strong>Instantiate Template</strong> and fill in the following fields, leaving the others as their default values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Namespace</strong> (the first one): Select <code>{{ USER_ID }}-project</code></p>
+</li>
+<li>
+<p><strong>Namespace</strong> (the <em>second</em> one): <code>openshift</code></p>
+</li>
+<li>
+<p><strong>Database Service Name</strong>: <code>postgres-database</code></p>
+</li>
+<li>
+<p><strong>PostgreSQL Connection Username</strong>: <code>sa</code></p>
+</li>
+<li>
+<p><strong>PostgreSQL Connection Password</strong>: <code>sa</code></p>
+</li>
+<li>
+<p><strong>PostgreSQL Database Name</strong>: <code>person</code></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/db-postgres-values.png" alt="db" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Select <strong>Create</strong>.</p>
+</div>
+<div class="paragraph">
+<p>And label the items with proper icons:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc label dc/postgres-database  app.openshift.io/runtime=postgresql --overwrite &amp;&amp; \
+oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc label dc/postgres-database app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will deploy the database to our new project. Select the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^] to see it:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/database-deployment.png" alt="inventory_db_deployments" width="700">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rebuild_and_redeploy_app"><a class="anchor" href="#_rebuild_and_redeploy_app"></a>Rebuild and redeploy app</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In previous steps we deployed our sample application as a native binary. Now let&#8217;s switch to a JVM-based deployment from here on out.</p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s deploy the application itself. Run the following command which will build and deploy using the OpenShift extension:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc delete bc/people &amp;&amp; \
+mvn clean package -DskipTests</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should end with <code>BUILD SUCCESS</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, make sure it&#8217;s actually done rolling out.</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait for that command to report <strong>deployment "people" successfully rolled out</strong> before continuing.</p>
+</div>
+<div class="paragraph">
+<p>And let&#8217;s do again to label the items with proper icons:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc label dc/postgres-database app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Back on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], make sure it&#8217;s done deploying (dark blue circle):</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remember in our <code>application.properties</code> we have pre-defined database connections for the <code>%prod</code> profile. When Quarkus runs in production, it will connect to the database you just deployed!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/database-redeployment.png" alt="inventory_db_deployments" width="700">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_access_deployed_app"><a class="anchor" href="#_access_deployed_app"></a>Access deployed app</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have our app running on OpenShift, let&#8217;s see what we can do.</p>
+</div>
+<div class="paragraph">
+<p>We can access using <code>curl</code> once again to find everyone born in or before the year 2000 (there will be many).</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s $(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'{% endraw %})/person/birth/before/2000 | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now access the <a href="http://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/datatable.html" target="_blank" rel="noopener">graphical person browser powered by the DataTables library</a>. It should look like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/datatable.png" alt="datatable" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the total number of records reported at the bottom. Type in a single letter, e.g. <code>F</code> in the search box and see how responsive the app is. Type additional letters to narrow the search. Rather than having all records loaded in the browser, DataTable makes a call back to our <code>/person/datatable</code> REST endpoint to fetch only those records that should be shown, based on page size, current page you&#8217;re looking at, and any search filters. With a page size of <code>10</code> each REST call will only return up to 10 records, no matter how many there are in the database.</p>
+</div>
+<div class="paragraph">
+<p>Skip around a few pages, try some different searches, and notice that the data is only loaded when needed. The overall performance is very good even for low-bandwidth connections or huge data sets.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise you got a glimpse of the power of Quarkus apps when dealing with large amounts of data. There is much more to Quarkus than fast startup times and low resource usage, so keep going!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="extensions.html" class="query-params-link">Using Quarkus extensions</a></span>
+  <span class="next"><a href="openapi.html" class="query-params-link">Documenting and Testing APIs</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

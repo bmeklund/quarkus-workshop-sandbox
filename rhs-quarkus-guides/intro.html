@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>What is Quarkus? :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-guides/intro.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="basics.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://github.com/bmeklund/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li><a href="intro.html">Lab Instructions</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/intro.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">What is Quarkus?</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/logo.png" alt="quarkus-logo" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Quarkus is a Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. Quarkus uses a technique called <a href="https://quarkus.io/vision/container-first" target="_blank" rel="noopener">compile time boot</a> and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring <em>real joy</em> to your development.</p>
+</div>
+<div class="paragraph">
+<p><strong>Red Hat</strong> offers the fully supported <a href="https://access.redhat.com/products/quarkus" target="_blank" rel="noopener">Red Hat Build of Quarkus(RHBQ)</a> with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift. Quarkus is one of the runtimes included in <a href="https://www.redhat.com/en/products/runtimes" target="_blank" rel="noopener">Red Hat Runtimes</a>. <a href="https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus" target="_blank" rel="noopener">Learn more about RHBQ</a>.</p>
+</div>
+<div class="paragraph">
+<p>Throughout this lab you&#8217;ll discover how Quarkus can make your development of cloud native apps faster and more productive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_first_step_connect_to_your_developer_sandbox_environment"><a class="anchor" href="#_first_step_connect_to_your_developer_sandbox_environment"></a>First Step: Connect to your Developer Sandbox environment!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To run this workshop you need to provision your own Developer Sandbox environment. This you do from <a href="https://developers.redhat.com/developer-sandbox" class="bare">https://developers.redhat.com/developer-sandbox</a></p>
+</div>
+<div class="paragraph">
+<p>Click the Start your sandbox for free and log in.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devSandboxrequest.png" alt="Request environment" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>In the console now click <strong>Launch</strong> to access your Red Hat OpenShift environment.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/launchSandbox.png" alt="login" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will lead you to the OpenShift console.</p>
+</div>
+<div class="paragraph">
+<p>Select <strong>Log in with DevSandbox</strong> if the choice opens up.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/loginDevSandbox.png" alt="login" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Take note of the cluster details in the url of the browser. It will be something like this: <a href="https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/yourusername-dev" class="bare">https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/yourusername-dev</a></p>
+</div>
+<div class="paragraph">
+<p>Look in the box at the top of this guide. If your sandbox environment is set already? If so it will look like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/alreadyset.png" alt="Set User ID above" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>If your sandbox environment is properly set, then you can move on. <strong>If not, in the above box, enter the cluster details</strong> like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/setuser.png" alt="Set User ID above" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>This will customize the links and copy/paste code for this workshop. If you accidently type the wrong details, just click the green recycle icon to reset it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_click_to_copy"><a class="anchor" href="#_click_to_copy"></a>Click-to-Copy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will see various code and command blocks throughout these exercises which can be copy/pasted directly by clicking anywhere on the block of text:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/* A sample Java snippet that you can copy/paste by clicking */
+public class CopyMeDirectly {
+    public static void main(String[] args) {
+        System.out.println("You can copy this whole class with a click!");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Simply click once and the whole block is copied to your clipboard, ready to be pasted with <span class="keyseq"><kbd>CTRL</kbd>+<kbd>V</kbd></span> (or <span class="keyseq"><kbd>Command</kbd>+<kbd>V</kbd></span> on Mac OS).</p>
+</div>
+<div class="paragraph">
+<p>There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">echo "This is a bash shell command that you can copy/paste by clicking"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_access_your_development_environment"><a class="anchor" href="#_access_your_development_environment"></a>Access Your Development Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will be using Visual Studio Code (VS Code) based on <a href="https://developers.redhat.com/products/openshift-dev-spaces/overview" target="_blank" rel="noopener">Red Hat OpenShift Dev Spaces</a>. <strong>Changes to files are auto-saved every few seconds</strong>, so you don&#8217;t need to explicitly save changes.</p>
+</div>
+<div class="paragraph">
+<p>To get started, access the Dev Spaces instance through the application picker in the top menu of the OpenShift console.
+Or click <strong>Launch</strong> on the Red Hat Dev Spaces card where you accessed the OpenShift console.</p>
+</div>
+<div class="paragraph">
+<p>Select <strong>Log in with OpenShift</strong> button if needed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/login_with_openshift.png" alt="login" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Select <strong>Log in with DevSandbox</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/loginDevSandbox.png" alt="login" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see the <strong>Authorize Access</strong> page as below, select <strong>Allow selected permissions</strong> button.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/auth-access.png" alt="auth-access" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you log in, you’ll be placed on the <strong>Create Workspace</strong> dashboard. Copy the following <code>Git Repo URL</code> and select <code>Create &amp; Open</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Git Repo URL</strong>: <code><a href="https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/ocp-4.15" class="bare">https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/ocp-4.15</a></code></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-landing.png" alt="ds" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>A new window or tab in your web browser will open automatically to showcase the progess about <strong>Starting workspace quarkus-workshop</strong>. It takes about <strong>60</strong> seconds to finish the process.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/starting-workspace.png" alt="ds" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see this information page, select <code>Start your workspace</code> to continue  using your workspace.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/starting-workspace-info.png" alt="ds" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After a few seconds, you’ll be placed in the workspace.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-workspace.png" alt="ds" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see this information page, click on <code>Yes, I trust the authors</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-trust-popup.png" alt="ds" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll use all of these during the course of this workshop, so keep this browser tab open throughout. <strong>If things get weird, you can simply reload the browser tab to refresh the view.</strong></p>
+</div>
+<div class="paragraph">
+<p>Ready? Let&#8217;s go!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html" class="query-params-link">Quarkus Workshop Guides</a></span>
+  <span class="next"><a href="basics.html" class="query-params-link">Getting Started with Quarkus</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

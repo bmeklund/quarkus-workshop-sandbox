@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Testing :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://github.com/bmeklund/quarkus-workshop-sandbox/rhs-quarkus-guides/testing.html">
+    <link rel="prev" href="cdi.html">
+    <link rel="next" href="debugging.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://github.com/bmeklund/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module One</li>
+    <li><a href="testing.html">Testing Quarkus Apps</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/testing.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Testing</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus supports continuous testing, where tests run immediately after code changes have been saved. This allows you to get instant feedback on your code changes. Quarkus detects which tests cover which code, and uses this information to only run the relevant tests when code is changed.</p>
+</div>
+<div class="paragraph">
+<p>In this step we&#8217;ll show you how to effectively write functional and continuous testing for your Quarkus Apps. You should already have a completed test written for you, including the correct <code>pom.xml</code> setup where you should see 2 test dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.quarkus&lt;/groupId&gt;
+    &lt;artifactId&gt;quarkus-junit5&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.rest-assured&lt;/groupId&gt;
+    &lt;artifactId&gt;rest-assured&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>quarkus-junit5</code> is required for testing, as it provides the <code>@QuarkusTest</code> annotation that controls the testing framework. <code>rest-assured</code> is not required but is a convenient way to test HTTP endpoints, we also provide integration that automatically sets the correct URL so no configuration is required.</p>
+</div>
+<div class="paragraph">
+<p>The basic test is in the <code>GreetingResourceTest</code> (in the <code>src/test/java/org/acme/people</code> directory). For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@QuarkusTest
+public class GreetingResourceTest {
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/hello")
+          .then()
+             .statusCode(200)
+             .body(is("hello"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When creating new tests, always double-check to be sure you are in the <code>src/test</code> directory tree, not <code>src/main</code>!</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/testshere.png" alt="testshere" width="700">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_starting_continuous_testing"><a class="anchor" href="#_starting_continuous_testing"></a>Starting Continuous Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Go back to the terminal and go down the bottom of the screen you should see the following:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ct-resume.png" alt="testshere" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Press <code>r</code> and the continuous testing will start running. You should see the status change down the bottom of the screen as they are running, and it should finish with the following error:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ct-error.png" alt="testshere" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This is because you changed the greeting in an earlier step. In <code>GreetingResource</code>, change <code>hola</code> back to <code>hello</code> (in the <code>GreetingResource</code> class) and the tests will run again automatically. Confirm all tests pass in the terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">INFO  [io.qua.test] (Test runner thread) All tests are now passing
+
+
+--
+All 1 test is passing (0 skipped), 1 test was run in 351ms. Tests completed at 01:19:02 due to changes to GreetingResource.class.
+Press [e] to edit command line args (currently ''), [r] to re-run, [o] Toggle test output, [:] for the terminal, [h] for more options&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a new test in the existing <code>GreetingResourceTest.java</code> class under the <code>// add more tests</code> marker that tests the <code>/hello/greeting</code> endpoint by copying this code below the existing test:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Test
+    public void testGreetingEndpoint() {
+        String uuid = UUID.randomUUID().toString();
+        given()
+          .pathParam("name", uuid)
+          .when().get("/hello/greeting/{name}")
+          .then()
+            .statusCode(200)
+            .body(startsWith("hello " + uuid));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see new test result instantly in the terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">--
+All 2 tests are passing (0 skipped), 2 tests were run in 401ms. Tests completed at 01:20:05 due to changes to GreetingResourceTest.class.
+Press [e] to edit command line args (currently ''), [r] to re-run, [o] Toggle test output, [:] for the terminal, [h] for more options&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controlling_continuous_testing"><a class="anchor" href="#_controlling_continuous_testing"></a>Controlling Continuous Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are various hotkeys you can use to control continuous testing. Pressing <code>h</code> will display the following list of commands in the terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">== Continuous Testing
+
+[r] - Re-run all tests
+[f] - Re-run failed tests
+[b] - Toggle 'broken only' mode, where only failing tests are run (disabled)
+[v] - Print failures from the last test run
+[p] - Pause tests
+[o] - Toggle test output (disabled)
+
+== Exceptions
+
+[x] - Open last exception (or project) in IDE (none)
+
+== HTTP
+
+[w] - Open the application in a browser
+[d] - Open the Dev UI in a browser
+
+== System
+
+[s] - Force restart
+[e] - Edits the command line parameters and restarts ()
+[i] - Toggle instrumentation based reload (disabled)
+[l] - Toggle live reload (enabled)
+[j] - Toggle log levels (INFO)
+[h] - Show this help
+[:] - Enter terminal mode
+[q] - Quit the application</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Quarkus also provides a new experimental Dev UI, which is available in dev mode (when you start quarkus with mvn quarkus:dev) at <code>/q/dev</code> by default. It allows you to quickly visualize all the extensions currently loaded, see their status and go directly to their documentation.</p>
+</div>
+<div class="paragraph">
+<p>To show up the public endpoints, select <code>Show plug-in endpoints</code>. Then, unfold the <code>ENDPOINTS &gt; Public</code> and select the <strong>Open Dev UI</strong> icon.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devui-endpoint.png" alt="devui-endpoint" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Open a new web browser or tab window and paste the URL.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/quarkus-devui.png" alt="devui-endpoint" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you have an issue (e.g., <em>ERROR [io.qua.ver.htt.run.dev.DevConsoleCORSFilter] (vert.x-eventloop-thread-0) Only localhost origin is allowed, but Origin header value is&#8230;&#8203;</em>) to access the Dev UI, please append <code>%dev.quarkus.dev-ui.cors.enabled=false</code> to the <strong>application.properties file</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you select <code>Open</code> on the left bottom, it will show the Quarkus runtime logs:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/quarkus-devui-open.png" alt="devui-endpoint" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see <strong>Tests not running</strong>, reload the DEV UI page.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Select <code>Continuous Testing</code> on the left menu, you will that see 2 test cases passed with a green color.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/quarkus-devui-test-result.png" alt="devui-endpoint" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_injecting_a_uri"><a class="anchor" href="#_injecting_a_uri"></a>Injecting a URI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is also possible to directly inject the URL into the test which can make it easy to use a different client. This is done via the <code>@TestHTTPResource</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Let’s write a simple test that shows this off to load some static resources. First create a simple HTML file in <code>src/main/resources/META-INF/resources/</code>. Right-click on this directory and select <em>New &#8594; File</em>. Name the file <code>test.html</code> in the dialog box:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/createhtml.png" alt="html" width="700">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/createhtml2.png" alt="html" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Add this code to the file:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Testing with Quarkus&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;... it's fun and entertaining!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Our test will verify that the <code>&lt;title&gt;</code> tags contain the right content.</p>
+</div>
+<div class="paragraph">
+<p>Next, create a new test under <code>src/test/java</code> in the <code>org.acme.people</code> package called <code>StaticContentTest.java</code>. Replace this code to the file:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.common.http.TestHTTPResource;
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
+public class StaticContentTest {
+
+    @TestHTTPResource("test.html") <i class="conum" data-value="1"></i><b>(1)</b>
+    URL url;
+
+    @Test
+    public void testIndexHtml() throws Exception {
+        try (InputStream in = url.openStream()) {
+            String contents = readStream(in);
+            Assertions.assertTrue(contents.contains("&lt;title&gt;Testing with Quarkus&lt;/title&gt;"));
+        }
+    }
+
+    private static String readStream(InputStream in) throws IOException {
+        byte[] data = new byte[1024];
+        int r;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        while ((r = in.read(data)) &gt; 0) {
+            out.write(data, 0, r);
+        }
+        return new String(out.toByteArray(), StandardCharsets.UTF_8);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@TestHTTPResource</code> annotation allows you to directly inject the URL of the Quarkus instance, the value of the annotation will be the path component of the URL. For now <code>@TestHTTPResource</code> allows you to inject URI, URL and String representations of the URL.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The test results will be updated automatically in the terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">All 3 tests are passing (0 skipped), 1 test was run in 451ms. Tests completed at 01:34:45 due to changes to StaticContentTest.class.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_injection_into_tests"><a class="anchor" href="#_injection_into_tests"></a>Injection into tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far we have only covered integration style tests that test the app via HTTP endpoints, but what if we want to do unit testing and test our beans directly?</p>
+</div>
+<div class="paragraph">
+<p>Quarkus supports this by allowing you to inject CDI beans into your tests via the <code>@Inject</code> annotation (in fact, tests in Quarkus are full CDI beans, so you can use all CDI functionality). Let’s create a simple test that tests the greeting service directly without using HTTP.</p>
+</div>
+<div class="paragraph">
+<p>Create a new test class file in <code>src/test</code> in the <code>org.acme.people</code> package called <code>GreetingServiceTest.java</code>. Use the following code for the file&#8217;s contents (note we&#8217;ve included the proper imports for you):</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people;
+
+import jakarta.inject.Inject;
+
+import org.acme.people.service.GreetingService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
+public class GreetingServiceTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("GreetingServiceTest");
+
+    @Inject <i class="conum" data-value="1"></i><b>(1)</b>
+    GreetingService service;
+
+    @Test
+    public void testGreetingService() {
+        Assertions.assertTrue(service.greeting("Quarkus").startsWith("hello Quarkus"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here we are injecting our <code>GreetingService</code> and calling it, just as our RESTful resource endpoint does in the production code.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You will see new test along with your existing tests run instantly in the terminal once again. Verify the tests are passing.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As mentioned above Quarkus tests are actually full CDI beans, and as such you can apply CDI interceptors as you would normally. As an example, if you want a test method to run within the context of a transaction you can simply apply the <code>@Transactional</code> annotation to the method and the transaction interceptor will handle it.</p>
+</div>
+<div class="paragraph">
+<p>In addition to this you can also create your own test stereotypes. Stereotypes can be particularly useful in large applications where you have a number of beans that perform similar functions, as it allows you to do something akin to multiple inheritance (multiple annotations) without having to repeat yourself over and over.</p>
+</div>
+<div class="paragraph">
+<p>For example we could create a <code>@TransactionalQuarkusTest</code> if we needed to write a large number of tests that required transactional support with particular configuration. It would look like (do not copy this code anywhere!)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@QuarkusTest
+@Stereotype
+@Transactional
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface TransactionalQuarkusTest {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we then apply this annotation to a test class it will act as if we had applied both the <code>@QuarkusTest</code> and <code>@Transactional</code> annotations, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@TransactionalQuarkusTest
+public class TestStereotypeTestCase {
+
+    @Inject
+    UserTransaction userTransaction;
+
+    @Test
+    public void testUserTransaction() throws Exception {
+        Assertions.assertEquals(Status.STATUS_ACTIVE, userTransaction.getStatus());
+    }
+
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mock_support"><a class="anchor" href="#_mock_support"></a>Mock support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus supports the use of mock objects using the CDI <code>@Alternative</code> mechanism. To use this simply override the bean you wish to mock with a class in the <code>src/test/java</code> directory, and put the <code>@Alternative</code> and <code>@Priority(1)</code> annotations on the bean. Alternatively, a convenient <code>io.quarkus.test.Mock</code> stereotype annotation could be used. This built-in stereotype declares <code>@Alternative</code>, <code>@Priority(1)</code> and <code>@Dependent</code>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s mock our existing <code>GreetingService</code>. Although our existing service is pretty simple, in the real world the service might have too many dependencies on external systems to be feasible to call directly.</p>
+</div>
+<div class="paragraph">
+<p>Create a new class file in <code>src/test/java</code> in the <code>org.acme.people</code> package called <code>MockGreetingService.java</code> with the following code:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import org.acme.people.service.GreetingService;
+import io.quarkus.test.Mock;
+
+@Mock
+@ApplicationScoped
+public class MockGreetingService extends GreetingService {
+
+    @Override
+    public String greeting(String name) {
+        return "hello " + name + " &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; from mock greeting &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now modify our existing <code>GreetingServiceTest</code> class to add a log statement showing the value retrieved during the test. Modify the <code>testGreetingService</code> method to look like:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Test
+    public void testGreetingService() {
+        LOGGER.info("greeting: " + service.greeting("Quarkus"));
+        Assertions.assertTrue(service.greeting("Quarkus").startsWith("hello Quarkus"));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The test results of the mock will be updated automatically in the terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">All 4 tests are passing (0 skipped), 1 test was run in 556ms. Tests completed at 01:37:50 due to changes to MockGreetingService.class and 1 other files.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Press <code>o</code> to toggle test output and press <code>r</code> to re-run the continuous testing. Then, you will see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">INFO  [GreetingServiceTest] (Test runner thread) greeting: hello Quarkus &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; from mock greeting &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This confirms that our <code>MockGreetingService</code> is being used instead of the original <code>GreetingService</code>.</p>
+</div>
+<div class="paragraph">
+<p>Make sure to press <code>p</code> to pause the continuous testing before you go to the next lab:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">Tests paused
+Press [r] to resume testing, [o] Toggle test output, [:] for the terminal, [h] for more options&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section we covered basic testing of Quarkus Apps using the <code>@QuarkusTest</code> and supporting annotations. This is an important part of any software engineering project and with Quarkus, testing has never been easier. For more information on testing with Quarkus, be sure to review the <a href="https://quarkus.io/guides/getting-started-testing" target="_blank" rel="noopener">Quarkus Testing Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>In the next section we&#8217;ll talk about how to effectively debug Quarkus applications. On with the show!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="cdi.html" class="query-params-link">Dependency Injection</a></span>
+  <span class="next"><a href="debugging.html" class="query-params-link">Debugging Quarkus Apps</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
