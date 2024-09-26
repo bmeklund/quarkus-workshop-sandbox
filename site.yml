@@ -20,7 +20,6 @@ asciidoc:
     project-namespace: workshop
     page-pagination: true    
     release-version: master
-    page-pagination: true
   extensions:
     - ./lib/tab-block.js
     - ./lib/remote-include-processor.js
