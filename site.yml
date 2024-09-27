@@ -3,7 +3,7 @@ runtime:
 
 site:
   title: Quarkus Workshop Guides
-  url: https://github.com/bmeklund/quarkus-workshop-sandbox
+  url: http://bmeklund.github.io/quarkus-workshop-sandbox/
   start_page: rhs-quarkus-guides::index.adoc
 
 content:
