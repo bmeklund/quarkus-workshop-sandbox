@@ -3,21 +3,20 @@ runtime:
 
 site:
   title: Quarkus Workshop Guides
-  url: http://bmeklund.github.io/quarkus-workshop-sandbox/
+  url: https://bmeklund.github.io/quarkus-workshop-sandbox
   start_page: rhs-quarkus-guides::index.adoc
 
 content:
   sources:
-    - url: https://github.com/bmeklund/quarkus-workshop-sandbox.git
-      branches: master
+    - url: ./
       start_path: documentation
 
 asciidoc:
   attributes:
     #title: Template Tutorial(Dev Mode)
     experimental: true
-    openshift-version: 4.15
-    project-namespace: workshop
+    #openshift-version: 4.15
+    #project-namespace: workshop
     page-pagination: true    
     release-version: master
   extensions:
