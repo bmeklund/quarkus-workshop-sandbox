@@ -5,7 +5,8 @@ on:
     branches:
       - master
   workflow_dispatch:
-
+env:
+  SITE_DIR: "github-pages"
 jobs:
   build_site:
     name: "Build site with Antora"
