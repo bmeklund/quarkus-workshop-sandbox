@@ -8,7 +8,8 @@ site:
 
 content:
   sources:
-    - url: ./
+    - url: https://github.com/bmeklund/quarkus-workshop-sandbox.git
+      branches: [master]
       start_path: documentation
 
 asciidoc:
@@ -29,6 +30,9 @@ ui:
     snapshot: true
   supplemental_files:
     - path: ./supplemental-ui
-
+    - path: .nojekyll
+    - path: ui.yml
+      contents: "static_files: [ .nojekyll ]"
+      
 output:
   dir: ./gh-pages

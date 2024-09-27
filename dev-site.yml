@@ -15,7 +15,7 @@ asciidoc:
   attributes:
     #title: Template Tutorial(Dev Mode)
     experimental: true
-    openshift-version: 4.11
+    openshift-version: 4.15
     project-namespace: workshop
     page-pagination: true
   extensions:

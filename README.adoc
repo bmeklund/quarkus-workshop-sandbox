@@ -43,4 +43,4 @@ This workshop is based on link:https://antora.org/[Antora] and link:https://gith
 
 To start this workshop, follow the step by step tutorial link for your cluster available below: 
 
-http://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/master/index.html
+http://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/index.html
