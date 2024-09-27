@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Debugging in Dev Mode :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/debugging.html">
+    <link rel="prev" href="testing.html">
+    <link rel="next" href="native.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module One</li>
+    <li><a href="debugging.html">Debugging Quarkus Apps</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/debugging.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Debugging in Dev Mode</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Debugging is an art of finding errors (bugs) and eradicating (debug) them from a piece of code written in any programming language. Quarkus apps are no different in this regard and you can use the raw Java command line debugger (<code>jdb</code>) or, if your IDE supports it, graphical debugging. Most IDEs have integration with Java debuggers, including Eclipse Che, so let&#8217;s exercise it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_write_some_bad_code"><a class="anchor" href="#_write_some_bad_code"></a>Write some bad code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s introduce a subtle off-by-one bug in our application and use the debugger to debug it.</p>
+</div>
+<div class="paragraph">
+<p>Open up the <code>GreetingResource.java</code> class again, and add another RESTful endpoint that returns the last letter in a name:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @GET
+    @Path("/lastletter/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String lastLetter(@PathParam("name") String name) {
+        int len = name.length();
+        String lastLetter = name.substring(len);
+        log.info("Got last letter: " + lastLetter);
+        return lastLetter;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A a bug has been reported where the last letter is not working. To reproduce the bug, try to retrieve the last letter of the string <code>Foo</code> by running this in a Terminal (your app should still be running - if it is not, use <em>Start Live Coding</em> again):</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/hello/lastletter/Foo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Due to the bug, nothing is returned from <em>curl</em>. It should have given us back an <code>o</code>. You&#8217;ll also see <code>Got last letter:</code> in the console output of the Quarkus app terminal.</p>
+</div>
+<div class="paragraph">
+<p>You can probably spot the bug right away but let&#8217;s see how you could find this with the debugger, and more importantly fix it and re-test very quickly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_attach_debugger"><a class="anchor" href="#_attach_debugger"></a>Attach debugger</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In <em>Live Coding</em> mode, Quarkus apps also listen for debugger connections on port <code>5005</code>. Your app should still be running.</p>
+</div>
+<div class="paragraph">
+<p>To connect to the running app, access the <em>debugger</em> by selecting on the debug icon:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/crwdebug.png" alt="buttons" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>The debugger view will appear with several small buttons used to start/stop execution, step into/over/out of code, and other operations. Ensure that <strong>Attach to App</strong> is selected in the drop-down, and select the <strong>Start Debugging</strong> button to attach the debugger to the app:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/buttons.png" alt="buttons" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Click on <code>Yes</code> to enable the <strong>Debug</strong> mode:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/debug-mode.png" alt="debug-mode" width="600">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_a_breakpoint"><a class="anchor" href="#_set_a_breakpoint"></a>Set a Breakpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To debug the app, let&#8217;s step through our function that has the bug. In the left gutter of the code, to the left of the line numbers, select once next to <code>int len = name.length();</code> to set a breakpoint and cause a red circle to appear:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Your line numbers may be different depending on where you placed this code in the file.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/break.png" alt="breakpoint" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trigger_the_bug"><a class="anchor" href="#_trigger_the_bug"></a>Trigger the bug</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have a breakpoint, in a Terminal issue the same <code>curl</code> command as before:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/hello/lastletter/foo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This time, the command will appear to hang as the breakpoint has been reached. The line where you set the breakpoint will be highlighted:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/breakreached.png" alt="breakpointreached">
+</div>
+</div>
+<div class="paragraph">
+<p>You will see four main sections of the debug view:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Threads</strong> - A list of active threads at the point where the breakpoint was reached.</p>
+</li>
+<li>
+<p><strong>Call Stack</strong> - This is an ordered list of <em>stack frames</em> showing the path through the code from the beginning of the thread to the current location in our code.</p>
+</li>
+<li>
+<p><strong>Variables</strong> - Here you can see the value of <em>local</em> variables in the selected stack frame. In our code we have no local variables defined yet, but once we start stepping through the code, newly defined variables (like <code>len</code>) will appear here.</p>
+</li>
+<li>
+<p><strong>Breakpoints</strong> - This lists the breakpoints you&#8217;ve set. Each Breakpoint can be further configured, or selectively disabled, by right-selecting on the breakpoint in the breakpoint list.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Step over the current line by selecting <strong>Step Over</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/stepover.png" alt="length" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will fully execute the current line, and advance to the next line in the code and stop again. (You could also step <em>into</em> methods for deeper debugging).</p>
+</div>
+<div class="paragraph">
+<p>At this point, <code>len</code> is defined (and listed on the right side):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/len.png" alt="length" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>2.13.7.Final-redhat-00003 <strong>Step Over</strong> again, which executes the line to grab the last letter using <code>len</code> an offset to the <code>substring</code> method. See the bug? Look at the value of <code>lastLetter</code> in the variables list on the right - it&#8217;s empty!</p>
+</div>
+<div class="paragraph">
+<p>We need to pass an offset that is one <em>before</em> the end, to get the last letter.</p>
+</div>
+<div class="paragraph">
+<p>Select the <strong>Continue</strong> button to let the method continue, log the erroneous value to the console, and return the value (your <code>curl</code> command may have timed out).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/debug-continue.png" alt="buttons" width="600">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fix_the_bug"><a class="anchor" href="#_fix_the_bug"></a>Fix the bug</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fix the code by changing the line that calls <code>substring()</code> to read:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        String lastLetter = name.substring(len - 1);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the bug fixed, re-trigger the method by running the <code>curl</code> command again in a Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/hello/lastletter/foo ; echo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The breakpoint will be hit once again. Step over the lines to verify the value of <code>lastLetter</code> is correct and you see a proper <code>Got last letter: o</code> on the console. before the method returns. You&#8217;ve fixed the bug!</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/fixed.png" alt="length" width="800">
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Occasionally the debugger gets disconnected from the running app. If your breakpoints aren&#8217;t being hit, try to select the <strong>Disconnect</strong> button, and then reconnect with the <strong>Start Debugging</strong> button, and try again.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Remove the breakpoint by selecting on the red circle to de-highlight it.  Run the <code>curl</code> command once more to see the full bugfix which should return the last letter of the generated name now: You should see <code>o</code>.</p>
+</div>
+<div class="paragraph">
+<p>select <strong>Disconnect</strong> button to quit the debugging session.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/debug-disconnect.png" alt="buttons" width="600">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus apps are just like any other Java app, so debugging is straightforward and supported by many IDEs and CLIs out there. Combined with Live Reload, it makes development quick and (relatively) painless!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="testing.html" class="query-params-link">Testing Quarkus Apps</a></span>
+  <span class="next"><a href="native.html" class="query-params-link">Building Native Quarkus Apps</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

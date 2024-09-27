@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Asynchronous messaging between beans :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/messaging.html">
+    <link rel="prev" href="openapi.html">
+    <link rel="next" href="kafka.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="messaging.html">Event-driven Messaging</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/messaging.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Asynchronous messaging between beans</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus allows different beans to interact using asynchronous messages, enforcing loose-coupling. The messages are sent to <em>virtual</em> addresses. It offers 3 types of delivery mechanism:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Point-to-Point</strong> - send the message, one consumer receives it. If several consumers listen to the address, a round robin is applied;</p>
+</li>
+<li>
+<p><strong>Publish/Subscribe</strong> - publish a message, all the consumers listening to the address are receiving the message;</p>
+</li>
+<li>
+<p><strong>Request/Reply</strong> - send the message and expect a response. The receiver can respond to the message in an asynchronous-fashion</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All these delivery mechanism are non-blocking, and provide one of the fundamental building blocks of reactive systems which promise better performance, reduced developer burden, better isolation between services, and improved recovery from failure.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The asynchronous message passing feature in Quarkus allows <em>replying</em> to messages&#8201;&#8212;&#8201;which is not supported by Reactive Messaging. However, it is limited to single-event behavior (no stream) and to local messages.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_extension"><a class="anchor" href="#_add_extension"></a>Add extension</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This mechanism uses the <a href="https://vertx.io/docs/vertx-core/java/#event_bus" target="_blank" rel="noopener">Vert.x EventBus</a>, so you need to enable the <code>vertx</code> extension to use this feature. Add the extension in the Terminal using this command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="vertx"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-vertx has been installed</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="https://vertx.io/" target="_blank" rel="noopener">Eclipse Vert.x</a> is a toolkit for building reactive applications. It is designed to be lightweight and embeddable. Vert.x defines a reactive execution model and provides a large ecosystem. Quarkus integrates Vert.x to implement different reactive features, such as asynchronous message passing (the subject of this exercise), and non-blocking HTTP client. Basically, Quarkus uses Vert.x as its reactive engine. While lots of reactive features from Quarkus don’t show Vert.x, it’s used underneath. But you can also access the managed Vert.x instance and benefit from the Vert.x ecosystem.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_restful_resource"><a class="anchor" href="#_create_restful_resource"></a>Create RESTful resource</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We&#8217;ll start by creating a new asynchronous endpoint. Open the <code>PersonResource</code> class and add a new field which will provide access to the Vert.x event bus which is used to pass messages between components:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Inject EventBus bus;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll also need to add more import statements at the top:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.vertx.mutiny.core.eventbus.EventBus;
+import jakarta.inject.Inject;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, create two new endpoints in the same class which creates new people in our database given a name, and finds people by their name:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @POST
+    @Path("/{name}")
+    public Uni&lt;Person&gt; addPerson(String name) {
+          return bus.&lt;Person&gt;request("add-person", name)
+                .onItem().transform(response -&gt; response.body());
+    }
+
+    @GET
+    @Path("/name/{name}")
+    public Person byName(String name) {
+        return Person.find("name", name).firstResult();
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>send the name to the <code>add-person</code> address</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>when we get the reply, extract the body and send this as response to the user</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>And add the imports:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.smallrye.mutiny.Uni;
+import jakarta.ws.rs.POST;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This code uses Mutiny reactive types. If you are not familiar with Mutiny, check out <a href="https://quarkus.io/guides/mutiny-primer" target="_blank" rel="noopener">Mutiny - an intuitive reactive programming library</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This uses the request/reply dispatching mechanism. Instead of implementing the business logic inside the JAX-RS endpoint, we are sending a message. This message is consumed by another bean and the response is sent using the reply mechanism.</p>
+</div>
+<div class="paragraph">
+<p>The <code>EventBus</code> object provides methods to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Send a message to a specific address - one single consumer receives the message</p>
+</li>
+<li>
+<p>Publish a message to a specific address - all consumers receive the messages</p>
+</li>
+<li>
+<p>Send a message and expect reply</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>With this endpoint we can POST to the <code>/person/joe</code> endpoint to create a new user given the name.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_try_it_and_fail"><a class="anchor" href="#_try_it_and_fail"></a>Try it, and fail</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With our endpoint implemented and our app still running in Live Coding mode, confirm the new endpoint fails using the Terminal to execute:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -i -X POST http://localhost:8080/person/joe</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>This will fail</strong> with an <code>500 Internal Server Error</code>. If you look at the Live Coding terminal, you&#8217;ll also see the reason:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">ERROR [org.jbo.res.res.i18n] (executor-thread-1) RESTEASY002020: Unhandled asynchronous exception, sending back 500: (NO_HANDLERS,-1) No handlers for address add-person</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We posted the message to the Vert.x event bus at the <code>add-person</code> address, but there&#8217;s nothing to receive it!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_consumer"><a class="anchor" href="#_create_consumer"></a>Create consumer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create a new class file in the <code>org.acme.people.service</code> package called <code>PersonService.java</code>. Use the following code to implement our message consumer:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.service;
+
+import java.time.LocalDate;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+
+import org.acme.people.model.EyeColor;
+import org.acme.people.model.Person;
+
+import io.quarkus.vertx.ConsumeEvent;
+
+@ApplicationScoped
+public class PersonService {
+
+    @ConsumeEvent(value = "add-person", blocking = true) <i class="conum" data-value="1"></i><b>(1)</b>
+    @Transactional
+    public Person addPerson(String name) {
+        LocalDate birth = LocalDate.now().plusWeeks(Math.round(Math.floor(Math.random() * 20 * 52 * -1)));
+        EyeColor color = EyeColor.values()[(int)(Math.floor(Math.random() * EyeColor.values().length))];
+        Person p = new Person();
+        p.birth = birth;
+        p.eyes = color;
+        p.name = name;
+        Person.persist(p); <i class="conum" data-value="2"></i><b>(2)</b>
+        return p; <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>By default, the code consuming the event <em>must</em> be non-blocking, as it’s called on the Vert.x event loop. Since our method will block to wait for the transaction, we use <code>blocking = true</code> to force this consumer to be run in a <em>worker thread</em>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A new Person entity is created and persisted</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The return value of a method annotated with <code>@ConsumeEvent</code> is used as response to the incoming message.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This bean receives the name, and creates a new <code>Person</code> entity and persists it, and then echos back the name (or a well defined failure if things go wrong).</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try our test again:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s -X POST http://localhost:8080/person/joe  | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should get back Joe!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "id": 1004,<i class="conum" data-value="1"></i><b>(1)</b>
+  "birth": "2000-03-15",
+  "eyes": "BROWN",<i class="conum" data-value="2"></i><b>(2)</b>
+  "name": "joe"
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The id may be different since its auto-generated</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The eye color you see here may be difference, since it&#8217;s randomly generated in the <code>addPerson()</code> method you added!</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s re-confirm Joe is present:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s http://localhost:8080/person/name/joe | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should also get back Joe!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "id": 1004,
+  "birth": "2000-03-15",
+  "eyes": "BROWN",<i class="conum" data-value="1"></i><b>(1)</b>
+  "name": "joe"
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The eye color you see here may be difference, since it&#8217;s randomly generated in the <code>addPerson()</code> method you added!</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To better understand, let’s detail how the HTTP request/response has been handled:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The request is received by the <code>addPerson</code> method</p>
+</li>
+<li>
+<p>a message containing the desired name is sent to the event bus</p>
+</li>
+<li>
+<p>Another bean receives this message and computes the response</p>
+</li>
+<li>
+<p>This response is sent back using the reply mechanism</p>
+</li>
+<li>
+<p>Once the reply is received by the sender, the content is written to the HTTP response</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise you learned how Quarkus allows different beans to interact using asynchronous messages. We&#8217;ll take this to the next level in the next exercise.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="openapi.html" class="query-params-link">Documenting and Testing APIs</a></span>
+  <span class="next"><a href="kafka.html" class="query-params-link">Streaming Data with Quarkus and Kafka</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

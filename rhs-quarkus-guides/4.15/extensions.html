@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quarkus Extensions :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/extensions.html">
+    <link rel="prev" href="deploy.html">
+    <link rel="next" href="panache.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="extensions.html">Using Quarkus extensions</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/extensions.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Quarkus Extensions</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus is a Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. Quarkus uses a technique called <a href="https://quarkus.io/vision/container-first" target="_blank" rel="noopener">compile time boot</a> and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring <em>real joy</em> to your development.</p>
+</div>
+<div class="paragraph">
+<p><strong>Red Hat</strong> offers the fully supported <a href="https://access.redhat.com/products/quarkus" target="_blank" rel="noopener">Red Hat Build of Quarkus(RHBQ)</a> with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift. Quarkus is one of the runtimes included in <a href="https://www.redhat.com/en/products/runtimes" target="_blank" rel="noopener">Red Hat Runtimes</a>. <a href="https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus" target="_blank" rel="noopener">Learn more about RHBQ</a>.</p>
+</div>
+<div class="paragraph">
+<p>Throughout this lab you&#8217;ll discover how Quarkus can make your development of cloud native apps faster and more productive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_if_youve_already_completed_the_quarkus_basic_hands_on_lab_today"><a class="anchor" href="#_if_youve_already_completed_the_quarkus_basic_hands_on_lab_today"></a>If you&#8217;ve already completed the Quarkus Basic Hands-on Lab Today</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>If you have completed the Basic lab today</strong>, you can scroll/skip down to the <strong>List Extensions</strong> exercise to continue your Quarkus lab. If not, then continue below:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_first_step_set_your_username"><a class="anchor" href="#_first_step_set_your_username"></a>First Step: Set Your Username!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Look in the box at the top of your screen. Is your username set already? If so it will look like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/alreadyset.png" alt="Set User ID above" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>If your username is properly set, then you can move on. <strong>If not, in the above box, enter the user ID you were assigned</strong> like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/setuser.png" alt="Set User ID above" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>This will customize the links and copy/paste code for this workshop. If you accidently type the wrong username, just select the green recycle icon to reset it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_select_to_copy"><a class="anchor" href="#_select_to_copy"></a>Select-to-Copy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will see various code and command blocks throughout these exercises which can be copy/pasted directly by selecting anywhere on the block of text:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/* A sample Java snippet that you can copy/paste by selecting */
+public class CopyMeDirectly {
+    public static void main(String[] args) {
+        System.out.println("You can copy this whole class with a select!");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Simply select once and the whole block is copied to your clipboard, ready to be pasted with <span class="keyseq"><kbd>CTRL</kbd>+<kbd>V</kbd></span> (or <span class="keyseq"><kbd>Command</kbd>+<kbd>V</kbd></span> on Mac OS).</p>
+</div>
+<div class="paragraph">
+<p>There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">echo "This is a bash shell command that you can copy/paste by selecting"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_access_your_development_environment"><a class="anchor" href="#_access_your_development_environment"></a>Access Your Development Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will be using VS Code server based on <a href="https://developers.redhat.com/products/openshift-dev-spaces/overview" target="_blank" rel="noopener">Red Hat OpenShift Dev Spaces</a> <strong>Changes to files are auto-saved every few seconds</strong>, so you don&#8217;t need to explicitly save changes.</p>
+</div>
+<div class="paragraph">
+<p>To get started, {{ DS_URL }}[access the Red Hat OpenShift Dev Spaces instance^] and select <strong>Log in with OpenShift</strong> button:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/login_with_openshift.png" alt="login" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Type in the following credentail:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Username</strong>: <code>{{ USER_ID }}</code></p>
+</li>
+<li>
+<p><strong>Password</strong>: <code>{{ DS_USER_PASSWORD }}</code></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/che-login.png" alt="login" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see the <strong>Authorize Access</strong> page as below, select <strong>Allow selected permissions</strong> button.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/auth-access.png" alt="auth-access" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you log in, you’ll be placed on the <strong>Create Workspace</strong> dashboard. Copy the following <code>Git Repo URL</code> and select <code>Create &amp; Open</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Git Repo URL</strong>: <code><a href="https://github.com/RedHat-Middleware-Workshops/quarkus-workshop-m1m2-labs/tree/ocp-4.15" class="bare">https://github.com/RedHat-Middleware-Workshops/quarkus-workshop-m1m2-labs/tree/ocp-4.15</a></code></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-landing.png" alt="ds" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>A new window or tab in your web browser will open automatically to showcase the progess about <strong>Starting workspace quarkus-workshop</strong>. It takes about <strong>60</strong> seconds to finish the process.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/starting-workspace.png" alt="ds" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see this information page, select <code>Start your workspace</code> to continue  using your workspace.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/starting-workspace-info.png" alt="ds" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After a few seconds, you’ll be placed in the workspace.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-workspace.png" alt="ds" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see this infomation page, check on <code>Trust the authors of all files in the parent folder 'projects'</code>. Then, select `Yes, I trust the authors.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-trust-popup.png" alt="ds" width="800">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll use all of these during the course of this workshop, so keep this browser tab open throughout. <strong>If things get weird, you can simply reload the browser tab to refresh the view.</strong></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_explore_project"><a class="anchor" href="#_explore_project"></a>Explore Project</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s take a look at the left <strong>Explorer</strong>. Your Quarkus project was already imported when the workspace was created.</p>
+</div>
+<div class="paragraph">
+<p>When you select the <code>pom.xml</code>, you will see which version fo the Red Hat Build of Quarkus you will use for the workshop today.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ds-explorer.png" alt="cdw" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>The project also has</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Maven structure</p>
+</li>
+<li>
+<p>An <code>org.acme.people.rest.GreetingResource</code> resource exposed on <code>/hello</code>, along with a simple test</p>
+</li>
+<li>
+<p>A landing page that is accessible on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> after starting the application</p>
+</li>
+<li>
+<p>The application configuration file</p>
+</li>
+<li>
+<p>Other source files we&#8217;ll use later</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Navigate to <code>src &#8594; main &#8594; java &#8594; org.acme.people.rest</code> in the project tree and double select <code>GreetingResource.java</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/initnav.png" alt="VS Code-workspace-terminal" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This class has a very simple RESTful endpoint definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Path("/hello")
+public class GreetingResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "hello";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s a very simple REST endpoint, returning "hello" to requests on <code>/hello</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Compared to vanilla JAX-RS, with Quarkus there is no need to create an <code>Application</code> class. It’s supported but not required. In addition, only one instance of the resource is created and not one per request. You can configure this using the different <code>*Scoped</code> annotations (<code>ApplicationScoped</code>, <code>RequestScoped</code>, etc).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_the_application_in_live_coding_mode"><a class="anchor" href="#_running_the_application_in_live_coding_mode"></a>Running the Application in Live Coding Mode</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Live Coding</strong> (also referred to as <em>dev mode</em>) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.</p>
+</div>
+<div class="paragraph">
+<p>You can always use the <code>mvn</code> (Maven) commands to run Quarkus apps, but we&#8217;ve created a few helpful <strong>tasks</strong> on the VS Code.</p>
+</div>
+<div class="paragraph">
+<p>Navigate the <strong>Command Palette</strong> menu or the press <span class="keyseq"><kbd>Control</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd></span> (or <span class="keyseq"><kbd>Command</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd></span> on macOS).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/navigate-command-palette.png" alt="commands" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Delete <code>&lt;</code> then type <code>task</code> in the command palette. Make sure to append a <code>space</code> character after the <strong>task</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Select the <code>che</code> task to show the Quarkus tasks up.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/type-task.png" alt="type-task" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Start the <em>Live Coding</em> by selecting <code>che: 02. Start Live Coding</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/quarkus-tasks.png" alt="quarkus-tasks" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>A terminal opens automatically to run the <strong>Quarkus Dev Mode</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cmd-livecoding.png" alt="livecoding" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>This will compile and run the app using <code>mvn compile quarkus:dev</code> in a Terminal window. Leave this terminal window open throughout the lab! You will complete the entire lab without shutting down Quarkus Live Coding mode, so be careful not to close the tab (if you do, you re-run it). This is very useful for quick experimentation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The first time you build the app, new dependencies may be downloaded via maven. This should only happen once, after that things will go even faster</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You may see WARNINGs like <code>Unrecognized configuration key</code> or <code>Duplicate entry</code>. These are configuration values that will take effect later on and can be safely ignored for now.
+Occasionally you may get an error (e.g. <code>NullPointerException</code>) during Live Reloading. In this case, simply close the terminal and restart live coding using the task.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">INFO  [io.quarkus] (Quarkus Main Thread) people 1.0-SNAPSHOT on JVM (powered by Quarkus xx.xx.xx.) started in 2.510s. Listening on: http://0.0.0.0:8080
+INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, resteasy-reactive, smallrye-context-propagation, vertx]
+
+--
+Tests paused
+Press [r] to resume testing, [o] Toggle test output, [h] for more options&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the amazingly fast startup time! The app is now running <strong>locally</strong> (within the Che container in which the workspace is also running). <code>localhost</code> refers to the Kubernetes pod, not <strong>your</strong> laptop (so therefore opening localhost:8080 in your browser will not do anything).</p>
+</div>
+<div class="paragraph">
+<p>You can also see <strong>Tests paused</strong> by default when a Quarkus application gets started. We will learn more details in the <em>Testing Quarkus App</em> lab.</p>
+</div>
+<div class="paragraph">
+<p>VS Code will also detect that the Quarkus app opens port <code>5005</code> (for debugging) and <code>8080</code> (for web requests). <strong>Close the popup not to add a port 5005</strong>, but when prompted, <strong>Open In New Tab</strong> to open a port <code>8080</code>, which opens a new tab in your web browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/open-port.png" alt="port" width="700">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see the popup message below, select <code>Open</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/open-external.png" alt="port" width="700">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should see the default Quarkus welcome page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/welcome-quarkus.png" alt="port" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Open a <strong>new</strong> terminal by selecting <code>+</code> icon:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cmd-terminal.png" alt="livecoding" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>and invoke the <code>hello</code> endpoint using the following <em>curl</em> command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/hello</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also add <code>/hello</code> to the Quarkus welcome page to see the same result as the <em>curl</em> command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/crw-open-page-hello.png" alt="page" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>When you fail to access the <strong>hello</strong> page, make sure to call the URL using <strong>http</strong> protocol.</p>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s exercise the <strong>live reload</strong> capabilities of Quarkus. In VS Code, open the <code>GreetingResource.java</code> file (in <code>src/main/java/org/acme/people/rest</code>) and change <code>return "hello";</code> to <code>return "hola";</code> in the editor. After making this change, reload the same brower tab that was showing <code>hello</code>. It should now show <code>hola</code>.</p>
+</div>
+<div class="paragraph">
+<p>Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we&#8217;re just getting started. Leave the app running so we can continue to change it on the fly in the next section.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>quarkus:dev</code> runs Quarkus in development mode. This enables live reload with background compilation, which means that when you modify your Java files your resource files and refresh your browser these changes will automatically take effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This will also listen for a debugger on port <code>5005</code>. If you want to wait for the debugger to attach before running you can pass <code>-Ddebug</code> on the command line. If you don’t want the debugger at all you can use <code>-Ddebug=false</code>. We&#8217;ll use this later.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_in_case_you_havent_done_module_1_basic_today"><a class="anchor" href="#_in_case_you_havent_done_module_1_basic_today"></a>In case you haven’t done Module 1 (Basic) today</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are only doing the <strong>Advanced</strong> lab today, or you didn’t quite complete the Basic Lab, you&#8217;ll need to login to OpenShift, then build and deploy the application needed for the exercises using a utility script provided. Follow the steps below to do this.</p>
+</div>
+<div class="sect3">
+<h4 id="_login_to_openshift"><a class="anchor" href="#_login_to_openshift"></a>Login to OpenShift</h4>
+<div class="paragraph">
+<p>Although your VS Code is running on the Kubernetes cluster, it&#8217;s running with a default restricted <em>Service Account</em> that prevents you from creating most resource types. So we&#8217;ll log in with your workshop user. Execute the following command in the VS Code terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc login -u {{ USER_ID }} -p {{ OPENSHIFT_USER_PASSWORD }} https://openshift.default.svc:443</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">Login successful.
+
+You have access to the following projects and can switch between them with 'oc project &lt;projectname&gt;':
+
+  * {{ USER_ID }}-devspaces
+    {{ USER_ID }}-project
+
+Using project "user1-devspaces".
+Welcome! See 'oc help' to get started.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations, you are now authenticated to the OpenShift server via the CLI. We&#8217;ll use the prettier web console later on in this lab.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_app"><a class="anchor" href="#_deploy_app"></a>Deploy app</h3>
+<div class="paragraph">
+<p>Deploy the <code>people</code> microservice by executing the following shell script in a CodeReady Workspaces Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">sh scripts/deploy-people.sh {{ USER_ID }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait for the script to complete before continuing.</p>
+</div>
+<div class="paragraph">
+<p>When the script completes, the app is deployed to OpenShift. You can see it in the {{ CONSOLE_URL}}[OpenShift Console^]. Login with your assigned username and password (e.g. <code>{{ USER_ID }}/{{ OPENSHIFT_USER_PASSWORD }}</code>):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocplogin.png" alt="login" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Once logged in, select the name of your project (<code>{{ USER_ID }}-project</code>):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocpproj.png" alt="project" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Switch to the <em>Developer Perspective</em> using the upper-left drop-down:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devperspective.png" alt="perspective" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>This provides a developer-centric Topology view of applications deployed to the project. You can see the single <code>people</code> deployment that we just deployed earlier using the CLI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/peopledc.png" alt="project" width="600">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_list_extensions"><a class="anchor" href="#_list_extensions"></a>List extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ready to dive into <strong>advanced</strong> Quarkus development? Let&#8217;s learn how easily Quarkus allows developers to extend for building a vibrant ecosystem.</p>
+</div>
+<div class="paragraph">
+<p>Think of Quarkus extensions as your project dependencies. Extensions configure, boot and integrate a framework or technology into your Quarkus application. They also do all of the heavy lifting of providing the right information to GraalVM for your application to compile natively.</p>
+</div>
+<div class="paragraph">
+<p>Quarkus aims to provide a support for a full <a href="https://quarkus.io/extensions/" target="_blank" rel="noopener">extension ecosystem</a>, to make it easy to discover and consume 3rd party extensions, as well as providing easier version management.</p>
+</div>
+<div class="paragraph">
+<p>Retrieve the list of possible extensions using the Maven plugin. Run this in the Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:list-extensions</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see the list of ~538 different extensions available to you in the output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">[INFO] Current Quarkus extensions available:
+[INFO]
+[INFO] ✬ ArtifactId                                         Extension Name
+[INFO] ✬ blaze-persistence-integration-quarkus              Blaze-Persistence
+[INFO] ✬ camel-quarkus-activemq                             Camel ActiveMQ
+[INFO] ✬ camel-quarkus-amqp                                 Camel AMQP
+[INFO] ✬ camel-quarkus-arangodb                             Camel ArangoDb
+[INFO] ✬ camel-quarkus-as2                                  Camel AS2
+[INFO] ✬ camel-quarkus-atlasmap                             Camel AtlasMap
+[INFO] ✬ camel-quarkus-atom                                 Camel Atom
+[INFO] ✬ camel-quarkus-attachments                          Camel Attachments
+[INFO] ✬ camel-quarkus-avro                                 Camel Avro
+[INFO] ✬ camel-quarkus-avro-rpc                             Camel Avro RPC
+[INFO] ✬ camel-quarkus-aws2-athena                          Camel AWS 2 Athena
+[INFO] ✬ camel-quarkus-aws2-cw                              Camel AWS 2 CloudWatch
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding an extension is similarly easy. With Maven, you can add extensions using <code>mvn quarkus:add-extension -Dextensions="extension1,extension2,&#8230;&#8203;"</code>. The extension name can be the maven groupId/artifactId name of the extension: e.g. <code>io.quarkus:quarkus-agroal</code>. But you can pass a partial name and Quarkus will do its best to find the right extension. For example, <code>agroal</code>, <code>Agroal</code> or <code>agro</code> will expand to <code>io.quarkus:quarkus-agroal</code>. If no extension is found or if more than one extensions match, you will see a warning and a list of possible matches in the command result.</p>
+</div>
+<div class="paragraph">
+<p>When you run Quarkus applications, the list of extensions enabled are shown in the output, such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, resteasy-reactive, smallrye-context-propagation, vertx]</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In Live Coding mode, Quarkus will monitor the state of <code>pom.xml</code> and bring in new dependencies. No need to stop and restart!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_an_extension"><a class="anchor" href="#_add_an_extension"></a>Add an extension</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Later on in this lab we&#8217;ll be using <code>Jackson</code> serialization support for RESTEasy Reactive, so let&#8217;s add that extension here. In the Terminal, run the following command to add the <em>RESTEasy Reactive Jackson</em> extension to your project:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="resteasy-reactive-jackson"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-resteasy-reactive-jackson has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of this command is a new <code>&lt;dependency&gt;</code> added to our <code>pom.xml</code> which you can see by looking at the differences you&#8217;ve made up till now.</p>
+</div>
+<div class="paragraph">
+<p>Select the <em>Source Control</em> view and then select <code>pom.xml</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gitdiff.png" alt="login" width="1000">
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see all the changes to <code>pom.xml</code> since you started, including the new extensions we&#8217;ve added.</p>
+</div>
+<div class="paragraph">
+<p>You may see other apparent differences due to whitespace and/or the re-shuffling of XML elements when you ran <code>mvn quarkus:add-extension</code>.</p>
+</div>
+<div class="paragraph">
+<p>There are many other git and GitHub operations like this one that you can perform directly in the IDE for real projects (e.g. committing, branching, merging, push/pull, log viewing, etc).</p>
+</div>
+<div class="paragraph">
+<p>Go back to the <strong>Explorer</strong> view in CodeReady (to see the tree of files once again).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_writing_your_own_extension"><a class="anchor" href="#_writing_your_own_extension"></a>Writing your own extension</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus extensions add a new developer focused behavior to the core offering, and consist of two distinct parts, buildtime augmentation and runtime container. The augmentation part is responsible for all metadata processing, such as reading annotations, XML descriptors etc. The output of this augmentation phase is recorded bytecode which is responsible for directly instantiating the relevant runtime services.</p>
+</div>
+<div class="paragraph">
+<p>This means that metadata is only processed once at build time, which both saves on startup time, and also on memory usage as the classes etc that are used for processing are not loaded (or even present) in the runtime JVM.</p>
+</div>
+<div class="paragraph">
+<p>Writing a Quarkus extension is beyond the scope of this lab, so consult the <a href="https://quarkus.io/guides/extension-authors-guide" target="_blank" rel="noopener">Extension Author&#8217;s Guide</a> for more detail on writing your own extension.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus aims to provide a support for a full <a href="https://quarkus.io/extensions/" target="_blank" rel="noopener">extension ecosystem</a>, to make it easy to discover and consume 3rd party extensions, as well as providing easier version management.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll be adding additional extensions as we go along in other sections of this workshop.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="deploy.html" class="query-params-link">Deploying to the cloud</a></span>
+  <span class="next"><a href="panache.html" class="query-params-link">Hibernate ORM with Panache</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

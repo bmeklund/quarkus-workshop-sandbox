@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Building Native Images :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/native.html">
+    <link rel="prev" href="debugging.html">
+    <link rel="next" href="cloudnative.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module One</li>
+    <li><a href="native.html">Building Native Quarkus Apps</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/native.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Building Native Images</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s now produce a native executable for our application. It improves the startup time of the application, and produces a minimal disk and memory footprint. The executable would have everything to run the application including the "JVM" (shrunk to be just enough to run the application), and the application. This is accomplished using <a href="https://github.com/graalvm/mandrel" target="_blank" rel="noopener">Mandrel</a>.</p>
+</div>
+<div class="paragraph">
+<p>Mandrel is a downstream distribution of the GraalVM community edition. Mandrel&#8217;s main goal is to provide a native-image release specifically to support <a href="https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus" target="_blank" rel="noopener">Quarkus</a>. The aim is to align the native-image capabilities from GraalVM with OpenJDK and Red Hat Enterprise Linux libraries to improve maintainability for native Quarkus applications.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/native-image-process.png" alt="native" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>GraalVM is already installed for you. Inspect the value of the <code>GRAALVM_HOME</code> variable in the Terminal with:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">echo $GRAALVM_HOME</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build_the_image"><a class="anchor" href="#_build_the_image"></a>Build the image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Within the <code>pom.xml</code> is the declaration for the Quarkus Maven plugin which contains a profile for <code>native-image</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;native&lt;/id&gt;
+      &lt;activation&gt;
+      ...
+      &lt;/activation&gt;
+      &lt;build&gt;
+      ...
+      &lt;properties&gt;
+        &lt;quarkus.package.type&gt;native&lt;/quarkus.package.type&gt;
+      &lt;/properties&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use a profile because, you will see very soon, packaging the native image takes a few seconds. However, this compilation time is only incurred <em>once</em>, as opposed to <em>every</em> time the application starts, which is the case with other approaches for building and executing JARs.</p>
+</div>
+<div class="paragraph">
+<p>Create a native executable by using the <strong>devfile: 04. Build Native App</strong> task:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cmd-native.png" alt="livecoding" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>or by running the below command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn clean package -Pnative -DskipTests -Dquarkus.native.native-image-xmx=2g</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>This will take about 2-3 minutes to finish. Wait for it!</strong>. In the end you should get a <strong>BUILD SUCCESS</strong> message.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since we are on Linux in this environment, and the OS that will eventually run our application is also Linux, we can use our local OS to build the native Quarkus app. If you need to build native Linux binaries when on other OS&#8217;s like Windows or Mac OS X, you can use <code>-Dquarkus.native.container-runtime=[podman | docker]</code>. You&#8217;ll need either Docker or <a href="https://podman.io">Podman</a> installed depending on which runtime you want to use!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The output of the native build is a native Linux binary, which you can see using the readelf command. Run this in a Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">readelf -h target/*-runner</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you’ll see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x405000
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          49403488 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         9
+  Size of section headers:           64 (bytes)
+  Number of section headers:         32
+  Section header string table index: 31</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s a binary that can only run on Linux, but as you’ll see in a moment, this native executable starts up very fast and takes up little memory.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_run_native_image"><a class="anchor" href="#_run_native_image"></a>Run native image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since our environment here is Linux, you can <em>just run it</em>. Select <strong>devfile: 06. Run Native App</strong> task:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/run-native.png" alt="livecoding" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>We use port <code>8081</code> here to avoid conflicting with our already-running development mode Quarkus app.</p>
+</div>
+<div class="paragraph">
+<p>Notice the amazingly fast startup time:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">INFO  [io.quarkus] (main) people 1.0-SNAPSHOT native (powered by Quarkus 3.8.3.redhat-00003) started in 0.024s. Listening on: http://0.0.0.0:8081</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s <strong>24</strong> milliseconds to start up.</p>
+</div>
+<div class="paragraph">
+<p>And extremely low memory usage as reported by the Linux <code>ps</code> utility. While the app is running, open another Terminal and run:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">ps -o pid,rss,command -p $(pgrep -f runner)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">    PID   RSS COMMAND
+  13306  2804 sh -c cd /projects/quarkus-workshop-m1m2-labs; ./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081
+  13312 44008 ./target/people-1.0-SNAPSHOT-runner -Dquarkus.http.port=8081</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The 2nd row is the actual process that is taking around <code>44</code> MB of memory (<a href="https://en.wikipedia.org/wiki/Resident_set_size" target="_blank" rel="noopener">Resident Set Size</a>, or RSS). Pretty compact!</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The RSS and memory usage of any app, including Quarkus, will vary depending your specific environment, and will rise as the application experiences load.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Make sure the app is still working as expected (we&#8217;ll use <code>curl</code> this time to access it directly). In a new Terminal run:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8081/hello/greeting/quarkus</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">hello quarkus from &lt;hostname&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nice!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cleanup"><a class="anchor" href="#_cleanup"></a>Cleanup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Go to the Terminal in which you ran the native app and press <span class="keyseq"><kbd>CTRL</kbd>+<kbd>C</kbd></span> to stop our native app. <strong>Be sure to leave your Live Coding Terminal open!</strong></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You&#8217;ve now built a Java application as an executable JAR and a Linux native binary. We&#8217;ll explore the benefits of native binaries later in when we start deploying to Kubernetes.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="debugging.html" class="query-params-link">Debugging Quarkus Apps</a></span>
+  <span class="next"><a href="cloudnative.html" class="query-params-link">Developing Cloud Native with Quarkus</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

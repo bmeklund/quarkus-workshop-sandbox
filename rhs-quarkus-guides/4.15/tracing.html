@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tracing with MicroProfile OpenTracing :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/tracing.html">
+    <link rel="prev" href="monitoring.html">
+    <link rel="next" href="security.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/tracing.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Tracing with MicroProfile OpenTracing</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This exercise shows how your Quarkus application can utilize <a href="https://opentelemetry.io/" target="_blank" rel="noopener">OpenTelemetry (OTel)</a> to provide distributed tracing for interactive web applications.</p>
+</div>
+<div class="paragraph">
+<p>OpenTelemetry Metrics and Logging are not yet supported.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Quarkus now supports the OpenTelemetry Autoconfiguration for Traces. The configurations match what you can see at <a href="https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md">OpenTelemetry SDK Autoconfigure</a> with the <code>quarkus.*`</code> prefix.</p>
+</li>
+<li>
+<p>Extensions and the libraries they provide, are directly instrumented in Quarkus. The use of the <a href="https://opentelemetry.io/docs/instrumentation/java/automatic/" target="_blank" rel="noopener">OpenTelemetry Agent</a> is not needed nor recommended due to context propagation issues between imperative and reactive libraries.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In a distributed cloud-native application, multiple microservices are collaborating to deliver the expected functionality. If you have hundreds of services, how do you debug an individual request as it travels through a distributed system? For Java enterprise developers, the OpenTelemetry framework enables you to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) which helps you analyze your application performance and behavior. Let&#8217;s find out how.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_jaeger"><a class="anchor" href="#_install_jaeger"></a>Install Jaeger</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.jaegertracing.io/" target="_blank" rel="noopener">Jaeger</a> is a distributed tracing system originally created by Uber (the ride sharing company). It is used for monitoring and troubleshooting microservices-based distributed systems, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Distributed context propagation</p>
+</li>
+<li>
+<p>Distributed transaction monitoring</p>
+</li>
+<li>
+<p>Root cause analysis</p>
+</li>
+<li>
+<p>Service dependency analysis</p>
+</li>
+<li>
+<p>Performance / latency optimization</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll use the Jaeger as a backend to collect the telemetry data because Jaeger exposes a <em>collector</em> through which apps (like our People app) report tracing details. Jaeger stores and reports on this tracing activity.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>What are Traces and Spans?</strong></p>
+</div>
+<div class="paragraph">
+<p>At the highest level, a <em>trace</em> tells the story of a transaction or workflow as it propagates through a (potentially distributed) system. A trace is a directed acyclic graph (DAG) of <em>spans</em>: named, timed operations representing a contiguous segment of work in that trace.</p>
+</div>
+<div class="paragraph">
+<p>Each component (microservice) in a distributed trace will contribute its own span or spans.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Jaeger is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).</p>
+</div>
+<div class="paragraph">
+<p>First, on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], click <strong>+Add to Project</strong>. Then, Type in <code>Jaeger</code> in the search box, and  select <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/fromcat.png" alt="names" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will open a dialog for you to configure the Jaeger service before it&#8217;s installed.</p>
+</div>
+<div class="paragraph">
+<p>Change the name to <code>jaeger</code> as shown, and click <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jaegerdone.png" alt="kafkacatalog" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a new <code>Jaeger</code> Kubernetes object in your namespace, triggering the Operator to deploy Jaeger. In the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^] you&#8217;ll see Jaeger spin up:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jaegerspin.png" alt="spin" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Jaeger exposes its collector at different ports for different protocols. Most use the HTTP collector at <code>jaeger-collector:14268</code> but other protocols like gRPC are also supported on different ports. You can see them by clicking on the Jaeger circle and clicking the <em>Resources</em> tab:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jaegersvcs.png" alt="spin" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>The endpoint on port <code>14250</code> is the one we&#8217;ll use for our app.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_opentelemetry_collector"><a class="anchor" href="#_install_opentelemetry_collector"></a>Install OpenTelemetry Collector</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenTelemetry Collector enables you to offload data quickly alongside your application services in terms of retries, batching, encryption or even sensitive data filtering. You will create an OpenTelemetry Collector to send the telemetry data to the Jaeger server.</p>
+</div>
+<div class="paragraph">
+<p>Open <code>otel.yml</code> in the <strong>src/main/kubernetes</strong> directory. Copy the following YAML to the file.</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel
+  namespace: {{ USER_ID }}-project
+spec:
+  mode: deployment
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+    processors:
+    exporters:
+      debug:
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: []
+          exporters: [debug]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, run the following <code>oc</code> command in VS Code terminal.</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc apply -f src/main/kubernetes/otel.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Go back to the Topology view, you will see the otel-collector deployed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devconsole-otel.png" alt="devconsole-otel" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_opentelemetry_to_quarkus"><a class="anchor" href="#_add_opentelemetry_to_quarkus"></a>Add OpenTelemetry to Quarkus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Jaeger installed, let&#8217;s turn back to our Quarkus app. Like other exercises, we&#8217;ll need the following extensions to enable OpenTelemetry in our app. Install it with:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="quarkus-opentelemetry, rest-client-reactive, quarkus-rest-client-reactive-jackson"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-rest-client-reactive-jackson has been installed
+[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-rest-client-reactive has been installed
+[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-quarkus-opentelemetry has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add the necessary entries in your <code>pom.xml</code> to bring in the OpenTracing capability, and an HTTP REST Client we&#8217;ll use pater.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_quarkus"><a class="anchor" href="#_configure_quarkus"></a>Configure Quarkus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next, open the <code>application.properties</code> file (in the <code>src/main/resources</code> directory). Add the following lines to it to configure the OTLP gRPC Exporter in Quarkus:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://jaeger-collector-headless:4317 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>gRPC endpoint (Jaeger collector service) to send spans.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_it_out"><a class="anchor" href="#_test_it_out"></a>Test it out</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like many other Quarkus frameworks, sensible defaults and out of the box functionality means you can get immediate value out of Quarkus without changing any code. By default, all JAX-RS endpoints (like our <code>/hello</code> and others) are automatically traced. Let&#8217;s see that in action by re-deploying our traced app.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s re-build and re-deploy the application:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn clean package -DskipTests &amp;&amp; \
+oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_confirm_deployment"><a class="anchor" href="#_confirm_deployment"></a>Confirm deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run and wait for the app to complete its rollout:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trigger_traces"><a class="anchor" href="#_trigger_traces"></a>Trigger traces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You&#8217;ll need to trigger some HTTP endpoints to generate traces. Access the <a href="https://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/datatable.html" target="_blank" rel="noopener">graphical person browser powered by the DataTables library we created earlier</a>.</p>
+</div>
+<div class="paragraph">
+<p>Exercise the table a bit by paging through the entries and using various search terms to force several RESTful calls back to our app:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/paging.png" alt="paging" width="600">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inspect_traces"><a class="anchor" href="#_inspect_traces"></a>Inspect traces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Open the <a href="https://jaeger-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}" target="_blank" rel="noopener">Jaeger Query UI</a>. By default Jaeger uses the same login details as OpenShift, so click the <strong>Login with OpenShift</strong> button, enter your credentials:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Username</strong>: <code>{{ USER_ID }}</code></p>
+</li>
+<li>
+<p><strong>Password</strong>: <code>{{ OPENSHIFT_USER_PASSWORD }}</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then, click <strong>Allow Selected Permissions</strong> to allow Jaeger to access your account details. You&#8217;ll end up on the Jaeger query page. Using the menu on the left, select the <code>people</code> Service, and click <strong>Find Traces</strong>. Jaeger will show the collected traces on the right:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/find1.png" alt="jaeger" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Select one of the traces from "a few seconds ago" to show the individual <em>spans</em> of each trace:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/trace1.png" alt="jaeger" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>You can see that this trace (along with the others) shows the incoming HTTP GET operation to the <code>/datatable</code> endpoint we created earlier, along with the time it took, and other ancillary info about the request. Not terribly interesting as it&#8217;s a single call, but you can imagine with a real world app and multiple microservices working together, that traces could reveal a lot of detail.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Service Mesh technologies like <a href="https://istio.io" target="_blank" rel="noopener">Istio</a> can provide even more tracing prowess as the calls across different services are traced at the network level, not requiring <em>any</em> frameworks or developer instrumentation to be enabled for tracing.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tracing_external_calls"><a class="anchor" href="#_tracing_external_calls"></a>Tracing external calls</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This exercise showa how to use the <a href="https://github.com/eclipse/microprofile-rest-client" target="_blank" rel="noopener">MicroProfile REST Client</a> with Quarkus in order to trace <em>external</em>, outbound requests with very little effort.</p>
+</div>
+<div class="paragraph">
+<p>We will use the publicly available <a href="https://swapi.dev" target="_blank" rel="noopener">Star Wars API</a> to fetch some characters from the Star Wars universe. Our first order of business is to setup the model we will be using, in the form of a StarWarsPerson POJO.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_model"><a class="anchor" href="#_create_model"></a>Create model</h3>
+<div class="paragraph">
+<p>Create a new class file in the <code>org.acme.people.model</code> package called <code>StarWarsPerson.java</code> with the following content:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.model;
+
+public class StarWarsPerson {
+
+    private String name;
+    private String mass;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMass() {
+        return mass;
+    }
+
+    public void setMass(String mass) {
+        this.mass = mass;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This contains a subset of the full Star Wars model, just enough to demonstrate tracing.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_interface"><a class="anchor" href="#_create_interface"></a>Create interface</h3>
+<div class="paragraph">
+<p>Using the <a href="https://github.com/eclipse/microprofile-rest-client" target="_blank" rel="noopener">MicroProfile REST Client</a> is as simple as creating an interface using the proper JAX-RS and MicroProfile annotations. Create a new Java class file in the <code>org.acme.people.service</code> package called <code>StarWarsService.java</code> with the following content:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.acme.people.service;
+
+import org.acme.people.model.StarWarsPerson;
+import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+
+@RegisterRestClient <i class="conum" data-value="1"></i><b>(1)</b>
+@Path("/api") <i class="conum" data-value="2"></i><b>(2)</b>
+public interface StarWarsService {
+
+    @GET
+    @Path("/people/{id}/") <i class="conum" data-value="2"></i><b>(2)</b>
+    @Produces("application/json") <i class="conum" data-value="3"></i><b>(3)</b>
+    @ClientHeaderParam(name="User-Agent", value="QuarkusLab") <i class="conum" data-value="4"></i><b>(4)</b>
+    StarWarsPerson getPerson(@PathParam("id") int id); <i class="conum" data-value="5"></i><b>(5)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>@RegisterRestClient</code> allows Quarkus to know that this interface is meant to be available for CDI injection as a REST Client</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>@Path</code>, <code>@GET</code> and <code>@PathParam</code> are the standard JAX-RS annotations used to define how to access the service</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>While <code>@Consumes</code> and <code>@Produces</code> are optional as auto-negotiation is supported, it is heavily recommended to annotate your endpoints with them to define precisely the expected content types. It will also allow to narrow down the number of JAX-RS providers (which can be seen as converters) included in the native executable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The Star Wars API requires a <code>User-Agent</code> header, so with Quarkus we add that with <code>@ClientHeaderParam</code>. Other parameters can be added here as needed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>getPerson</code> method gives our code the ability to query the Star Wars API by <code>id</code>. The client will handle all the networking and marshalling leaving our code clean of such technical details.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configure_endpoint"><a class="anchor" href="#_configure_endpoint"></a>Configure endpoint</h3>
+<div class="paragraph">
+<p>In order to determine the base URL to which REST calls will be made, the REST Client uses configuration from <code>application.properties</code>. To configure it, add this to your <code>application.properties</code> (in <code>src/main/resources</code>):</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none">org.acme.people.service.StarWarsService/mp-rest/url=https://swapi.dev</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Having this configuration means that all requests performed using our code will use <code><a href="https://swapi.dev" class="bare">https://swapi.dev</a></code> as the base URL.</p>
+</div>
+<div class="paragraph">
+<p>Note that <code>org.acme.people.service.StarWarsService</code> must match the fully qualified name of the StarWarsService interface we created in the previous section.</p>
+</div>
+<div class="paragraph">
+<p>Using the configuration above, calling the <code>getPerson(int)</code> method of StarWarsService with a value of <code>1</code> would result in an HTTP GET request being made to <code><a href="https://swapi.dev/api/people/1/" class="bare">https://swapi.dev/api/people/1/</a></code>. Confirm you can access the Star Wars API using curl:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s https://swapi.dev/api/people/1/ | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should get Luke Skywalker back:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "name": "Luke Skywalker",
+  "height": "172",
+  "mass": "77",
+  "hair_color": "blond",
+  "skin_color": "fair",
+  "eye_color": "blue",
+  "birth_year": "19BBY",
+  "gender": "male",
+  "homeworld": "https://swapi.dev/api/planets/1/",
+  ....&lt;more here&gt;....
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_final_step_add_endpoint"><a class="anchor" href="#_final_step_add_endpoint"></a>Final step: add endpoint</h3>
+<div class="paragraph">
+<p>We need to <code>@Inject</code> an instance of our new <code>StarWarsService</code> and call it. Open the existing <code>PersonResource</code> class and add the following injected field and method:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Inject
+    @RestClient
+    StarWarsService swService; <i class="conum" data-value="1"></i><b>(1)</b>
+
+    @GET
+    @Path("/swpeople")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;StarWarsPerson&gt; getCharacters() {
+        return IntStream.range(1, 6) <i class="conum" data-value="2"></i><b>(2)</b>
+            .mapToObj(swService::getPerson)  <i class="conum" data-value="3"></i><b>(3)</b>
+            .collect(Collectors.toList());  <i class="conum" data-value="4"></i><b>(4)</b>
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Our injected service</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Generate a stream of 5 integers that we will use as IDs to pass to the service</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>For each of the integers, call the <code>StarWarsService::getPerson</code> method</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Collect the results into a list and return it</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll need to add a few imports at the top of the file:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.acme.people.model.StarWarsPerson;
+import org.acme.people.service.StarWarsService;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+import java.util.stream.IntStream;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_it_out_2"><a class="anchor" href="#_test_it_out_2"></a>Test it out</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s re-build and re-deploy the application:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn clean package -DskipTests &amp;&amp; \
+oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_confirm_deployment_2"><a class="anchor" href="#_confirm_deployment_2"></a>Confirm deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run and wait for the app to complete its rollout:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trigger_traces_2"><a class="anchor" href="#_trigger_traces_2"></a>Trigger traces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Access the endpoint by running the following command:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s https://$(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'{% endraw %})/person/swpeople | jq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+  {
+    "mass": "77",
+    "name": "Luke Skywalker"
+  },
+  {
+    "mass": "75",
+    "name": "C-3PO"
+  },
+  {
+    "mass": "32",
+    "name": "R2-D2"
+  },
+  {
+    "mass": "136",
+    "name": "Darth Vader"
+  },
+  {
+    "mass": "49",
+    "name": "Leia Organa"
+  }
+]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inspect_traces_2"><a class="anchor" href="#_inspect_traces_2"></a>Inspect traces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Reload the <a href="https://jaeger-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}" target="_blank" rel="noopener">Jaeger Query UI</a>. Then, select <code>GET /person/swpeople</code> in the Operation and click <strong>Find Traces</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/swpeople-search.png" alt="swpeople" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The new trace should appear the top with multiple spans. Select it to display details:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/swpeople.png" alt="swpeople" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>You can see that this trace (along with the others) shows multiple spans: the incoming HTTP GET operation to the <code>/swperson</code> endpoint we created earlier, and the external calls to the Star Wars API. Expand the traces to show the detail:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/swpeopleext.png" alt="swpeopleext" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extra_credit_explicit_method_tracing"><a class="anchor" href="#_extra_credit_explicit_method_tracing"></a>Extra credit: Explicit method tracing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An annotation is provided to define explicit Span creation. This works on top of the "no-action" setup we did in the previous steps.</p>
+</div>
+<div class="paragraph">
+<p>The <code>@Traced</code> annotation, applies to a class or a method. When applied to a class, the <code>@Traced</code> annotation is applied to all methods of the class. If the annotation is applied to a class and method then the annotation applied to the method takes precedence. The annotation starts a Span at the beginning of the method, and finishes the Span at the end of the method.</p>
+</div>
+<div class="paragraph">
+<p>If you have time after this workshop, add a <code>@Traced</code> annotation to some of the other methods and test them out.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You&#8217;ve seen how to enable automatic tracing for JAX-RS methods as well as create custom tracers for non-JAX-RS methods and external services by using MicroProfile OpenTracing. This specification makes it easy for Quarkus developers to instrument services with distributed tracing for learning, debugging, performance tuning, and general analysis of behavior.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="monitoring.html" class="query-params-link">Monitoring with Prometheus and Grafana</a></span>
+  <span class="next"><a href="security.html" class="query-params-link">Securing Quarkus APIs</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

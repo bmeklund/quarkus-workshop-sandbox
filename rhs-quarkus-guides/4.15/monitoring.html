@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Monitoring Quarkus Apps using Micrometer :: Quarkus Workshop Guides</title>
+    <link rel="canonical" href="https://bmeklund.github.io/quarkus-workshop-sandbox/rhs-quarkus-guides/4.15/monitoring.html">
+    <link rel="prev" href="kafka.html">
+    <link rel="next" href="tracing.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://bmeklund.github.io/quarkus-workshop-sandbox">Quarkus Workshop Guides</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rhs-quarkus-guides" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Quarkus Workshop Guides</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="intro.html">Lab Instructions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module One</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basics.html">Getting Started with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cdi.html">Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="testing.html">Testing Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="debugging.html">Debugging Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="native.html">Building Native Quarkus Apps</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cloudnative.html">Developing Cloud Native with Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="deploy.html">Deploying to the cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Module Two</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="extensions.html">Using Quarkus extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="panache.html">Hibernate ORM with Panache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="openapi.html">Documenting and Testing APIs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="messaging.html">Event-driven Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kafka.html">Streaming Data with Quarkus and Kafka</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="monitoring.html">Monitoring with Prometheus and Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tracing.html">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="security.html">Securing Quarkus APIs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Quarkus Workshop Guides</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Quarkus Workshop Guides</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Quarkus Workshop Guides</a></li>
+    <li>Module Two</li>
+    <li><a href="monitoring.html">Monitoring with Prometheus and Grafana</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/bmeklund/quarkus-workshop-sandbox/edit/master/documentation/modules/ROOT/pages/monitoring.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Monitoring Quarkus Apps using Micrometer</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This exercise demonstrates how your Quarkus application can utilize the <a href="https://quarkus.io/guides/micrometer" target="_blank" rel="noopener">Micrometer Metrics</a> specification through the Micrometer Registry Prometheus extension.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://micrometer.io/" target="_blank" rel="noopener">Micrometer</a> allows applications to gather various metrics and statistics that provide insights into what is happening inside the application. They serve to pinpoint issues, provide long term trend data for capacity planning and pro-active discovery of issues (e.g. disk usage growing without bounds). Metrics can also help those scheduling systems decide when to scale the application to run on more or fewer machines.</p>
+</div>
+<div class="paragraph">
+<p>Micrometer defines a core library and a set of additional libraries that support different monitoring systems. Quarkus Micrometer extensions are structured similarly: <em>quarkus-micrometer</em> provides core micrometer support and runtime integration and other supporting Quarkus and <em>Quarkiverse</em> extensions bring in additional dependencies and requirements to support specific monitoring systems.</p>
+</div>
+<div class="paragraph">
+<p>The metrics can be read remotely using JSON format or the <a href="https://prometheus.io/docs/instrumenting/exposition_formats/#text-based-format" target="_blank" rel="noopener">OpenMetrics text format</a>, so that they can be processed by additional tools such as Prometheus, and stored for analysis and visualisation. You can then use tools like <a href="http://prometheus.io" target="_blank" rel="noopener">Prometheus</a> and <a href="http://grafana.com" target="_blank" rel="noopener">Grafana</a> to collect and display metrics for your Quarkus apps.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_prometheus"><a class="anchor" href="#_install_prometheus"></a>Install Prometheus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First, let&#8217;s install Prometheus. Prometheus is an open-source systems monitoring and alerting toolkit featuring:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a multi-dimensional <a href="https://prometheus.io/docs/concepts/data_model/" target="_blank" rel="noopener">data model</a> with time series data identified by metric name and key/value pairs</p>
+</li>
+<li>
+<p><a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank" rel="noopener">PromQL</a>, a flexible query language to leverage this dimensionality</p>
+</li>
+<li>
+<p>time series collection happens via a pull model over HTTP</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To install it, first create a Kubernetes ConfigMap that will hold the Prometheus configuration. In the Terminal, run the following:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc create configmap prom --from-file=prometheus.yml=src/main/kubernetes/prometheus.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a ConfigMap using the contents of the <code>src/main/kubernetes/prometheus.yml</code> file in your project (we&#8217;ve created this file for you). It contains basic Prometheus configuration, plus a specific <em>target</em> which instructs it to look for application metrics from both Prometheus itself, and our <code>people</code> app, on HTTP port 8080 at the <code>/q/metrics</code> endpoint. Here&#8217;s a snippet of that file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">scrape_configs:
+  - job_name: 'prometheus' <i class="conum" data-value="1"></i><b>(1)</b>
+    static_configs:
+    - targets: ['localhost:9090']
+
+  - job_name: 'quarkus-people-app' <i class="conum" data-value="2"></i><b>(2)</b>
+    metrics_path: '/q/metrics'
+    static_configs:
+    - targets: ['people:8080']</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Configures Prometheus to scrape metrics from itself</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>COnfigures Prometheus to scrape metrics from Kubernetes service <code>people</code> on port <code>8080</code> with HTTP, at the default metrics endpoint of <code>/q/metrics</code></td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_deploy_prometheus_from_container_image"><a class="anchor" href="#_deploy_prometheus_from_container_image"></a>Deploy Prometheus from Container Image</h3>
+<div class="paragraph">
+<p>On the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View for your project^], <strong>right-click</strong> on <code>+Add to Project</code>, and choose "Container Image"</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/add-to-project.png" alt="Prometheus" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Type in <code>quay.io/prometheus/prometheus</code> in <strong>Image Name from external registry</strong> field. You will see <strong>green checked</strong> icon and <strong>Validated</strong> under the input box.</p>
+</div>
+<div class="paragraph">
+<p>Next, fill out the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Application</strong>: <code>Create Application</code></p>
+</li>
+<li>
+<p><strong>Application Name</strong>: <code>prometheus</code></p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>prometheus</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Leave the rest as-is and select <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/search-prometheus-image.png" alt="Prometheus" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>On the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View for your project^], you&#8217;ll see prometheus spinning up.</p>
+</div>
+<div class="paragraph">
+<p>Finally, mount the ConfigMap into the running container:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc set volume deployment/prometheus --add -t configmap --configmap-name=prom -m /etc/prometheus/prometheus.yml --sub-path=prometheus.yml</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In case you see <strong>Warning: would violate PodSecurity "restricted:v1.24"</strong>, you can ignore it during the workshop.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should get <code>deployment.extensions/prometheus volume updated</code> and this will cause the contents of the <code>ConfigMap&#8217;s prometheus.yml</code> data to be mounted at <code>/etc/prometheus/prometheus.yml</code> where Prometheus is expecting it, and it will start scraping metrics from our app. But our app does not yet expose metrics. We&#8217;ll do that in the next step.</p>
+</div>
+<div class="paragraph">
+<p>Verify Prometheus is up and running:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/prometheus</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see <code>deployment "prometheus" successfully rolled out</code>.</p>
+</div>
+<div class="paragraph">
+<p>Once it completes, select on the arrow to access the prometheus query UI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/prometheus-route.png" alt="Prometheus" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Which should load the Prometheus Web UI (we&#8217;ll use this later). If you see a dark mode, you can simply turn it off:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/promgui.png" alt="Prometheus" width="800">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_metrics_to_quarkus"><a class="anchor" href="#_add_metrics_to_quarkus"></a>Add Metrics to Quarkus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like other exercises, we&#8217;ll need another extension to enable metrics. Install it with:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn quarkus:add-extension -Dextensions="micrometer-registry-prometheus"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-smallrye-metrics has been installed
+[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-micrometer-registry-prometheus has been installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add the necessary entries in your <code>pom.xml</code> to bring in the Metrics capability. It will import the <code>micrometer-registry-prometheus</code> extension which is an implementation of the Micrometer specification used in Quarkus.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_metrics_endpoint"><a class="anchor" href="#_test_metrics_endpoint"></a>Test Metrics endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will be able to immediately see the raw metrics generated from Quarkus apps. Run this in the Terminal:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/q/metrics</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see a bunch of metrics in the OpenMetrics format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none"># TYPE http_server_connections_seconds summary
+http_server_connections_seconds_active_count 1.0
+# HELP http_server_bytes_written_max
+# TYPE http_server_bytes_written_max gauge
+http_server_bytes_written_max 4096.0
+# TYPE http_server_bytes_written summary
+http_server_bytes_written_count 2.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is what Prometheus will use to access and index the metrics from our app when we deploy it to the cluster.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_additional_metrics"><a class="anchor" href="#_add_additional_metrics"></a>Add additional metrics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Out of the box, you get a lot of basic JVM metrics which are useful, but what if you wanted to provide metrics for your app? Let&#8217;s add a few using the Micrometer APIs.</p>
+</div>
+<div class="paragraph">
+<p>Open the <code>GreetingResource</code> class (in the <code>org.acme.people.rest</code> package). Let&#8217;s add a metric to count the number of times we&#8217;ve greeted someone. Add the following <code>MeterRegistry</code> specification:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private final MeterRegistry registry;
+
+    GreetingResource(MeterRegistry registry) {
+        this.registry = registry;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace the <code>hello()</code> method with the following code for adding the <code>counter</code> API:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @NonBlocking
+    public String hello() {
+        registry.counter("greeting.hello.counter").increment();
+        return "hello";
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, add the necessary import statement at the top of the file:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micrometer.core.instrument.MeterRegistry;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can also hover over the red error line and choose <em>Quick Fix</em> to add the import.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Next, trigger a greeting:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl http://localhost:8080/hello</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then access the metrics again, this time we&#8217;ll look for our new metric, specifying <em>greeting</em> in the URL:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">curl -s http://localhost:8080/q/metrics | grep -i greeting</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs" data-lang="none"># HELP greeting_hello_counter_total
+# TYPE greeting_hello_counter_total counter
+greeting_hello_counter_total 1.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shows we&#8217;ve accessed the greetings once (<code>1.0</code>). Repeat the <code>curl</code> greeting a few times and then access metrics again, and you&#8217;ll see the number rise.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The comments in the metrics output starting with <code>#</code> are part of the format and give human-readable descriptions to the metrics which you&#8217;ll see later on.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_a_few_more"><a class="anchor" href="#_add_a_few_more"></a>Add a few more</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s add a few more metrics for our Kafka stream we setup in the previous exercise. Open the <code>NameConverter</code> class (in the <code>org.acme.people.stream</code> package), add the following <code>MeterRegistry</code> specification:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private final MeterRegistry registry;
+
+    NameConverter(MeterRegistry registry) {
+        this.registry = registry;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace the <code>process()</code> method with the following code for adding the <code>counter</code> and  `timer`APIs:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Incoming("names")
+    @Outgoing("my-data-stream")
+    @Broadcast
+    public String process(String name) {
+        String honorific = honorifics[(int)Math.floor(Math.random() * honorifics.length)];
+        registry.counter("nameconvert.process.counter").increment(); <i class="conum" data-value="1"></i><b>(1)</b>
+        registry.timer("nameconvert.process.timer").record(3000, TimeUnit.MILLISECONDS); <i class="conum" data-value="2"></i><b>(2)</b>
+        return honorific + " " + name;
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This metric will count the number of times this method is called</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This metric will measure how long it takes the method to run</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t forget to import the correct classes as before using <em>Quick Fix&#8230;&#8203;</em> or simply add these to the top of the class:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.util.concurrent.TimeUnit;
+import io.micrometer.core.instrument.MeterRegistry;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rebuild_and_redeploy_to_openshift"><a class="anchor" href="#_rebuild_and_redeploy_to_openshift"></a>Rebuild and redeploy to OpenShift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run the following command which will build and deploy using the OpenShift extension:</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">mvn clean package -DskipTests &amp;&amp; \
+oc label deployment/people app.kubernetes.io/part-of=people --overwrite &amp;&amp; \
+oc annotate deployment/people app.openshift.io/connects-to=postgres-database --overwrite</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_confirm_deployment"><a class="anchor" href="#_confirm_deployment"></a>Confirm deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once the build completes, ensure the app completes its redeployment with this command (or watch the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View for your project^])</p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc rollout status -w deployment/people</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test"><a class="anchor" href="#_test"></a>Test</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You&#8217;ll need to trigger the methods that we&#8217;ve instrumented, so <a href="https://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/names.html" target="_blank" rel="noopener">reopen the name cloud</a>, which will start producing names (and generating metrics):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/names.png" alt="names" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>Within about 15-30 seconds, Prometheus should start scraping the metrics. Once again, access the <a href="http://prometheus-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}" target="_blank" rel="noopener">Prometheus UI</a>. Start typing in the query box to look for 'acme':</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you do not see any <code>name</code> metrics when querying, wait 15 seconds, reload the Prometheus page, and try again. They will eventually show up!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/prom.png" alt="Prometheus" width="800"></span></p>
+</div>
+<div class="paragraph">
+<p>These are the metrics exposed by our application, both raw numbers (like number of converted names in the <code>nameconvert_process_counter_total</code> metric) along with quantiles of the same data across different time periods.</p>
+</div>
+<div class="paragraph">
+<p>Select <code>nameconvert_process_counter_total</code> in the box, and select <strong>Execute</strong>. This will fetch the values from our metric showing the number of converted names:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/promnames.png" alt="names" width="800"></span></p>
+</div>
+<div class="paragraph">
+<p>Select the <strong>Graph</strong> tab to see it visually, and adjust the time period to <code>5m</code>:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/promg1.png" alt="names" width="800"></span></p>
+</div>
+<div class="paragraph">
+<p>Cool! You can try this with some of the JVM metrics as well, e.g. try to graph the <code>process_resident_memory_bytes</code> to see how much memory our app is using over time:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/promg2.png" alt="names" width="800"></span></p>
+</div>
+<div class="paragraph">
+<p>Of course Quarkus apps use very little memory, even for apps stuffed with all sorts of extensions and code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_visualizing_with_grafana"><a class="anchor" href="#_visualizing_with_grafana"></a>Visualizing with Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://grafana.com/" target="_blank" rel="noopener">Grafana</a> is commonly used to visualize metrics and provides a flexible, graphical frontend which has support for Prometheus (and many other data sources) and can display <a href="https://prometheus.io/docs/visualization/grafana/" target="_blank" rel="noopener">customized, realtime dashboards</a>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://grafana.com/api/dashboards/3308/images/2099/image" alt="Grafana dashboard" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create a Grafana Dashboard for our Quarkus App!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_grafana"><a class="anchor" href="#_install_grafana"></a>Install Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Follow the same process as before: On the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], select on <code>+Add to Project</code>, and choose "Container Image", and fill in the fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Image Name</strong>: <code>quay.io/openshiftlabs/ccn-grafana:1.0</code></p>
+</li>
+<li>
+<p><strong>Application</strong>: <code>Create Application</code></p>
+</li>
+<li>
+<p><strong>Application Name</strong>: <code>grafana</code></p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>grafana</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Leave the rest as-is and select <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/search-grafana-image.png" alt="Grafana" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>On the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View for your project^], you&#8217;ll see Grafana spinning up. Once it completes, select on the arrow to access the Grafana UI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-route.png" alt="Prometheus" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Which should load the Grafana Web UI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-login.png" alt="Grafana" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Log into Grafana web UI using the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: <code>admin</code></p>
+</li>
+<li>
+<p>Password: <code>admin</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Skip</strong> the New Password (or change it to something else that you can remember)</p>
+</div>
+<div class="paragraph">
+<p>You will see the landing page of Grafana as shown:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-webui.png" alt="Grafana" width="700">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_10_add_a_data_source_to_grafana"><a class="anchor" href="#_10_add_a_data_source_to_grafana"></a>10. Add a data source to Grafana</h4>
+<div class="paragraph">
+<p>Select Add data source and select <strong>Prometheus</strong> as data source type.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-datasource-types.png" alt="Grafana" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Fill out the form with the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>URL</strong>: <code><a href="http://prometheus.{{USER_ID}}-project:9090" class="bare">http://prometheus.{{USER_ID}}-project:9090</a></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Select <strong>Save &amp; Test</strong> and confirm you get a success message:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-ds-success.png" alt="Grafana" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>At this point Grafana is set up to pull collected metrics from Prometheus as they are collected from the application(s) you are monitoring.</p>
+</div>
+<div class="paragraph">
+<p>With our prometheus data source working, let&#8217;s make a dashboard.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_dashboard"><a class="anchor" href="#_create_dashboard"></a>Create Dashboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Back on the <a href="http://grafana-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}" target="_blank" rel="noopener">Grafana Home</a>, select <strong>New Dashboard</strong> to create a new <em>Dashboard</em> to review the metrics.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-create-dashboard.png" alt="metrics_grafana" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a new dashboard with a single Panel. Each Panel can visualize a computed metric (either a single metric, or a more complex query) and display the results in the Panel.</p>
+</div>
+<div class="paragraph">
+<p>Select Add <strong>a new panel</strong> to add a new panel with a query:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana-add-query.png" alt="metrics_grafana" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>In the Query box, type <code>name</code> to again get an autocompleted list of available metrics from our app:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafquery.png" alt="query" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Look for the one ending in <code>nameconvert_process_counter_total</code> and select it. Select the <strong>Refresh</strong> button in the upper right:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafrefresh.png" alt="query" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>The metrics should immediately begin to show in the graph above:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafgraf.png" alt="graf" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Next select on the <em>Visualization</em> on the right:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafvis.png" alt="graf" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This lets you fine tune the display, along with the type of graph (bar, line, gauge, etc). Leave them for now, and scroll to the top of the <em>Panel</em> tab. Change the name of the panel to <code>Converted Names</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafgen.png" alt="graf" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Select the <strong>Save</strong> icon at the top to save our new dashboard, enter <code>Quarkus Metrics Dashboard</code> as its name (you can actually name it any name you want, it will show up in a list of dashboards later on).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafdashsave.png" alt="graf" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_more_panels"><a class="anchor" href="#_add_more_panels"></a>Add more Panels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See if you can add additional Panels to your new Dashboard. Use the <strong>Add an empty panel</strong> button to add a new Panel:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafmorepanels.png" alt="graf" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Follow the same steps as before to create a few more panels, and <strong>don&#8217;t forget to Save each panel when you&#8217;ve created it.</strong></p>
+</div>
+<div class="paragraph">
+<p>Add Panels for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The different quantiles of time it takes to process names <code>http_server_bytes_written_count</code> (Name it <code>Converter Performance</code> for the <em>Panel Title</em>).</p>
+</li>
+<li>
+<p>The JVM RSS Value <code>process_resident_memory_bytes</code> (set the visualization type to <code>Gauge</code> and the Unit in <em>Field</em> tab to <code>bytes(IEC)</code> on the <em>Visualization</em>, and the title to <code>Memory</code> on the <em>Panel Title</em>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafjvm.png" alt="jvm" width="500">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fix_layout"><a class="anchor" href="#_fix_layout"></a>Fix layout</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After saving, go back to the main dashboard (select <strong>My Dashboard</strong> at the top and then select it under <em>Recent Dashboards</em>). Change the time value to <em>Last 30 Minutes</em> at the top-right:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/graftime.png" alt="time" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, move the <em>Converted Names</em> Dashboard to the right of the <em>Converter Performance</em> by dragging its title bar to the right, and then expand the memory graph to take up the full width.</p>
+</div>
+<div class="paragraph">
+<p>Select <strong>Save Dashboad</strong> again to save it. Your final Dashboard should look like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/graffinal.png" alt="final" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Beautiful, and useful! You can add many more metrics to monitor and alert for Quarkus apps using these tools.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>Congratulations!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This exercise demonstrates how your Quarkus application the <a href="https://quarkus.io/guides/micrometer" target="_blank" rel="noopener">Micrometer Metrics</a> specification through the Micrometer Registry Prometheus extension. You also consumed these metrics using a popular monitoring stack with Prometheus and Grafana.</p>
+</div>
+<div class="paragraph">
+<p>There are many more possibilities for application metrics, and it&#8217;s a useful way to not only gather metrics, but act on them through alerting and other features of the monitoring stack you may be using.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="kafka.html" class="query-params-link">Streaming Data with Quarkus and Kafka</a></span>
+  <span class="next"><a href="tracing.html" class="query-params-link">Tracing Quarkus Apps with Jaeger and MicroProfile Tracing</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
