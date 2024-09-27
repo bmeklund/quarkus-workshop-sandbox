@@ -22,7 +22,7 @@ jobs:
         with:
           antora_playbook: site.yml
       - name: "Upload generated site"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           name: site
           path: "${{ github.workspace }}/${{ env.SITE_DIR }}"
