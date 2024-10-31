@@ -26,17 +26,17 @@ You can also run this Lab on any other OpenShift cluster, either Managed and Sel
 
 ### Objectives
 
-*Dependency Injection
-*Testing Quarkus Apps
-*Debugging Quarkus Apps
-*Building Native Quarkus Apps
-*Developing Cloud Native with Quarkus
-*Using Quarkus extensions
-*Hibernate ORM with Panache
-*Event-driven Messaging
-*Streaming Data with Quarkus and Kafka
-*Monitoring with Prometheus and Grafana
-*Tracing Quarkus Apps with Jaeger and MicroProfile Tracing
+* Dependency Injection
+* Testing Quarkus Apps
+* Debugging Quarkus Apps
+* Building Native Quarkus Apps
+* Developing Cloud Native with Quarkus
+* Using Quarkus extensions
+* Hibernate ORM with Panache
+* Event-driven Messaging
+* Streaming Data with Quarkus and Kafka
+* Monitoring with Prometheus and Grafana
+* Tracing Quarkus Apps with Jaeger and MicroProfile Tracing 
 
 ## Documentation
 
