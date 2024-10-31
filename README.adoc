@@ -16,12 +16,13 @@ The workshop uses OpenShift Developer Sandbox and the Sandbox IDE(DevSpaces) to 
 
 You can also run this Lab on any other OpenShift cluster, either Managed and Self-Managed by pointing the guides to the correct cluster and namespace.  
 
-* OCP
+* OpenShift Container Platform(OCP)
 * Developer Sandbox
-* CRC
-* ARO
-* ROKS
-* ROSA
+* OpenShift Local
+* Azure Red Hat OpenShift(ARO)
+* Red Hat OpenShift Service on AWS(ROSA)
+* IBM Red Hat OpenShift Kubernetes Service(ROKS)
+
 
 ### Objectives
 
