@@ -67,6 +67,9 @@ echo "This is a bash shell command that you can copy/paste by clicking"
 You will be using Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
 To get started, access the Dev Spaces instance through the application picker in the top menu of the OpenShift console.
+
+image::openDevSpaces.png[Open DevSpaces via app picker, 700]
+
 Or click *Launch* on the Red Hat Dev Spaces card where you accessed the OpenShift console. 
 
 Select *Log in with OpenShift* button if needed:

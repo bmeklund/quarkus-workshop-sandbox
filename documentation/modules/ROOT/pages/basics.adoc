@@ -132,6 +132,14 @@ You should see the default Quarkus welcome page:
 
 image::welcome-quarkus.png[port, 900]
 
+[NOTE]
+====
+
+If you missed the popup or if you closed the window and want to reopen it,
+
+Check in the panel on the left hand side for the ENDPOINTS drop down. In it you will find a *Public* endpoints section and below it you can click the icon for opening in a separate window of the *index-webpage(8080/https)* row.
+====
+
 Open a *new* terminal by selecting `+` icon:
 
 image::cmd-terminal.png[livecoding, 900]
@@ -149,6 +157,8 @@ image::crw-open-page-hello.png[page, 800]
 
 When you fail to access the *hello* page, make sure to call the URL using *http* protocol.
 
+### Live reloading
+
 Now, let's exercise the **live reload** capabilities of Quarkus. In VS Code, open the `GreetingResource.java` file (in `src/main/java/org/acme/people/rest`) and change `return "hello";` to `return "hola";` in the editor. After making this change, reload the same brower tab that was showing `hello`. It should now show `hola`.
 
 Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it a few more times and access the endpoint again. And we're just getting started. Leave the app running so we can continue to change it on the fly in the next section.
@@ -163,13 +173,20 @@ Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it 
 This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
 ====
 
-### Package the app
+## Package the app
 
 Quarkus apps can be packaged as an executable JAR file or a native binary. We'll cover native binaries later, so for now, let's package as an executable JAR.
 
 Open the *command palette* again. Select `devfile: 03. Package app for OpenShift` in the che tasks:
 
 image::cmd-package.png[livecoding, 700]
+
+Or run the following command in a new terminal window: 
+
+[source,sh,role="copypaste"]
+----
+mvn package -DskipTests
+----
 
 This produces an executable jar file in the `target/quarkus-app/` directory:
 
@@ -203,7 +220,9 @@ hola
 
 ## Cleanup
 
-Go back to the terminal in which you ran the app with `java -jar` and stop the app by pressing kbd:[CTRL+C]. **Be sure not to close the "Start Live Coding" terminal!**
+Go back to the terminal in which you ran the app with `java -jar` and stop the app by pressing kbd:[CTRL+C]. 
+
+**Be sure not to close the "Start Live Coding" terminal!**
 
 ## Congratulations!
 

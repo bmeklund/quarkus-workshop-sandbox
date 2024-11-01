@@ -5,9 +5,11 @@
 [.text-center.strong]
 == Quarkus Workshop
 
-This workshop focuses on Quarkus, supersonic, subatomic container-native Java.  
+This workshop focuses on Quarkus - supersonic, subatomic container-native Java.  
 
-The workshop rely on the Developer Sandbox IDE(Dev Spaces) to develop Quarkus apps and deploy them to a Kubernetes cluster (based on OpenShift), and covers several other developer topics such as:
+The workshop in its native form rely on the Developer Sandbox and the Developer Sandbox IDE(Dev Spaces) to develop Quarkus applications and deploy them to the Sandbox cluster.  
+
+It will cover the below modules
 
 [.tiles.browse]
 == Browse modules

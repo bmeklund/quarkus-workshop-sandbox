@@ -6,28 +6,25 @@ With our app fully ready for its first cloud native deployment, let's package it
 
 OpenShift is a commercially supported distribution of Kubernetes from Red Hat. The platform is also available as open source, in the form of https://www.okd.io/[OKD^], the Origin Community Distribution of Kubernetes that powers Red Hat OpenShift.
 
-== Login to OpenShift
 
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
+== Change to correct project
+
+Your VS Code is running on the Kubernetes clusterbut we will make sure we are in the correct project.
+
+Execute the following command in the VS Code terminal:
 
 [source,sh,role="copypaste"]
 ----
-oc login -u {{ USER_ID }} -p {{ OPENSHIFT_USER_PASSWORD }} https://openshift.default.svc:443
+oc get project %USER_ID%-dev
 ----
 
 You should see:
 
 [source, none]
 ----
-Login successful.
+NAME               DISPLAY NAME           STATUS
+{{USER_ID}}-dev    {{USER_ID}}-dev        Active
 
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-  * {{ USER_ID }}-devspaces
-    {{ USER_ID }}-project
-
-Using project "user1-devspaces".
-Welcome! See 'oc help' to get started.
 ----
 
 Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
@@ -39,7 +36,7 @@ The login session might timeout after long periods of inactivity. If this happen
 
 https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/[Namespaces^] are a top level concept to help you organize your deployments and teams of developers. A namespace allows a community of users (or a user) to organize and manage their content in isolation from other communities. OpenShift _projects_ provide additional functionality for managing Kubernetes namespaces.
 
-For this scenario, a project has been created for you called `{{ USER_ID }}-project`. You will use this project to deploy your developed project in the next step.
+For this scenario, we will use the `{{USER_ID}}-dev` project. You will use this project to deploy your developed project in the next step.
 
 == Build and Deploy native image
 
@@ -69,7 +66,7 @@ Next, add the following variables in `src/main/resources/application.properties`
 %prod.quarkus.openshift.build-strategy=docker<4>
 %prod.quarkus.openshift.route.expose=true<5>
 quarkus.openshift.deployment-kind=Deployment<6>
-quarkus.container-image.group={{ USER_ID }}-project<7>
+quarkus.container-image.group=%USER_ID%-dev<7>
 quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000<8>
 
 ----
@@ -89,8 +86,8 @@ Rebuild and re-deploy the people application via running the following maven plu
 
 [source,sh,role="copypaste"]
 ----
-oc project {{ USER_ID }}-project &&
-mvn clean package -Pnative -DskipTests -Dquarkus.package.uber-jar=false
+oc project %USER_ID%-dev &&
+mvn clean package -Pnative -Dquarkus.native.native-image-xmx=3g -DskipTests -Dquarkus.package.uber-jar=false
 ----
 
 As you recall, the output of this process is a native Linux binary but also running Source-To-Image(S2I) build processor.
@@ -108,7 +105,7 @@ And now we can access using `curl` once again. In the Terminal, run this command
 
 [source,sh,role="copypaste copypaste"]
 ----
-curl $(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'{% endraw %})/hello/greeting/quarkus-on-openshift
+curl $(oc get route people -o=go-template  --template='{{ .spec.host }}')/hello/greeting/quarkus-on-openshift
 ----
 
 [NOTE]
@@ -116,7 +113,7 @@ curl $(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'
 The above `curl` command constructs the URL to your running app on the cluster using the `oc get route` command.
 ====
 
-You should see:
+You should see something like:
 
 [source,none]
 ----
@@ -128,11 +125,13 @@ hello quarkus-on-openshift from people-1-9sgsm
 Your hostname (the Kubernetes _pod_ in which your app runs) name will be different from the above.
 ====
 
-So now our app is deployed to OpenShift. You can also see it in the {{ CONSOLE_URL}}[OpenShift Console^]. Login with your assigned username and password (e.g. `{{ USER_ID }}/{{ OPENSHIFT_USER_PASSWORD }}`):
+So now our app is deployed to OpenShift. You can also see it in the OpenShift Console from where you started the Dev Spaces instance. 
+
+Login with your assigned username and password if you have been logged out:
 
 image::ocplogin.png[login,700]
 
-Once logged in, select the name of your project (`{{ USER_ID }}-project`):
+Once logged in, select the name of your project (`{{ USER_ID }}-dev`):
 
 image::ocpproj.png[project,700]
 
