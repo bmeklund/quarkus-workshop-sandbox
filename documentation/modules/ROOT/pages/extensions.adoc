@@ -10,9 +10,11 @@ Throughout this lab you'll discover how Quarkus can make your development of clo
 
 == If you've already completed the Quarkus Basic Hands-on Lab Today
 
-*If you have completed the Basic lab today*, you can scroll/skip down to the **List Extensions** exercise to continue your Quarkus lab. If not, then continue below:
+*If you have completed the Basic lab today and still are logged in on the cluster* - Scroll/skip down to the xref:#_list_extensions[List Extensions] section to continue your Quarkus lab. If not, then continue below:
 
-== First Step: Set Your Username!
+== In case you haven’t done Module 1 (Basic) today
+
+=== First Step: Set Your Username!
 
 Look in the box at the top of your screen. Is your username set already? If so it will look like this:
 
@@ -24,7 +26,7 @@ image::setuser.png[Set User ID above, 700]
 
 This will customize the links and copy/paste code for this workshop. If you accidently type the wrong username, just select the green recycle icon to reset it.
 
-== Select-to-Copy
+=== Select-to-Copy
 
 You will see various code and command blocks throughout these exercises which can be copy/pasted directly by selecting anywhere on the block of text:
 
@@ -47,7 +49,7 @@ There are also Linux shell commands that can also be copied and pasted into a Te
 echo "This is a bash shell command that you can copy/paste by selecting"
 ----
 
-## Access Your Development Environment
+=== Access Your Development Environment
 
 ### First Step: Connect to your Developer Sandbox environment!
 
@@ -126,7 +128,7 @@ image::ds-trust-popup.png[ds, 800]
 
 You'll use all of these during the course of this workshop, so keep this browser tab open throughout. **If things get weird, you can simply reload the browser tab to refresh the view.**
 
-## Explore Project
+=== Explore Project
 
 Let's take a look at the left *Explorer*. Your Quarkus project was already imported when the workspace was created. 
 
@@ -168,7 +170,7 @@ It’s a very simple REST endpoint, returning "hello" to requests on `/hello`.
 Compared to vanilla JAX-RS, with Quarkus there is no need to create an `Application` class. It’s supported but not required. In addition, only one instance of the resource is created and not one per request. You can configure this using the different `*Scoped` annotations (`ApplicationScoped`, `RequestScoped`, etc).
 ====
 
-## Running the Application in Live Coding Mode
+=== Running the Application in Live Coding Mode
 
 **Live Coding** (also referred to as _dev mode_) allows us to run the app and make changes on the fly. Quarkus will automatically re-compile and reload the app when changes are made. This is a powerful and efficient style of developing that you will use throughout the lab.
 
@@ -268,11 +270,11 @@ Wow, how cool is that? Supersonic Subatomic live reload! Go ahead and change it 
 This will also listen for a debugger on port `5005`. If you want to wait for the debugger to attach before running you can pass `-Ddebug` on the command line. If you don’t want the debugger at all you can use `-Ddebug=false`. We'll use this later.
 ====
 
-== In case you haven’t done Module 1 (Basic) today
+=== Preparing for coming exercises
 
 If you are only doing the *Advanced* lab today, or you didn’t quite complete the Basic Lab, you'll need to login to OpenShift, then build and deploy the application needed for the exercises using a utility script provided. Follow the steps below to do this.
 
-== Change to correct project
+=== Change to correct project
 
 Your VS Code is running on the Kubernetes cluster but we will make sure we are in the correct project.
 
@@ -313,7 +315,7 @@ This provides a developer-centric Topology view of applications deployed to the 
 
 image::peopledc.png[project,600]
 
-== List extensions
+## List extensions
 
 Ready to dive into *advanced* Quarkus development? Let's learn how easily Quarkus allows developers to extend for building a vibrant ecosystem.
 
