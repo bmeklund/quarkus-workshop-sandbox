@@ -49,18 +49,45 @@ echo "This is a bash shell command that you can copy/paste by selecting"
 
 ## Access Your Development Environment
 
-You will be using VS Code server based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^] **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
+### First Step: Connect to your Developer Sandbox environment!
 
-To get started, {{ DS_URL }}[access the Red Hat OpenShift Dev Spaces instance^] and select *Log in with OpenShift* button:
+To run this workshop you need to provision your own Developer Sandbox environment. If you have already provisioned an environment just reconnect to it through the same flow as below:
+
+Go to https://developers.redhat.com/developer-sandbox
+
+Click the Start your sandbox for free and log in.
+
+image::devSandboxrequest.png[Request environment, 800]
+
+In the console now click *Launch* to access your Red Hat OpenShift environment. 
+
+image::launchSandbox.png[login,800]
+
+This will lead you to the OpenShift console. 
+
+Select *Log in with DevSandbox* if the choice opens up.
+
+image::loginDevSandbox.png[login,800]
+
+Take note of the cluster details in the url of the browser. It will be something like this: https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/yourusername-dev
+
+### Now let's start the developer IDE.
+
+You will be using Visual Studio Code (VS Code) based on https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces^]. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
+
+To get started, access the Dev Spaces instance through the application picker in the top menu of the OpenShift console.
+
+image::openDevSpaces.png[Open DevSpaces via app picker, 700]
+
+Or click *Launch* on the Red Hat Dev Spaces card where you accessed the OpenShift console. 
+
+Select *Log in with OpenShift* button if needed:
 
 image::login_with_openshift.png[login,800]
 
-Type in the following credentail:
+Select *Log in with DevSandbox*
 
-* *Username*: `{{ USER_ID }}`
-* *Password*: `{{ DS_USER_PASSWORD }}`
-
-image::che-login.png[login,800]
+image::loginDevSandbox.png[login,800]
 
 [NOTE]
 ====
@@ -71,7 +98,7 @@ image::auth-access.png[auth-access, 800]
 
 Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy the following `Git Repo URL` and select `Create & Open`.
 
-* *Git Repo URL*: `https://github.com/RedHat-Middleware-Workshops/quarkus-workshop-m1m2-labs/tree/ocp-4.15`
+* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/ocp-4.15`
 
 image::ds-landing.png[ds, 800]
 
@@ -92,7 +119,7 @@ image::ds-workspace.png[ds, 800]
 
 [NOTE]
 ====
-In case you see this infomation page, check on `Trust the authors of all files in the parent folder 'projects'`. Then, select `Yes, I trust the authors.
+In case you see this information page, click on `Yes, I trust the authors`.
 
 image::ds-trust-popup.png[ds, 800]
 ====
@@ -245,50 +272,38 @@ This will also listen for a debugger on port `5005`. If you want to wait for the
 
 If you are only doing the *Advanced* lab today, or you didn’t quite complete the Basic Lab, you'll need to login to OpenShift, then build and deploy the application needed for the exercises using a utility script provided. Follow the steps below to do this.
 
-==== Login to OpenShift
+== Change to correct project
 
-Although your VS Code is running on the Kubernetes cluster, it's running with a default restricted _Service Account_ that prevents you from creating most resource types. So we'll log in with your workshop user. Execute the following command in the VS Code terminal:
+Your VS Code is running on the Kubernetes cluster but we will make sure we are in the correct project.
+
+Execute the following command in the VS Code terminal:
 
 [source,sh,role="copypaste"]
 ----
-oc login -u {{ USER_ID }} -p {{ OPENSHIFT_USER_PASSWORD }} https://openshift.default.svc:443
+oc get project %USER_ID%-dev
 ----
 
 You should see:
 
 [source, none]
 ----
-Login successful.
+NAME               DISPLAY NAME           STATUS
+{{USER_ID}}-dev    {{USER_ID}}-dev        Active
 
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-  * {{ USER_ID }}-devspaces
-    {{ USER_ID }}-project
-
-Using project "user1-devspaces".
-Welcome! See 'oc help' to get started.
 ----
-
-Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
 
 === Deploy app
 
-Deploy the `people` microservice by executing the following shell script in a CodeReady Workspaces Terminal:
+Deploy the `people` microservice by executing the following shell script in a Dev Spaces terminal:
 
 [source, shell, role="copypaste"]
 ----
-sh scripts/deploy-people.sh {{ USER_ID }}
+sh scripts/deploy-people.sh %USER_ID%-dev
 ----
 
 Wait for the script to complete before continuing.
 
-When the script completes, the app is deployed to OpenShift. You can see it in the {{ CONSOLE_URL}}[OpenShift Console^]. Login with your assigned username and password (e.g. `{{ USER_ID }}/{{ OPENSHIFT_USER_PASSWORD }}`):
-
-image::ocplogin.png[login,700]
-
-Once logged in, select the name of your project (`{{ USER_ID }}-project`):
-
-image::ocpproj.png[project,700]
+When the script completes, the app is deployed to OpenShift. You can see it in the OpenShift Console. From the console make sure to switch to the developer perspective:
 
 Switch to the _Developer Perspective_ using the upper-left drop-down:
 

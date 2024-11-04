@@ -27,7 +27,7 @@ NAME               DISPLAY NAME           STATUS
 
 ----
 
-Congratulations, you are now authenticated to the OpenShift server via the CLI. We'll use the prettier web console later on in this lab.
+You can interact and manage resources on the OpenShift cluster via this CLI. We'll use the prettier web console later on in this lab.
 
 [WARNING]
 ====

@@ -69,7 +69,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
           src="{{uiRootPath}}/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
-      <a class="navbar-item" href="{{{or site.url (or siteRootUrl siteRootPath)}}}">{{site.title}}</a>
+      <a class="navbar-item" href="{{{or site.url (or siteRootUrl siteRootPath)}}}" style="color:white">{{site.title}}</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -79,17 +79,18 @@
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item" id="navbar-form-empty">
+          <span class="navbar-text" style="color: white;margin-left: 1rem; margin-right: 1rem;">Your workshop environment | User ID: </span>
           <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i style="color: orange;"
               class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
 
           <form action="javascript:void(0);" onsubmit="gowithcluster();">
-            <input size="40" id="clusterfield" type="text" placeholder="Enter user id">
+            <input size="40" id="clusterfield" type="text" placeholder="Enter Sandbox user id">
             <input type="hidden" id="projectfield2" name="projectfield2" value="">
           </form>
         </div>
 
         <div class="navbar-item" id="navbar-form-filled" style="display: none;">
-          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">|</span>
+          <span class="navbar-text" style="color: white;margin-left: 1rem; margin-right: 1rem;">Your workshop environment |  User ID: </span>
           <span class="navbar-text" id="cluster_subdomain"></span>
           <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i onclick="recycle();" style="color: green;" class="fa fa-recycle" aria-hidden="true"></i></span>
         </div>
