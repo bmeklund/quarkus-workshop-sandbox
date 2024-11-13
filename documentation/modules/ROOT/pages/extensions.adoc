@@ -50,6 +50,7 @@ echo "This is a bash shell command that you can copy/paste by selecting"
 ----
 
 === Access Your Development Environment
+---
 
 ### First Step: Connect to your Developer Sandbox environment!
 
@@ -104,7 +105,7 @@ Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy th
 
 image::ds-landing.png[ds, 800]
 
-A new window or tab in your web browser will open automatically to showcase the progess about *Starting workspace quarkus-workshop*. It takes about *60* seconds to finish the process.
+A new window or tab in your web browser will open automatically to showcase the progess about *Starting workspace quarkus-workshop*. It can take a few minutes the first time to finish the process, but will be quicker next time.
 
 image::starting-workspace.png[ds, 800]
 
@@ -303,7 +304,7 @@ Deploy the `people` microservice by executing the following shell script in a De
 sh scripts/deploy-people.sh %USER_ID%-dev
 ----
 
-Wait for the script to complete before continuing.
+Wait for the script to complete before continuing. This will take a few minutes as we will run a native build and deploy the artifact to our cluster.
 
 When the script completes, the app is deployed to OpenShift. You can see it in the OpenShift Console. From the console make sure to switch to the developer perspective:
 
