@@ -32,7 +32,18 @@ You should see:
 
 This will add the necessary extension for using OpenAPI, and a graphical frontend extension called *Swagger* which we'll discuss later. It also enables a new RESTful endpoint in the app accessible at `/q/openapi`.
 
-Access the new endpoint using the following command in a Terminal:
+[NOTE]
+====
+If your local instance is not running, restart it by running the devfile task *02. Start Live Coding* or by running the following command in a terminal:
+
+[source,sh,role="copypaste"]
+----
+mvn quarkus:dev
+----
+
+====
+
+Access the new endpoint using the following command:
 
 [source,sh,role="copypaste"]
 ----

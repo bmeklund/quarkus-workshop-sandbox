@@ -101,7 +101,7 @@ image::auth-access.png[auth-access, 800]
 
 Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy the following `Git Repo URL` and select `Create & Open`.
 
-* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/ocp-4.15`
+* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs.git/tree/rh-sandbox`
 
 image::ds-landing.png[ds, 800]
 

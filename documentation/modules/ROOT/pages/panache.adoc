@@ -650,14 +650,14 @@ We can access using `curl` once again to find everyone born in or before the yea
 curl -s $(oc get route people -o=go-template --template='{{ .spec.host }}')/person/birth/before/2000 | jq
 ----
 
-Now lets access our GUI for this application. Run the below command to get the route for your application
+Now lets access our GUI for this application. Run the below command to get the URL for your application
 
 [source,sh,role="copypaste"]
 ----
-oc get route people -o=go-template --template='{{ .spec.host }} {{printf "\n"}}'
+oc get route people -o=go-template --template='http://{{ .spec.host }}/datatable.html {{printf "\n"}}'
 ----
 
-Open a new browser tab and paste the result and also add the following endpoint to it to view the result */datatable.html*
+Open a new browser tab and paste the result to view the page
 
 The url should look something like this: 
 [source,console]
@@ -665,7 +665,7 @@ The url should look something like this:
 http://people-user-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/datatable.html
 ----
 
-And the resulting page should look like this:
+The page should look like this:
 
 image::datatable.png[datatable,800]
 

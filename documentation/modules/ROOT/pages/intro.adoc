@@ -88,9 +88,9 @@ In case you see the *Authorize Access* page as below, select *Allow selected per
 image::auth-access.png[auth-access, 800]
 ====
 
-Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy the following `Git Repo URL` and select `Create & Open`.
+Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy the following `Git Repo URL` and select `Create & Open`. Make sure the rh-sandbox branch is used
 
-* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/ocp-4.15`
+* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs.git/tree/rh-sandbox`
 
 image::ds-landing.png[ds, 800]
 
@@ -117,5 +117,7 @@ image::ds-trust-popup.png[ds, 800]
 ====
 
 You'll use all of these during the course of this workshop, so keep this browser tab open throughout. **If things get weird, you can simply reload the browser tab to refresh the view.**
+
+The state of your changes will be saved in a persistent volume on your Sandbox environment so if you need to shut down for a while you can continue later on.(As long as your sandbox environment is not decomissioned that is).
 
 Ready? Let's go!
