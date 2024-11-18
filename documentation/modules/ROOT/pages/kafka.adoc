@@ -2,7 +2,9 @@
 :experimental:
 :imagesdir: images
 
-In this exercise, you will use the Quarkus Kafka extension to build a streaming application using MicroProfile Reactive Streams Messaging and https://kafka.apache.org[Apache Kafka^], a distributed streaming platform. You will also use https://www.redhat.com/en/resources/amq-streams-datasheet[Red Hat AMQ streams^], which provides an easy way to run an Apache Kafka cluster on Kubernetes and OpenShift using https://operatorhub.io/what-is-an-operator[Operators^].
+In this exercise, you will use the Quarkus Kafka extension to build a streaming application using MicroProfile Reactive Streams Messaging and https://kafka.apache.org[Apache Kafka^], a distributed streaming platform. You will also use https://strimzi.io/[Strimzi^], which provides an easy way to run an Apache Kafka cluster on Kubernetes and OpenShift.
+
+Strimzi is an Open Source project which is also the upstream of Red Hats supported version of Kafka - https://access.redhat.com/products/streams-for-apache-kafka[Streams for Apache Kafka^]. In this excersise we will use Strimzi in a single node kafka cluster setup.
 
 == What is Apache Kafka?
 
@@ -17,9 +19,9 @@ Kafka is generally used for two broad classes of applications:
 * Building real-time streaming data pipelines that reliably get data between systems or applications
 * Building real-time streaming applications that transform or react to the streams of data
 
-== What is AMQ Streams?
+== What is Streams for Apache Kafka?
 
-AMQ Streams simplifies the process of running Apache Kafka in an OpenShift cluster. AMQ Streams provides container images and Operators for running Kafka on OpenShift. AMQ Streams Operators are fundamental to the running of AMQ Streams. The Operators provided with AMQ Streams are purpose-built with specialist operational knowledge to effectively manage Kafka.
+Streams for Apache Kafka simplifies the process of running Apache Kafka in an OpenShift cluster. It provides container images and Operators for running Kafka on OpenShift. Streams for Kafka Operators are fundamental to the running of the Kafka cluster. The Operators provided are purpose-built with specialist operational knowledge to effectively manage Kafka.
 
 Operators simplify the process of:
 
@@ -34,52 +36,128 @@ Operators simplify the process of:
 
 == The Goal
 
-In this exercise, we are going to generate (random) names in one component. These names are written in a Kafka topic (`names`). A second component reads from the `names` Kafka topic and applies some magic conversion to the name (adding an honorific). The result is sent to an _in-memory stream_ consumed by a JAX-RS resource. The data is sent to a browser using https://www.w3.org/TR/eventsource/[_server-sent events_^] and displayed in the browser. It will look like this:
+As mentioned earlier, in this exercise, we will not use the operator but install Strimzi as a single node kafka cluster. In the excersise we are going to generate (random) names in one component. These names are written in a Kafka topic (`names`). A second component reads from the `names` Kafka topic and applies some magic conversion to the name (adding an honorific). The result is sent to an _in-memory stream_ consumed by a JAX-RS resource. The data is sent to a browser using https://www.w3.org/TR/eventsource/[_server-sent events_^] and displayed in the browser. It will look like this:
 
 image::names.png[names,800]
 
 === Create Kafka Cluster
 
-The Strimzi operator installs and manages Kafka clusters on Kubernetes. It's been pre-installed for you, so all you have to do is create a Kafka cluster inside your namespace.
+In the kafka.yaml file in the src/main/kubernetes folder paste the below:
 
-First, on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], select **+Add to Project** on the left. Then, Type in `Kafka` in the search box, and select the *Kafka*:
+[source,sh,role="copypaste"]
+----
+apiVersion: v1
+kind: Service
+metadata:
+  name: names-cluster-kafka-bootstrap
+  labels:
+    app: names-cluster
+    strimzi.io/cluster: names-cluster
+spec:
+ ports:
+ - port: 9092
+   protocol: TCP
+   targetPort: 9092
+ selector:
+   app: names-cluster
+ type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: names-cluster
+  labels:
+    app.openshift.io/runtime: amq
+    strimzi.io/cluster: names-cluster
+    app.kubernetes.io/part-of: strimzi-names-cluster
+spec:
+  selector:
+    matchLabels:
+      app: names-cluster
+  template:
+    metadata:
+      labels:
+        app: names-cluster
+    spec:
+      containers:
+      - name: names-cluster
+        image: quay.io/strimzi/kafka:latest-kafka-3.9.0
+        command:
+          - /bin/sh
+          - -c
+          - 'export CLUSTER_ID=$(./bin/kafka-storage.sh random-uuid) && ./bin/kafka-storage.sh format -t $CLUSTER_ID -c ./config/kraft/server.properties && ./bin/kafka-server-start.sh ./config/kraft/server.properties --override advertised.listeners=${KAFKA_ADVERTISED_LISTENERS}'
+        env:
+        - name: LOG_DIR
+          value: /tmp/logs
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: PLAINTEXT://names-cluster-kafka-bootstrap:9092
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 9092
+----
 
-image::fromcat-kafka.png[names,800]
+Then run the following command in the terminal in Dev Spaces: 
 
-These are all of the Kafka cluster elements you can install. Select **Create**. This will open a yaml file for you to configure the cluster before it's installed. Change the name of the cluster from `my-cluster` to `names-cluster` (under the _metadata_ section of the YAML file). Leave all other values as-is, and select **Create**:
+[source,sh,role="copypaste"]
+----
+oc apply -f src/main/kubernetes/kafka.yaml 
+----
 
-image::createkafka.png[createkafka,800]
+This will install the kafka cluster in your namespace. 
 
-This will create a new Kafka Kubernetes object in your namespace, triggering the Operator to deploy Kafka.
+image::kafkaClusterCreate.png[names,800]
 
 == Create Kafka Topic
 
-Follow the same process to create a Kafka _Topic_:
+We'll need to create a topic for our application to stream to and from.
 
-Select **+Add to Project** on the left. Then, Type in `Topic` in the search box, and select the *Create*:
+The creation of the Kafka topic needed we do through your terminal. Follow the below process to create a Kafka _Topic_:
 
-image::createkafkatopic.png[createkafka,800]
+First run this command: 
 
-We'll need to create a topic for our application to stream to and from, so in the YAML:
+[source,sh,role="copypaste"]
+----
+oc get pods | grep names-cluster
+----
+This will leave you with a response similar to this:
 
-* Change the _metadata > name_ value from `my-topic` to `names`.
-* Change the vale of the `strimzi.io/cluster=my-cluster` to `strimzi.io/cluster=names-cluster`
+[source,console]
+----
+names-cluster-8578688d8-jcml8                1/1     Running     0          34m
+----
 
-Then select **Create**.
+Copy the indentifier after names-cluster- (in this case 8578688d8-jcml8 ) and run the command but with your unique identifiers instead of the xxxxxxxxx-xxxxx:
 
-image::topiccreate.png[topiccreate,800]
+[source,sh,role="copypaste"]
+----
+oc rsh names-cluster-xxxxxxxxx-xxxxx
+----
 
-This will cause the Operator to provision a new Topic in the Kafka cluster.
+Then lastly you create the topic by running this command:
+[source,sh,role="copypaste"]
+----
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --partitions 1 --replication-factor 1 --topic names
+----
 
-Back on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], make sure all the Kafka and Zookeeper pods are up and running (with dark blue circles):
+You can verify the topic is created by listing the topics with this command: 
+
+[source,sh,role="copypaste"]
+----
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+----
+
+This will list the topics for you in the terminal.
+
+Back on the Topology View, make sure the Kafka instance pod is up and running (with dark blue circle):
 
 image::kafkaup.png[topiccreate,800]
 
-It may take a few minutes for all of the pods to appear spin up. You can continue to the next step while the Kafka cluster and topics are created.
-
 == Add Quarkus Kafka Extension
 
-With Kafka installing, turn your attention back to the app. Like other exercises, we'll need another extension to integrate with Kafka. Install it with:
+With Kafka installed, turn your attention back to the app. Like other exercises, we'll need another extension to integrate with Kafka. Install it with:
 
 [source,sh,role="copypaste"]
 ----
@@ -285,7 +363,22 @@ The build should take a minute or two to complete.
 
 == Test
 
-Our application should be up and running in a few seconds after the build completes and generating names. To see if it's working, access the https://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/names.html[graphical name cloud powered by Quarkus, MicroProfile and Kafka^]. You should see a cloud of names updating every 5 seconds (it may take a few seconds for it to start!):
+Our application should be up and running in a few seconds after the build completes and generating names. To see if it's working, acces the names-page. The URL can be found by running this command:
+
+[source,sh,role="copypaste"]
+----
+oc get route people -o=go-template --template='https://{{ .spec.host }}/names.html {{printf "\n"}}'
+----
+
+Open a new browser tab and paste the result to view the graphical name cloud powered by Quarkus, MicroProfile and Kafka
+
+The url should look something like this: 
+[source,console]
+----
+https://people-user-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/names.html
+----
+
+You should see a cloud of names updating every 5 seconds (it may take a few seconds for it to start!):
 
 [NOTE]
 ====
