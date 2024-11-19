@@ -109,15 +109,22 @@ Then run the following command in the terminal in Dev Spaces:
 oc apply -f src/main/kubernetes/kafka.yaml 
 ----
 
-This will install the kafka cluster in your namespace. 
+This will install the kafka cluster in your namespace. You will be able to see it in the Topology view and follow the creation of the cluster.
+
+Make sure the Kafka instance pod is up and running (with dark blue circle):
 
 image::kafkaClusterCreate.png[names,800]
 
-== Create Kafka Topic
+=== Kafka Topics
 
-We'll need to create a topic for our application to stream to and from.
+Usually you also need to create the Kafka topics needed, to make it simpler in this excersise we will rely on Kafkas abiblity to auto create topics if not existing. This is something you can use in a local or test setup, not something we recommend to use in a production setup.
 
-The creation of the Kafka topic needed we do through your terminal. Follow the below process to create a Kafka _Topic_:
+In this case Kafka will create a topic for our application to stream to and from - called *names*
+
+[NOTE]
+====
+
+If you want to check the creation of your topic(or create other topics) after running the test later in this excersise you can do that by running the below commands.
 
 First run this command: 
 
@@ -139,12 +146,6 @@ Copy the indentifier after names-cluster- (in this case 8578688d8-jcml8 ) and ru
 oc rsh names-cluster-xxxxxxxxx-xxxxx
 ----
 
-Then lastly you create the topic by running this command:
-[source,sh,role="copypaste"]
-----
-bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --partitions 1 --replication-factor 1 --topic names
-----
-
 You can verify the topic is created by listing the topics with this command: 
 
 [source,sh,role="copypaste"]
@@ -154,9 +155,14 @@ bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 This will list the topics for you in the terminal.
 
-Back on the Topology View, make sure the Kafka instance pod is up and running (with dark blue circle):
+If you want to create another topic the below command will achieve that, change the name in the end of the command:
+Then lastly you create the topic by running this command:
 
-image::kafkaup.png[topiccreate,800]
+[source,sh,role="copypaste"]
+----
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --partitions 1 --replication-factor 1 --topic someothername
+----
+====
 
 == Add Quarkus Kafka Extension
 
@@ -182,7 +188,7 @@ The app consists of 3 components that pass messages via Kafka and an in-memory s
 
 image::kafkaarch.png[kafka, 800]
 
-== Create name generator
+=== Create name generator
 
 To start building the app, create a new Java class file in the `org.acme.people.stream` called `NameGenerator.java`. This class will generate random names and publish them to our Kafka topic for further processing. Use this code:
 
@@ -215,7 +221,7 @@ public class NameGenerator {
 
 The method returns a Reactive Stream. The generated items are sent to the stream named `generated-name`. This stream is mapped to Kafka using the application.properties file that we will create soon.
 
-== Add honorifics
+=== Add honorifics
 
 The name converter reads the names from Kafka, and transforms them, adding a random (English) honorific to the beginning of the name.
 
@@ -250,7 +256,7 @@ public class NameConverter {
 
 The process method is called for every Kafka record from the `names` topic (configured in the application configuration). Every result is sent to the my-data-stream in-memory stream.
 
-== Expose to front end
+=== Expose to front end
 
 Finally, let’s bind our stream to a JAX-RS resource. Create a new Java class in the same package called `NameResource.java`. Use this code:
 
@@ -311,7 +317,7 @@ source.onmessage = function (event) { // <2>
 
 ====
 
-== Configure application
+=== Configure application
 
 We need to configure the Kafka connector. This is done in the `application.properties` file (in the `src/main/resources` directory). The keys are structured as follows:
 
