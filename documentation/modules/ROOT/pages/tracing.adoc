@@ -287,6 +287,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: otel
+        app.kubernetes.io/part-of: tracing
     spec:
       containers:
       - name: otelcol
@@ -315,7 +316,7 @@ data:
     processors:
     exporters:
       otlp:
-        endpoint: jaeger-collector.bmeklund-dev.svc:14250
+        endpoint: jaeger-collector.%USER_ID%-dev.svc:14250
         tls:
           ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
       logging:
@@ -612,7 +613,7 @@ Access the endpoint by running the following command:
 
 [source,sh,role="copypaste"]
 ----
-curl -s $(oc get route people -o=go-template --template='{{ .spec.host }}')/person/swpeople | jq
+curl -s https://$(oc get route people -o=go-template --template='{{ .spec.host }}')/person/swpeople | jq
 ----
 
 You should see:
