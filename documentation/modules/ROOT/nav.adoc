@@ -17,4 +17,3 @@
 * xref:kafka.adoc[Streaming Data with Quarkus and Kafka]
 * xref:monitoring.adoc[Monitoring with Prometheus and Grafana]
 * xref:tracing.adoc[Tracing Quarkus Apps with Jaeger and MicroProfile Tracing]
-* xref:security.adoc[Securing Quarkus APIs]

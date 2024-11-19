@@ -65,7 +65,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: names-cluster
+  name: names-cluster // <1>
   labels:
     app.openshift.io/runtime: amq
     strimzi.io/cluster: names-cluster
@@ -73,7 +73,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: names-cluster
+      app: names-cluster 
   template:
     metadata:
       labels:
@@ -81,7 +81,7 @@ spec:
     spec:
       containers:
       - name: names-cluster
-        image: quay.io/strimzi/kafka:latest-kafka-3.9.0
+        image: quay.io/strimzi/kafka:latest-kafka-3.9.0 // <2>
         command:
           - /bin/sh
           - -c
@@ -98,6 +98,9 @@ spec:
         ports:
         - containerPort: 9092
 ----
+
+<1> Indicates that the name of our Kafka cluster
+<1> Indicates that the Strimzi image used for our Kafka cluster
 
 Then run the following command in the terminal in Dev Spaces: 
 

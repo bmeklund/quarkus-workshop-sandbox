@@ -33,19 +33,228 @@ At the highest level, a _trace_ tells the story of a transaction or workflow as 
 Each component (microservice) in a distributed trace will contribute its own span or spans.
 ====
 
-Jaeger is installed and managed through its Kubernetes Operator (just like AMQ Streams and Kafka that you used in previous exercises).
+In this case we will install a Jaeger-all-in-one image, this is mostly for local/test installations normally but in our excercise it is enough.
 
-First, on the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^], click **+Add to Project**. Then, Type in `Jaeger` in the search box, and  select **Create**:
+Open `jaeger.yml` in the *src/main/kubernetes* directory. Copy the following YAML to the file. 
 
-image::fromcat.png[names,800]
+[source,yaml,role="copypaste"]
+----
+apiVersion: v1
+kind: List
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: jaeger
+    labels:
+      app: jaeger
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
+      app.kubernetes.io/part-of: tracing
+  spec:
+    selector:
+      matchLabels:
+        app: jaeger
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: jaeger
+          app.kubernetes.io/name: jaeger
+          app.kubernetes.io/component: all-in-one
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "16686"
+      spec:
+          containers:
+          -   env:
+              - name: COLLECTOR_ZIPKIN_HTTP_PORT
+                value: "9411"
+              image: registry.redhat.io/rhosdt/jaeger-all-in-one-rhel8
+              name: jaeger
+              ports:
+                - containerPort: 5775
+                  protocol: UDP
+                - containerPort: 6831
+                  protocol: UDP
+                - containerPort: 6832
+                  protocol: UDP
+                - containerPort: 5778
+                  protocol: TCP
+                - containerPort: 16685
+                  protocol: UDP
+                - containerPort: 16686
+                  protocol: TCP
+                - containerPort: 9411
+                  protocol: TCP
+                - containerPort: 14250
+                  protocol: TCP
+                - containerPort: 14268
+                  protocol: TCP
+                - containerPort: 14269
+                  protocol: TCP
+                - containerPort: 4317
+                  protocol: TCP
+                - containerPort: 4318
+                  protocol: TCP
+              readinessProbe:
+                httpGet:
+                  path: "/"
+                  port: 14269
+                initialDelaySeconds: 5
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-query
+    labels:
+      app: jaeger
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: query
+  spec:
+    ports:
+      - name: query-http
+        port: 443
+        protocol: TCP
+        targetPort: 16686
+      - name: admin-http
+        port: 16687
+        protocol: TCP
+        targetPort: 16687
+      - name: query-grpc
+        port: 16685
+        protocol: UDP
+        targetPort: 16685   
+    selector:
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-collector
+    labels:
+      app: jaeger
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
+  spec:
+    ports:
+    - name: jaeger-collector-tchannel
+      port: 14267
+      protocol: TCP
+      targetPort: 14267
+    - name: tls-grpc-jaeger
+      port: 14250
+      protocol: TCP
+      targetPort: 14250
+    - name: jaeger-collector-http
+      port: 14268
+      protocol: TCP
+      targetPort: 14268
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    - name: grpc-otlp
+      port: 4317
+      protocol: TCP
+      targetPort: 4317
+    - name: http-otlp
+      port: 4318
+      protocol: TCP
+      targetPort: 4318
+    - name: admin-http
+      port: 14269
+      protocol: TCP
+      targetPort: 14269
+    selector:
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-agent
+    labels:
+      app: jaeger
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: agent
+  spec:
+    ports:
+    - name: agent-zipkin-thrift
+      port: 5775
+      protocol: UDP
+      targetPort: 5775
+    - name: agent-compact
+      port: 6831
+      protocol: UDP
+      targetPort: 6831
+    - name: agent-binary
+      port: 6832
+      protocol: UDP
+      targetPort: 6832
+    - name: agent-configs
+      port: 5778
+      protocol: TCP
+      targetPort: 5778
+    - name: admin-http
+      port: 14271
+      protocol: TCP
+      targetPort: 14271
+    clusterIP: None
+    selector:
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: zipkin
+    labels:
+      app: jaeger
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: zipkin
+  spec:
+    ports:
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    type: ClusterIP
+    selector:
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: jaeger
+    labels:
+      app: jaeger
+      app.kubernetes.io/component: query
+      app.kubernetes.io/name: jaeger
+  spec:
+    to:
+      kind: Service
+      name: jaeger-query
+      weight: 100
+    port:
+      targetPort: query-http
+    tls:
+      termination: edge
+    wildcardPolicy: None
+    selector:
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
 
-This will open a dialog for you to configure the Jaeger service before it's installed.
+----
 
-Change the name to `jaeger` as shown, and click **Create**:
+Then run this command in your terminal in Dev Spaces
 
-image::jaegerdone.png[kafkacatalog,800]
+[source,sh,role="copypaste"]
+----
+oc apply -f src/main/kubernetes/jaeger.yml
+----
 
-This will create a new `Jaeger` Kubernetes object in your namespace, triggering the Operator to deploy Jaeger. In the {{ CONSOLE_URL }}/topology/ns/{{ USER_ID }}-project[Topology View^] you'll see Jaeger spin up:
+This will create a new `Jaeger` Kubernetes object in your namespace, in the Topology View you'll see Jaeger spin up:
 
 image::jaegerspin.png[spin, 600]
 
@@ -102,21 +311,20 @@ metadata:
 data:
   collector.yaml: |
     receivers:
-      otlp:
-        protocols:
-          grpc:
-            endpoint: 0.0.0.0:4317
-          http:
-            endpoint: 0.0.0.0:4318
+      zipkin:
     processors:
     exporters:
-      debug:
+      otlp:
+        endpoint: jaeger-collector.bmeklund-dev.svc:14250
+        tls:
+          ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+      logging:
     service:
       pipelines:
         traces:
-          receivers: [otlp]
+          receivers: [zipkin]
           processors: []
-          exporters: [debug]
+          exporters: [otlp, logging]
 ----
 
 Then, run the following `oc` command in VS Code terminal.
@@ -126,7 +334,7 @@ Then, run the following `oc` command in VS Code terminal.
 oc apply -f src/main/kubernetes/otel.yml
 ----
 
-Go back to the Topology view, you will see the otel-collector deployed.
+Go back to the Topology view, you will see the Open Telemetry collector deployed.
 
 image::devconsole-otel.png[devconsole-otel,800]
 
@@ -157,7 +365,7 @@ Next, open the `application.properties` file (in the `src/main/resources` direct
 
 [source,none,role="copypaste"]
 ----
-%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://jaeger-collector-headless:4317 <1>
+%prod.quarkus.otel.exporter.otlp.traces.endpoint=http://jaeger-collector:4317 <1>
 ----
 <1> gRPC endpoint (Jaeger collector service) to send spans.
 
@@ -185,7 +393,25 @@ oc rollout status -w deployment/people
 
 == Trigger traces
 
-You'll need to trigger some HTTP endpoints to generate traces. Access the https://people-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}/datatable.html[graphical person browser powered by the DataTables library we created earlier^].
+You'll need to trigger some HTTP endpoints to generate traces. Access the datatable endpoint of our people application again.
+
+[NOTE]
+====
+
+If you have closed the tab with the datatable page you can retrieve it again by running the below:
+[source,sh,role="copypaste"]
+----
+oc get route people -o=go-template --template='http://{{ .spec.host }}/datatable.html {{printf "\n"}}'
+----
+
+Open a new browser tab and paste the result to view the page
+
+The url should look something like this: 
+[source,console]
+----
+http://people-user-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/datatable.html
+----
+====
 
 Exercise the table a bit by paging through the entries and using various search terms to force several RESTful calls back to our app:
 
@@ -193,12 +419,13 @@ image::paging.png[paging,600]
 
 == Inspect traces
 
-Open the https://jaeger-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}[Jaeger Query UI^]. By default Jaeger uses the same login details as OpenShift, so click the **Login with OpenShift** button, enter your credentials:
+Open the Jaeger Query UI. 
 
-* **Username**: `{{ USER_ID }}`
-* **Password**: `{{ OPENSHIFT_USER_PASSWORD }}`
+You can access it by clicking the arrow on the right corner of the Jaeger deployment like shown below:
 
-Then, click **Allow Selected Permissions** to allow Jaeger to access your account details. You'll end up on the Jaeger query page. Using the menu on the left, select the `people` Service, and click **Find Traces**. Jaeger will show the collected traces on the right:
+image::openJaegerUi.png[paging,600]
+
+You'll end up on the Jaeger query page. Using the menu on the left, select the `people` Service, and click **Find Traces**. Jaeger will show the collected traces on the right:
 
 image::find1.png[jaeger,600]
 
@@ -385,7 +612,7 @@ Access the endpoint by running the following command:
 
 [source,sh,role="copypaste"]
 ----
-curl -s https://$(oc get route people -o=go-template --template={% raw %}'{{ .spec.host }}'{% endraw %})/person/swpeople | jq
+curl -s $(oc get route people -o=go-template --template='{{ .spec.host }}')/person/swpeople | jq
 ----
 
 You should see:
@@ -418,7 +645,7 @@ You should see:
 
 == Inspect traces
 
-Reload the https://jaeger-{{USER_ID}}-project.{{ROUTE_SUBDOMAIN}}[Jaeger Query UI^]. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**. 
+Reload the Jaeger Query UI. Then, select `GET /person/swpeople` in the Operation and click **Find Traces**. 
 
 image::swpeople-search.png[swpeople,800]
 
