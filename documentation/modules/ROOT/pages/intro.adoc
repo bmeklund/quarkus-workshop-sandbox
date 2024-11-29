@@ -13,11 +13,17 @@ Throughout this lab you'll discover how Quarkus can make your development of clo
 
 To run this workshop you need to provision your own Developer Sandbox environment. This you do from https://developers.redhat.com/developer-sandbox
 
-Click the Start your sandbox for free and log in.
+Click the *Start your sandbox for free* 
 
 image::devSandboxrequest.png[Request environment, 800]
 
-In the console now click *Launch* to access your Red Hat OpenShift environment. 
+If you don't have a Red Hat account previously you can create one by clicking the *Register for a Red Hat account* link below the login details. It's free of charge and you get access to lots of resources at developers.redhat.com for example.
+
+image::createAccount.png[login,800]
+
+Fill in the details required and you are good to go. If needed go back to the Start your Sandbox for free and click the button. 
+
+In the console opening(Hybrid Cloud Console) click *Launch* (showed below) for Red Hat OpenShift to access your Red Hat OpenShift environment. 
 
 image::launchSandbox.png[login,800]
 
@@ -29,15 +35,23 @@ image::loginDevSandbox.png[login,800]
 
 Take note of the cluster details in the url of the browser. It will be something like this: https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/yourusername-dev
 
-Look in the box at the top of this guide. If your sandbox environment is set already? If so it will look like this:
+Remember the *yourusername-dev* part, you will use this username multiple times during this workshop. To start with you first have to personalize this workshop guide. You do this by adding your username in the box in the top menu(if it's not already done) - do it without the "-dev" part.
 
-image::alreadyset.png[Set User ID above, 700]
-
-If your sandbox environment is properly set, then you can move on. **If not, in the above box, enter the cluster details** like this:
+*In the  box, enter your username* where indicated below.
 
 image::setuser.png[Set User ID above, 700]
 
-This will customize the links and copy/paste code for this workshop. If you accidently type the wrong details, just click the green recycle icon to reset it.
+When you have added your username it will look like this:
+
+image::alreadyset.png[Set User ID above, 700]
+
+If your sandbox environment is properly set, then you can move on. 
+This will customize the links and copy/paste code for this workshop.
+
+[NOTE]
+====
+If you accidently type the wrong username, just click the green recycle icon to reset it and add the correct username.
+====
 
 == Click-to-Copy
 
