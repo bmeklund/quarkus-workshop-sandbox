@@ -5,9 +5,11 @@
 [.text-center.strong]
 == Quarkus Workshop
 
-This workshop focuses on Quarkus - supersonic, subatomic container-native Java.  
+This workshop gives an introduction to Quarkus - supersonic, subatomic container-native Java.  
 
-The workshop in its native form rely on the Developer Sandbox and the Developer Sandbox IDE(Dev Spaces) to develop Quarkus applications and deploy them to the Sandbox cluster.  
+The workshop in its native form rely on the https://developers.redhat.com/developer-sandbox[Developer Sandbox^] and the Developer Sandbox IDE(Dev Spaces) to develop Quarkus applications both locally as well as containerising and deployment to the cloud using OpenShift.  
+
+You will get an overview of using Quarkus for common use cases as well as integrating it with common tools and frameworks.
 
 It will cover the below modules
 
@@ -45,4 +47,5 @@ It will cover the below modules
 [.tile]
 * xref:tracing.adoc[Tracing Quarkus Apps with Jaeger and MicroProfile Tracing]
 [.tile]
-* xref:security.adoc[Securing Quarkus APIs]
+* xref:Summary.adoc[Summary and wrap up]
+

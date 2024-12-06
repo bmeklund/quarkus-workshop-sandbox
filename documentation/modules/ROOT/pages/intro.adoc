@@ -3,7 +3,9 @@
 
 image::logo.png[quarkus-logo, 900]
 
-Quarkus is a Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. Quarkus uses a technique called https://quarkus.io/vision/container-first[compile time boot^] and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring _real joy_ to your development.
+Quarkus is a Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. 
+
+Quarkus uses a technique called https://quarkus.io/vision/container-first[compile time boot^] and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring _real joy_ to your development.
 
 *Red Hat* offers the fully supported https://access.redhat.com/products/quarkus[Red Hat Build of Quarkus(RHBQ)^] with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift. Quarkus is one of the runtimes included in https://www.redhat.com/en/products/runtimes[Red Hat Runtimes^]. https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus[Learn more about RHBQ^].
 
@@ -12,6 +14,8 @@ Throughout this lab you'll discover how Quarkus can make your development of clo
 == First Step: Connect to your Developer Sandbox environment!
 
 To run this workshop you need to provision your own Developer Sandbox environment. This you do from https://developers.redhat.com/developer-sandbox
+
+The Developer Sandbox for Red Hat OpenShift provides you with 30 days of no-cost access to a shared cluster on OpenShift. Get access to your own preconfigured OpenShift environment for development and testing, hosted and managed by Red Hat.
 
 Click the *Start your sandbox for free* 
 
@@ -33,7 +37,12 @@ Select *Log in with DevSandbox* if the choice opens up.
 
 image::loginDevSandbox.png[login,800]
 
-Take note of the cluster details in the url of the browser. It will be something like this: https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/yourusername-dev
+Take note of the cluster details in the url of the browser. It will be something like the below.
+
+[source, none]
+----
+https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/add/ns/johndoe-dev
+----
 
 Remember the *yourusername-dev* part, you will use this username multiple times during this workshop. To start with you first have to personalize this workshop guide. You do this by adding your username in the box in the top menu(if it's not already done) - do it without the "-dev" part.
 
@@ -104,7 +113,7 @@ image::auth-access.png[auth-access, 800]
 
 Once you log in, you’ll be placed on the *Create Workspace* dashboard. Copy the following `Git Repo URL` and select `Create & Open`. Make sure the rh-sandbox branch is used
 
-* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs.git/tree/rh-sandbox`
+* *Git Repo URL*: `https://github.com/bmeklund/quarkus-workshop-m1m2-labs/tree/rh-sandbox`
 
 image::ds-landing.png[ds, 800]
 

@@ -1,0 +1,14 @@
+= Summary and wrap up
+:page-layout: home
+:!sectids:
+
+[.text-center.strong]
+== Congratulations on finishing the Quarkus Workshop
+
+This workshop gave you an introduction to Quarkus and how to tackle common use cases with it.
+
+You also got to try out the Developer Sandbox and different capabilities of OpenShift and other related projects for running modern applications.
+
+If you want to dig deeper into Quarkus there are plenty of documentation and guides at http://quarkus.io[quarkus.io^] as well in Red Hats documentation for https://docs.redhat.com/en/documentation/red_hat_build_of_quarkus/[Quarkus^]
+
+There are also other interactive learning paths as well as interesting blog posts and free e-books around Java and Quarkus at https://developers.redhat.com/learn/java[Red Hat Developers - Java^]

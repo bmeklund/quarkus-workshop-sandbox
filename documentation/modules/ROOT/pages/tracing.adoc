@@ -35,9 +35,11 @@ Each component (microservice) in a distributed trace will contribute its own spa
 
 In this case we will install a Jaeger-all-in-one image, this is mostly for local/test installations normally but in our excercise it is enough.
 
-Open `jaeger.yml` in the *src/main/kubernetes* directory. Copy the following YAML to the file. 
+Open `jaeger.yml` in the *src/main/kubernetes* directory. There you will see the definition for configuring and deploying the jaeger-all-in-one to your cluster. The definition is quite large and you don't have to dig into the details if you don't want to. 
 
-[source,yaml,role="copypaste"]
+It consists of a Deployment, a few Services as well as a Route.
+
+[source,yaml,role="none"]
 ----
 apiVersion: v1
 kind: List
@@ -247,7 +249,7 @@ items:
 
 ----
 
-Then run this command in your terminal in Dev Spaces
+To install it, run this command in your terminal in Dev Spaces
 
 [source,sh,role="copypaste"]
 ----
