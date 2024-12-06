@@ -47,5 +47,5 @@ It will cover the below modules
 [.tile]
 * xref:tracing.adoc[Tracing Quarkus Apps with Jaeger and MicroProfile Tracing]
 [.tile]
-* xref:Summary.adoc[Summary and wrap up]
+* xref:summary.adoc[Summary and wrap up]
 
