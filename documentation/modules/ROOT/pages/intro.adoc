@@ -15,7 +15,7 @@ Throughout this lab you'll discover how Quarkus can make your development of clo
 
 To run this workshop you need to provision your own Developer Sandbox environment. This you do from https://developers.redhat.com/developer-sandbox
 
-The Developer Sandbox for Red Hat OpenShift provides you with 30 days of no-cost access to a shared cluster on OpenShift. Get access to your own preconfigured OpenShift environment for development and testing, hosted and managed by Red Hat.
+The Developer Sandbox provides you with 30 days of no-cost access to a shared cluster on OpenShift. Get access to your own preconfigured OpenShift environment for development and testing, hosted and managed by Red Hat.
 
 Click the *Start your sandbox for free* 
 
